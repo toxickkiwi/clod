@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Где купить Robim Good в банке — вариант 3 «Сильно» (референс)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Токены те же, что в варианте 2; цвета и шрифты временные */
+:root{
+  --ground:#F4EFE6; --card:#FFFFFF; --ink:#1B1A17; --muted:#5C574E;
+  --line:#E4DCCD; --line-strong:#CFC6B5; --tag:#F1EADC; --dashed:#A79E8E;
+  --accent:#E3A21A; --zero:#155E75; --zero-tint:#E7F0F2; --zero-ink:#0F4556;
+  --radius:10px; --radius-card:12px;
+  --display:'Oswald','Arial Narrow',sans-serif;
+  --body:'Manrope','Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#D9D2C5;font-family:var(--body);color:var(--ink);font-size:15px;line-height:1.45}
+.page{max-width:430px;margin:0 auto;background:var(--ground);min-height:100vh}
+a{color:var(--ink)}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--zero);outline-offset:2px}
+
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--ink);color:var(--ground);position:sticky;top:0;z-index:5}
+.logo{font-family:var(--display);font-size:20px;font-weight:600;letter-spacing:1px}
+.icon-btn{width:44px;height:44px;border:0;background:transparent;color:inherit;display:flex;align-items:center;justify-content:center}
+
+.intro{padding:24px 16px 8px;display:flex;flex-direction:column;gap:12px}
+.intro h1{font-family:var(--display);font-size:30px;line-height:1.1;font-weight:600;text-transform:uppercase;margin:0}
+.intro p{margin:0;color:var(--muted);font-size:14px}
+
+.cans{display:flex;gap:10px;overflow-x:auto;padding:4px 16px;scroll-snap-type:x mandatory}
+.can{flex-shrink:0;width:96px;padding:8px;border-radius:var(--radius-card);border:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;gap:6px;align-items:center;color:var(--ink);scroll-snap-align:start}
+.can[aria-pressed="true"]{border:2px solid var(--ink)}
+.can.zero[aria-pressed="true"]{border-color:var(--zero)}
+.can .photo{width:100%;height:96px;border-radius:8px;border:1px dashed var(--dashed);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
+.can .name{font-size:12px;font-weight:700;text-align:center;line-height:1.2}
+
+.search{padding:16px;display:flex;flex-direction:column;gap:10px}
+.btn{height:44px;border-radius:var(--radius);font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border:0;font-size:15px}
+.btn-primary{height:52px;background:var(--accent);color:var(--ink);font-size:16px}
+.btn-ghost{background:var(--card);border:1px solid var(--line-strong);color:var(--ink);font-weight:600}
+.btn-dark{background:var(--ink);color:var(--ground)}
+.btn-outline{background:transparent;border:1px solid var(--ink);color:var(--ink)}
+
+.map{margin:0 16px;height:230px;border-radius:var(--radius-card);background:var(--line);position:relative;overflow:hidden}
+.road{position:absolute;background:var(--ground)}
+.me{position:absolute;left:172px;top:104px;width:18px;height:18px;border-radius:50%;background:#2563EB;border:3px solid #fff}
+.pin{position:absolute;width:30px;height:30px;border-radius:50%;color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;background:var(--ink)}
+.pin.zero{background:var(--zero)}
+.map-note{position:absolute;right:10px;bottom:10px;font-size:11px;color:var(--muted);background:var(--ground);padding:2px 6px;border-radius:4px}
+
+.results{padding:16px;display:flex;flex-direction:column;gap:12px}
+.summary{font-size:13px;color:var(--muted)}
+.card{background:var(--card);border-radius:var(--radius-card);padding:16px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line)}
+.card-top{display:flex;justify-content:space-between;gap:12px}
+.who{display:flex;gap:10px;align-items:flex-start}
+.num{width:26px;height:26px;flex-shrink:0;border-radius:50%;background:var(--ink);color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.num.zero{background:var(--zero)}
+.card-name{font-weight:700;font-size:16px}
+.card-addr{color:var(--muted);font-size:14px}
+.dist{font-weight:700;font-size:14px;white-space:nowrap}
+.delivery{padding:10px 12px;border-radius:8px;background:var(--tag);font-size:14px;display:flex;justify-content:space-between;gap:8px}
+.delivery.zero{background:var(--zero-tint)}
+.delivery b{color:var(--ink)}
+.delivery.zero b{color:var(--zero-ink)}
+.more{font-size:13px;color:var(--muted)}
+.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+
+.rating{margin:8px 16px 0;padding:18px;border-radius:var(--radius-card);background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.rating .kicker{font-size:13px;color:var(--muted)}
+.rating .big{font-family:var(--display);font-size:32px;font-weight:600}
+.links{padding:24px 16px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.links .btn{height:52px}
+.btn-zero{background:var(--zero);color:#fff}
+
+.footer{margin-top:28px;padding:24px 16px calc(24px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ground);display:flex;flex-direction:column;gap:8px;font-size:14px}
+.footer a{color:var(--ground)}
+.footer .phone{font-weight:700;font-size:16px}
+.warning{margin-top:12px;padding-top:12px;border-top:1px solid #47433C;font-size:12px;color:var(--line-strong)}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="header">
+  <div class="logo">ROBIM GOOD</div>
+  <button class="icon-btn" type="button" aria-label="Меню"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+</header>
+
+<!-- 1. Выбор сорта (необязательный шаг) -->
+<section class="intro">
+  <h1>Какую банку ищете?</h1>
+  <p>Выберите сорт или пропустите этот шаг.</p>
+</section>
+<div class="cans" id="cans" role="group" aria-label="Сорт"></div>
+
+<!-- 2. Поиск -->
+<section class="search">
+  <button class="btn btn-primary" type="button" id="locate">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    <span id="locateText"></span>
+  </button>
+  <button class="btn btn-ghost" type="button">Выбрать город</button>
+</section>
+
+<!-- 3. Карта -->
+<div class="map">
+  <div class="road" style="left:0;right:0;top:70px;height:10px"></div>
+  <div class="road" style="left:0;right:0;top:160px;height:14px"></div>
+  <div class="road" style="top:0;bottom:0;left:120px;width:12px"></div>
+  <div class="road" style="top:0;bottom:0;left:260px;width:10px"></div>
+  <div class="me" aria-label="Вы здесь"></div>
+  <div id="pins"></div>
+  <div class="map-note">Карта: Яндекс или Google</div>
+</div>
+
+<!-- 4. Точки с датой поставки выбранного сорта -->
+<section class="results" aria-live="polite">
+  <div class="summary" id="summary"></div>
+  <div id="cards" style="display:flex;flex-direction:column;gap:12px"></div>
+</section>
+
+<!-- 5. Рейтинг Untappd -->
+<section class="rating">
+  <div class="kicker">Что говорят в Untappd</div>
+  <div style="display:flex;align-items:baseline;gap:8px"><span class="big">[рейтинг]</span><span class="more" style="font-size:14px">[число оценок] · <span id="ratingName"></span></span></div>
+  <p style="margin:0;font-size:14px">[Короткий отзыв покупателя с разрешения автора]</p>
+  <a href="#" style="font-weight:700;font-size:14px">Отметить банку в Untappd</a>
+</section>
+
+<!-- 6. Переходы -->
+<section class="links">
+  <a class="btn btn-zero" href="#">Вся Zero-серия</a>
+  <a class="btn btn-dark" href="https://www.instagram.com/robimgoodbrewery/">Instagram</a>
+</section>
+
+<footer class="footer">
+  <a class="phone" href="tel:+375296611701">+375 29 661-17-01</a>
+  <div style="display:flex;gap:16px"><a href="#">Telegram</a><a href="#">Viber</a><a href="#">Нет точки рядом?</a></div>
+  <div class="warning">Чрезмерное употребление пива вредит вашему здоровью</div>
+</footer>
+</div>
+
+<script>
+/* Данные — пример. В рабочей версии: точки и даты последней поставки по сортам из таблицы (см. README). */
+const SORTS = ['Zero IPA','Zero Lager','Zero Stout','FACTORY I.P.A Vista','FACTORY TOMATO BBQ'];
+const POINTS = [
+  { name:'«Точка», магазин-бар', address:'пр-т Дзержинского, 22', phone:'+375447975508', dist:'0,4 км', deliveries:{'Zero IPA':'[дата]','Zero Lager':'[дата]','FACTORY I.P.A Vista':'[дата]'}, mapX:140, mapY:40 },
+  { name:'«Братья крафт»', address:'ул. Московская, 7', phone:'', dist:'1,1 км', deliveries:{'Zero IPA':'[дата]','Zero Lager':'[дата]','FACTORY TOMATO BBQ':'[дата]'}, mapX:230, mapY:128 },
+  { name:'«Пивоваров»', address:'ул. Куйбышева, 69', phone:'', dist:'2,0 км', deliveries:{'Zero IPA':'[дата]','Zero Stout':'[дата]','FACTORY I.P.A Vista':'[дата]'}, mapX:60, mapY:180 },
+  { name:'«BeerSoul»', address:'пр-т Победителей, 135', phone:'', dist:'3,4 км', deliveries:{'Zero Stout':'[дата]','FACTORY TOMATO BBQ':'[дата]'}, mapX:300, mapY:30 }
+];
+let selected = 'Zero IPA';
+const isZero = s => s.startsWith('Zero');
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const plural = n => n % 10 === 1 && n % 100 !== 11 ? 'точка' : ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100) ? 'точки' : 'точек');
+
+document.getElementById('cans').innerHTML = SORTS.map(s => `
+  <button type="button" class="can ${isZero(s) ? 'zero' : ''}" data-sort="${esc(s)}" aria-pressed="false">
+    <span class="photo">Фото</span><span class="name">${esc(s)}</span>
+  </button>`).join('');
+
+function render(){
+  const z = isZero(selected);
+  document.querySelectorAll('#cans .can').forEach(b => b.setAttribute('aria-pressed', b.dataset.sort === selected));
+  document.getElementById('locateText').textContent = `Где ${selected} рядом со мной`;
+  document.getElementById('ratingName').textContent = selected;
+
+  const list = POINTS.filter(p => p.deliveries[selected]);
+  document.getElementById('summary').textContent = `${selected} рядом с вами · ${list.length} ${plural(list.length)}`;
+  document.getElementById('pins').innerHTML = list.map((p, i) =>
+    `<div class="pin ${z ? 'zero' : ''}" style="left:${p.mapX}px;top:${p.mapY}px">${i + 1}</div>`).join('');
+  document.getElementById('cards').innerHTML = list.map((p, i) => {
+    const more = Object.keys(p.deliveries).filter(s => s !== selected).join(', ') || '—';
+    return `
+    <article class="card">
+      <div class="card-top">
+        <div class="who"><div class="num ${z ? 'zero' : ''}">${i + 1}</div>
+          <div><div class="card-name">${esc(p.name)}</div><div class="card-addr">${esc(p.address)}</div></div></div>
+        <div class="dist">${p.dist}</div>
+      </div>
+      <div class="delivery ${z ? 'zero' : ''}"><b>${esc(selected)}</b><span>последняя поставка ${esc(p.deliveries[selected])}</span></div>
+      <div class="more">Ещё здесь: ${esc(more)}</div>
+      <div class="actions">
+        <a class="btn btn-dark" href="${p.phone ? 'tel:' + p.phone : '#'}">Позвонить</a>
+        <a class="btn btn-outline" href="https://yandex.by/maps/?text=${encodeURIComponent('Минск, ' + p.address)}" target="_blank" rel="noopener">Маршрут</a>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+document.getElementById('cans').addEventListener('click', e => {
+  const b = e.target.closest('[data-sort]'); if (b){ selected = b.dataset.sort; render(); }
+});
+render();
+</script>
+</body>
+</html>

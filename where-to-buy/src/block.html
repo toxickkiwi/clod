@@ -1,0 +1,701 @@
+<!--
+  Robim Good — «Где купить в банке». Блок для Tilda (HTML-код, T123).
+  Настройки — в объекте RG_CONFIG ниже. Подробности: where-to-buy/README.md
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+#rg-wtb {
+  --rg-ground: #f4f8fb;
+  --rg-card: #ffffff;
+  --rg-ink: #10202e;
+  --rg-muted: #4a5a6a;
+  --rg-line: #dbe4ee;
+  --rg-line-strong: #b9c7d5;
+  --rg-sky: #5fb3ed;
+  --rg-orange: #fe6501;
+  --rg-orange-press: #e35a00;
+  --rg-zero: #1b64a8;
+  --rg-ipa: #2f7d32;
+  --rg-tomato: #d7381e;
+  --rg-radius: 12px;
+  --rg-font: 'Fira Sans Condensed', 'Arial Narrow', Arial, sans-serif;
+  --rg-hero-img: url(https://thb.tildacdn.biz/tild3166-3631-4738-b965-313339613031/-/resize/1200x/-4-.jpg);
+
+  font-family: var(--rg-font);
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--rg-ink);
+  background: var(--rg-ground);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+#rg-wtb *, #rg-wtb *::before, #rg-wtb *::after { box-sizing: border-box; }
+#rg-wtb ::selection { background: var(--rg-sky); color: var(--rg-ink); }
+#rg-wtb a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+#rg-wtb button, #rg-wtb select { font: inherit; color: inherit; }
+#rg-wtb button { cursor: pointer; }
+#rg-wtb :focus-visible { outline: 3px solid var(--rg-zero); outline-offset: 2px; }
+#rg-wtb [hidden] { display: none !important; }
+#rg-wtb h1, #rg-wtb h2, #rg-wtb h3, #rg-wtb p { margin: 0; }
+#rg-wtb .rg-wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+#rg-wtb .rg-num { font-variant-numeric: tabular-nums; }
+
+/* ---------- Первый экран ---------- */
+#rg-wtb .rg-hero { background: var(--rg-ground); }
+#rg-wtb .rg-hero__photo {
+  height: 132px;
+  background: #4aa3e6 var(--rg-hero-img) 46% 38% / 168% auto no-repeat;
+}
+#rg-wtb .rg-hero__body { padding: 20px 16px 22px; display: grid; gap: 14px; max-width: 560px; }
+#rg-wtb .rg-hero h1 {
+  font-size: 34px; line-height: 1.02; font-weight: 800; text-transform: uppercase;
+  letter-spacing: -0.01em; text-wrap: balance;
+}
+#rg-wtb .rg-hero h1 span { color: var(--rg-zero); }
+#rg-wtb .rg-lead { color: var(--rg-muted); font-size: 17px; }
+
+#rg-wtb .rg-btn {
+  min-height: 48px; padding: 0 18px; border-radius: 10px; border: 0;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-weight: 700; font-size: 17px; text-decoration: none; line-height: 1.1;
+  transition: background-color .15s ease, transform .15s ease;
+}
+#rg-wtb .rg-btn:active { transform: scale(.98); }
+#rg-wtb .rg-btn svg { flex: none; }
+#rg-wtb .rg-btn--primary { min-height: 56px; background: var(--rg-orange); color: var(--rg-ink); font-size: 19px; }
+#rg-wtb .rg-btn--primary:hover { background: var(--rg-orange-press); }
+#rg-wtb .rg-btn--primary[aria-busy="true"] svg { animation: rg-pulse 1s ease-in-out infinite; }
+#rg-wtb .rg-btn--dark { background: var(--rg-ink); color: #fff; }
+#rg-wtb .rg-btn--dark:hover { background: #22384c; }
+#rg-wtb .rg-btn--line { background: transparent; color: var(--rg-ink); border: 1.5px solid var(--rg-ink); }
+#rg-wtb .rg-btn--line:hover { background: #e8eef4; }
+#rg-wtb .rg-btn--soft { background: transparent; border: 1px solid var(--rg-line-strong); width: 100%; }
+#rg-wtb .rg-btn--soft:hover { background: #e8eef4; }
+@keyframes rg-pulse { 50% { transform: translateY(-3px); } }
+
+#rg-wtb .rg-city { display: grid; gap: 6px; }
+#rg-wtb .rg-city label { font-size: 15px; color: var(--rg-muted); font-weight: 500; }
+#rg-wtb .rg-select {
+  height: 50px; width: 100%; padding: 0 44px 0 14px; border-radius: 10px;
+  border: 1px solid var(--rg-line-strong); background: var(--rg-card); font-size: 17px; font-weight: 600;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none' stroke='%2310202e' stroke-width='2'%3E%3Cpath d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
+}
+#rg-wtb .rg-geo-note { font-size: 15px; color: var(--rg-muted); }
+
+/* ---------- Фильтры и вид ---------- */
+#rg-wtb .rg-tools { background: var(--rg-ground); padding: 10px 0 8px; border-bottom: 1px solid var(--rg-line); }
+#rg-wtb .rg-chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px 16px; margin: 0 -16px; }
+#rg-wtb .rg-chips::-webkit-scrollbar { display: none; }
+#rg-wtb .rg-chips + .rg-chips { margin-top: 8px; }
+#rg-wtb .rg-chip {
+  flex: none; min-height: 44px; padding: 0 16px; border-radius: 22px;
+  border: 1px solid var(--rg-line-strong); background: var(--rg-card);
+  font-size: 16px; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;
+}
+#rg-wtb .rg-chip--sm { font-weight: 600; background: transparent; }
+#rg-wtb .rg-chip[aria-pressed="true"] { background: var(--rg-ink); border-color: var(--rg-ink); color: #fff; }
+#rg-wtb .rg-chip--zero[aria-pressed="true"] { background: var(--rg-zero); border-color: var(--rg-zero); }
+#rg-wtb .rg-chip .rg-x { width: 10px; height: 10px; }
+#rg-wtb .rg-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+#rg-wtb .rg-view { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; background: #e3eaf1; border-radius: 10px; padding: 4px; }
+#rg-wtb .rg-view button { min-height: 44px; border: 0; border-radius: 7px; background: transparent; font-weight: 700; font-size: 16px; }
+#rg-wtb .rg-view button[aria-selected="true"] { background: var(--rg-card); box-shadow: 0 1px 3px rgba(16,32,46,.14); }
+
+/* ---------- Результаты ---------- */
+#rg-wtb .rg-results { padding: 16px 0 8px; scroll-margin-top: 0; }
+#rg-wtb .rg-summary { font-size: 15px; color: var(--rg-muted); margin-bottom: 12px; }
+#rg-wtb .rg-summary b { color: var(--rg-ink); }
+#rg-wtb .rg-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+#rg-wtb .rg-card {
+  background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: var(--rg-radius);
+  padding: 16px; display: grid; gap: 10px;
+}
+#rg-wtb .rg-card.is-in { animation: rg-in .42s cubic-bezier(.16,1,.3,1) both; }
+@keyframes rg-in { from { opacity: 0; transform: translateY(10px); } }
+#rg-wtb .rg-card__top { display: flex; align-items: flex-start; gap: 12px; }
+#rg-wtb .rg-card__n {
+  flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--rg-ink); color: #fff;
+  display: grid; place-items: center; font-weight: 700; font-size: 15px;
+}
+#rg-wtb .rg-card__n.is-zero { background: var(--rg-zero); }
+#rg-wtb .rg-card__main { flex: 1; min-width: 0; }
+#rg-wtb .rg-card__name { font-size: 19px; font-weight: 700; line-height: 1.2; }
+#rg-wtb .rg-card__addr { color: var(--rg-muted); font-size: 16px; }
+#rg-wtb .rg-card__dist { flex: none; font-weight: 700; font-size: 16px; white-space: nowrap; padding-top: 2px; }
+#rg-wtb .rg-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+#rg-wtb .rg-badge { font-size: 14px; font-weight: 700; padding: 3px 9px; border-radius: 6px; background: var(--rg-ink); color: #fff; }
+#rg-wtb .rg-tag { font-size: 14px; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: #e8eef4; display: inline-flex; align-items: center; gap: 6px; }
+#rg-wtb .rg-tag.is-zero { background: var(--rg-zero); color: #fff; }
+#rg-wtb .rg-hint { font-size: 15px; color: var(--rg-muted); }
+#rg-wtb .rg-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+#rg-wtb .rg-actions > :only-child { grid-column: 1 / -1; }
+#rg-wtb .rg-more { margin-top: 12px; }
+#rg-wtb .rg-empty {
+  padding: 20px; border-radius: var(--rg-radius); border: 1px dashed var(--rg-line-strong);
+  display: grid; gap: 12px; justify-items: start;
+}
+#rg-wtb .rg-status { font-size: 15px; color: var(--rg-muted); padding: 8px 0 0; }
+
+#rg-wtb .rg-map {
+  height: 62vh; min-height: 340px; max-height: 560px; border-radius: var(--rg-radius); overflow: hidden;
+  background: #dfe8f0; border: 1px solid var(--rg-line); position: relative; z-index: 0;
+}
+#rg-wtb .rg-map__msg { position: absolute; inset: 0; display: grid; place-items: center; color: var(--rg-muted); font-size: 15px; padding: 20px; text-align: center; }
+#rg-wtb .rg-pin {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--rg-ink); color: #fff; border: 2px solid #fff;
+  display: grid; place-items: center; font: 700 14px/1 var(--rg-font); box-shadow: 0 2px 6px rgba(16,32,46,.35);
+}
+#rg-wtb .rg-pin.is-zero { background: var(--rg-zero); }
+#rg-wtb .rg-me { width: 18px; height: 18px; border-radius: 50%; background: #2563eb; border: 3px solid #fff; box-shadow: 0 0 0 6px rgba(37,99,235,.2); }
+#rg-wtb .leaflet-container { font-family: var(--rg-font); }
+#rg-wtb .rg-pop { font: 15px/1.35 var(--rg-font); color: var(--rg-ink); }
+#rg-wtb .rg-pop b { font-size: 16px; }
+#rg-wtb .rg-pop a { font-weight: 700; }
+
+/* ---------- Блоки ниже списка ---------- */
+#rg-wtb .rg-section { padding: 40px 0 0; display: grid; gap: 14px; }
+#rg-wtb .rg-h2 { font-size: 28px; line-height: 1.05; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
+
+#rg-wtb .rg-tochka {
+  border-radius: var(--rg-radius); background: var(--rg-ink); color: #fff; padding: 20px;
+  display: grid; gap: 12px;
+}
+#rg-wtb .rg-tochka p { color: #c9d5e0; }
+#rg-wtb .rg-tochka .rg-btn--line { color: #fff; border-color: #fff; justify-self: start; }
+#rg-wtb .rg-tochka .rg-btn--line:hover { background: rgba(255,255,255,.08); }
+
+#rg-wtb .rg-zero {
+  border-radius: 16px; overflow: hidden; color: #fff;
+  background: var(--rg-zero); display: grid;
+}
+#rg-wtb .rg-zero__body { padding: 22px 20px 20px; display: grid; gap: 12px; align-content: start; }
+#rg-wtb .rg-zero__title { font-size: 40px; line-height: .95; font-weight: 800; letter-spacing: .01em; }
+#rg-wtb .rg-zero__title small { display: block; font-size: 20px; font-weight: 600; letter-spacing: 0; text-transform: none; color: #d6e6f5; margin-top: 6px; }
+#rg-wtb .rg-zero .rg-btn { background: #fff; color: var(--rg-zero); justify-self: start; }
+#rg-wtb .rg-zero .rg-btn:hover { background: #e7f0f9; }
+#rg-wtb .rg-zero__cans { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+
+#rg-wtb .rg-can {
+  aspect-ratio: 390 / 600; background-color: #4aa3e6; background-image: var(--rg-hero-img);
+  background-size: 430.77% auto; background-repeat: no-repeat;
+}
+#rg-wtb .rg-can--ipa { background-position: 7.36% 71.7%; }
+#rg-wtb .rg-can--bbq { background-position: 36.43% 81.67%; }
+#rg-wtb .rg-can--lager { background-position: 65.89% 23.33%; }
+#rg-wtb .rg-can--zipa { background-position: 90.31% 85%; }
+
+#rg-wtb .rg-beers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+#rg-wtb .rg-beer { background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: var(--rg-radius); overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+#rg-wtb .rg-beer__body { padding: 12px; display: grid; gap: 2px; align-content: start; }
+#rg-wtb .rg-beer__name { font-weight: 700; font-size: 17px; line-height: 1.15; }
+#rg-wtb .rg-beer__style { font-size: 15px; color: var(--rg-muted); display: inline-flex; align-items: center; gap: 6px; }
+#rg-wtb .rg-beer__style::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--rg-accent); }
+#rg-wtb .rg-beer__stats { font-size: 15px; font-weight: 600; margin-top: 4px; }
+#rg-wtb .rg-link { font-weight: 700; color: var(--rg-zero); }
+
+#rg-wtb .rg-social { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+#rg-wtb .rg-nopoint { border-radius: var(--rg-radius); border: 1px solid var(--rg-line-strong); padding: 20px; display: grid; gap: 12px; }
+#rg-wtb .rg-nopoint .rg-btn--primary { min-height: 50px; font-size: 17px; }
+
+#rg-wtb .rg-foot { margin-top: 48px; background: var(--rg-ink); color: #fff; padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0px)); }
+#rg-wtb .rg-foot__grid { display: grid; gap: 10px; font-size: 16px; }
+#rg-wtb .rg-foot a { text-decoration: none; }
+#rg-wtb .rg-foot a:hover { text-decoration: underline; }
+#rg-wtb .rg-foot__phone { font-size: 22px; font-weight: 700; }
+#rg-wtb .rg-foot__links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+#rg-wtb .rg-foot__links a { display: inline-flex; min-height: 44px; align-items: center; }
+#rg-wtb .rg-warning { margin-top: 14px; padding-top: 14px; border-top: 1px solid #2c4256; font-size: 15px; color: #c9d5e0; }
+
+/* ---------- Компьютер ---------- */
+@media (min-width: 900px) {
+  #rg-wtb .rg-hero { padding-top: 80px; } /* под прозрачной шапкой Tilda */
+  #rg-wtb .rg-hero__inner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 40px; align-items: center; max-width: 1160px; margin: 0 auto; padding: 32px 16px 36px; }
+  #rg-wtb .rg-hero__photo { order: 2; height: 380px; border-radius: 16px; background-size: cover; background-position: 50% 40%; }
+  #rg-wtb .rg-hero__body { padding: 0; }
+  #rg-wtb .rg-hero h1 { font-size: 56px; }
+  #rg-wtb .rg-tools { position: sticky; top: 0; z-index: 4; }
+  #rg-wtb .rg-tools .rg-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  #rg-wtb .rg-chips { margin: 0; padding: 2px 0; overflow: visible; }
+  #rg-wtb .rg-chips + .rg-chips { margin-top: 0; }
+  #rg-wtb .rg-chips:not([hidden]) + .rg-chips::before { content: ""; width: 1px; height: 28px; background: var(--rg-line-strong); align-self: center; margin-right: 4px; }
+  #rg-wtb .rg-view { display: none; }
+  #rg-wtb .rg-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; align-items: start; }
+  #rg-wtb .rg-map { display: block !important; position: sticky; top: 84px; height: calc(100vh - 110px); max-height: 720px; }
+  #rg-wtb .rg-below { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  #rg-wtb .rg-below > .rg-section--wide { grid-column: 1 / -1; }
+  #rg-wtb .rg-zero { grid-template-columns: 1fr 1fr; }
+  #rg-wtb .rg-zero__body { padding: 32px; align-content: center; }
+  #rg-wtb .rg-zero__title { font-size: 64px; }
+  #rg-wtb .rg-beers { grid-template-columns: repeat(4, 1fr); }
+  #rg-wtb .rg-foot__grid { grid-template-columns: auto 1fr; align-items: center; gap: 10px 40px; }
+  #rg-wtb .rg-warning { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #rg-wtb *, #rg-wtb *::before, #rg-wtb *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div id="rg-wtb">
+  <section class="rg-hero" aria-labelledby="rg-title">
+    <div class="rg-hero__inner">
+      <div class="rg-hero__photo" role="img" aria-label="Банки Robim Good: IPA Vista, BBQ Tomato, Zero Lager и Zero IPA"></div>
+      <div class="rg-hero__body">
+        <h1 id="rg-title">Где купить Robim&nbsp;Good <span>в&nbsp;банке</span></h1>
+        <p class="rg-lead" id="rg-lead">Магазины и бары по всей Беларуси. Найдите ближайший.</p>
+        <button class="rg-btn rg-btn--primary" type="button" id="rg-locate">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          <span>Найти рядом со мной</span>
+        </button>
+        <div class="rg-city">
+          <label for="rg-city">или выберите город</label>
+          <select class="rg-select" id="rg-city"></select>
+        </div>
+        <p class="rg-geo-note" id="rg-geo-note" role="status" hidden></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rg-tools" id="rg-tools">
+    <div class="rg-wrap">
+      <div class="rg-chips" id="rg-sorts" role="group" aria-label="Сорт" hidden>
+        <button class="rg-chip" type="button" data-sort="all" aria-pressed="true">Все сорта</button>
+        <button class="rg-chip rg-chip--zero" type="button" data-sort="zero" aria-pressed="false">ZERO</button>
+        <button class="rg-chip" type="button" data-sort="ipa" aria-pressed="false"><span class="rg-dot" style="background:var(--rg-ipa)"></span>FACTORY IPA</button>
+        <button class="rg-chip" type="button" data-sort="bbq" aria-pressed="false"><span class="rg-dot" style="background:var(--rg-tomato)"></span>TOMATO BBQ</button>
+      </div>
+      <div class="rg-chips" id="rg-types" role="group" aria-label="Тип точки">
+        <button class="rg-chip rg-chip--sm" type="button" data-type="shop" aria-pressed="false">Магазины</button>
+        <button class="rg-chip rg-chip--sm" type="button" data-type="bar" aria-pressed="false">Бары</button>
+        <button class="rg-chip rg-chip--sm" type="button" id="rg-tochka-chip" aria-pressed="true" hidden>Сеть «Точка» <svg class="rg-x" viewBox="0 0 10 10" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l8 8M9 1L1 9"/></svg><span class="rg-sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">, убрать фильтр</span></button>
+      </div>
+      <div class="rg-view" role="tablist" aria-label="Вид">
+        <button type="button" role="tab" id="rg-tab-list" aria-selected="true" aria-controls="rg-list-panel">Список</button>
+        <button type="button" role="tab" id="rg-tab-map" aria-selected="false" aria-controls="rg-map">Карта</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="rg-wrap">
+    <section class="rg-results" id="rg-points" aria-label="Точки продаж">
+      <div class="rg-layout">
+        <div id="rg-list-panel">
+          <p class="rg-summary" id="rg-summary" aria-live="polite"></p>
+          <ol class="rg-list" id="rg-list"></ol>
+          <div class="rg-empty" id="rg-empty" hidden>
+            <p>Нет точек с таким фильтром.</p>
+            <button class="rg-btn rg-btn--line" type="button" id="rg-reset">Сбросить фильтры</button>
+          </div>
+          <button class="rg-btn rg-btn--soft rg-more" type="button" id="rg-more" hidden></button>
+          <p class="rg-status" id="rg-status" hidden></p>
+        </div>
+        <div class="rg-map" id="rg-map" role="tabpanel" aria-label="Карта точек" hidden>
+          <div class="rg-map__msg" id="rg-map-msg">Загружаем карту…</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rg-below">
+      <section class="rg-section" aria-labelledby="rg-tochka-h">
+        <div class="rg-tochka">
+          <h2 class="rg-h2" id="rg-tochka-h">Сеть «Точка»</h2>
+          <p>Наш главный партнёр. Банки Robim Good есть в магазинах и барах сети в Минске, Бобруйске и Лиде.</p>
+          <button class="rg-btn rg-btn--line" type="button" id="rg-tochka-go">Все адреса «Точки»</button>
+        </div>
+      </section>
+
+      <section class="rg-section" aria-labelledby="rg-nopoint-h">
+        <div class="rg-nopoint">
+          <h2 class="rg-h2" id="rg-nopoint-h">Нет точки рядом?</h2>
+          <p class="rg-lead">Напишите, в каком городе вы хотите Robim Good. Мы передадим это партнёрам.</p>
+          <a class="rg-btn rg-btn--primary" href="https://t.me/+375296611701" target="_blank" rel="noopener">Написать в Telegram</a>
+          <a class="rg-link" href="mailto:info@robimgood.beer?subject=%D0%A5%D0%BE%D1%82%D0%B8%D0%BC%20%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D1%8C%20Robim%20Good">Хотите продавать наше пиво?</a>
+        </div>
+      </section>
+
+      <section class="rg-section rg-section--wide" aria-labelledby="rg-zero-h">
+        <div class="rg-zero">
+          <div class="rg-zero__body">
+            <h2 class="rg-zero__title" id="rg-zero-h">ZERO<small>Безалкогольная серия</small></h2>
+            <p>Zero IPA и Zero Lager: 0% алкоголя, 40 и 20 IBU.</p>
+            <button class="rg-btn" type="button" id="rg-zero-go">Где купить Zero</button>
+          </div>
+          <div class="rg-zero__cans" aria-hidden="true">
+            <div class="rg-can rg-can--zipa"></div>
+            <div class="rg-can rg-can--lager"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rg-section rg-section--wide" aria-labelledby="rg-beers-h">
+        <h2 class="rg-h2" id="rg-beers-h">Наши банки</h2>
+        <ul class="rg-beers">
+          <li class="rg-beer" style="--rg-accent:var(--rg-ipa)"><div class="rg-can rg-can--ipa" role="img" aria-label="Банка FACTORY I.P.A Vista"></div><div class="rg-beer__body"><span class="rg-beer__name">FACTORY I.P.A&nbsp;Vista</span><span class="rg-beer__style">American IPA</span><span class="rg-beer__stats rg-num">6,3% · 65 IBU</span></div></li>
+          <li class="rg-beer" style="--rg-accent:var(--rg-tomato)"><div class="rg-can rg-can--bbq" role="img" aria-label="Банка FACTORY TOMATO BBQ"></div><div class="rg-beer__body"><span class="rg-beer__name">FACTORY TOMATO&nbsp;BBQ</span><span class="rg-beer__style">Tomato Sour</span><span class="rg-beer__stats rg-num">5,1% · 0 IBU</span></div></li>
+          <li class="rg-beer" style="--rg-accent:var(--rg-zero)"><div class="rg-can rg-can--zipa" role="img" aria-label="Банка Zero IPA"></div><div class="rg-beer__body"><span class="rg-beer__name">Zero IPA</span><span class="rg-beer__style">Безалкогольное</span><span class="rg-beer__stats rg-num">0% · 40 IBU</span></div></li>
+          <li class="rg-beer" style="--rg-accent:var(--rg-zero)"><div class="rg-can rg-can--lager" role="img" aria-label="Банка Zero Lager"></div><div class="rg-beer__body"><span class="rg-beer__name">Zero Lager</span><span class="rg-beer__style">Безалкогольное</span><span class="rg-beer__stats rg-num">0% · 20 IBU</span></div></li>
+        </ul>
+        <a class="rg-link" href="https://robimgood.beer">Всё наше пиво</a>
+      </section>
+
+      <section class="rg-section rg-section--wide" aria-labelledby="rg-social-h">
+        <h2 class="rg-h2" id="rg-social-h">Следите за новинками</h2>
+        <div class="rg-social">
+          <a class="rg-btn rg-btn--dark" href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener">Instagram</a>
+          <a class="rg-btn rg-btn--dark" href="https://www.facebook.com/robimgoodbrewery/" target="_blank" rel="noopener">Facebook</a>
+        </div>
+        <p class="rg-lead">Отметьте банку в <a class="rg-link" href="https://untappd.com/search?q=Robim%20Good&amp;type=beer" target="_blank" rel="noopener">Untappd</a>: нам важно, что вы думаете.</p>
+      </section>
+    </div>
+  </div>
+
+  <footer class="rg-foot">
+    <div class="rg-wrap rg-foot__grid">
+      <a class="rg-foot__phone rg-num" href="tel:+375296611701">+375 29 661-17-01</a>
+      <div class="rg-foot__links">
+        <a href="https://t.me/+375296611701" target="_blank" rel="noopener">Telegram</a>
+        <a href="viber://chat?number=%2B375296611701">Viber</a>
+        <a href="mailto:info@robimgood.beer">info@robimgood.beer</a>
+        <a href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p class="rg-warning">Чрезмерное употребление пива вредит вашему здоровью</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===== Настройки ===== */
+  var RG_CONFIG = {
+    // Ссылка на Google-таблицу, опубликованную как CSV. Пусто — берётся встроенный список ниже.
+    sheetCsvUrl: '',
+    // Ключ JavaScript API Яндекс Карт. Пусто — карта OpenStreetMap.
+    yandexMapsKey: '',
+    pageSize: 10,
+    defaultCity: 'Минск'
+  };
+
+  /* Резервный список: последняя сохранённая копия таблицы. Собирается build.py из data/points.csv */
+  var FALLBACK = {{FALLBACK_JSON}};
+
+  var root = document.getElementById('rg-wtb');
+  var $ = function (id) { return document.getElementById(id); };
+
+  var SORT_RULES = {
+    zero: function (s) { return /^zero/i.test(s); },
+    ipa: function (s) { return /ipa/i.test(s) && !/^zero/i.test(s); },
+    bbq: function (s) { return /tomato|bbq/i.test(s); }
+  };
+  var isZero = SORT_RULES.zero;
+
+  var state = {
+    points: [], city: RG_CONFIG.defaultCity, me: null,
+    sort: 'all', type: 'all', tochka: false, view: 'list', shown: RG_CONFIG.pageSize, animate: false
+  };
+
+  /* ===== Данные ===== */
+  function parseCsv(text) {
+    var rows = [], row = [], cell = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      if (q) {
+        if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+        else if (c === '"') q = false;
+        else cell += c;
+      } else if (c === '"') q = true;
+      else if (c === ',') { row.push(cell); cell = ''; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && text[i + 1] === '\n') i++;
+        row.push(cell); rows.push(row); row = []; cell = '';
+      } else cell += c;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    var head = rows.shift().map(function (h) { return h.trim().toLowerCase(); });
+    return rows.filter(function (r) { return r.join('').trim(); }).map(function (r) {
+      var o = {}; head.forEach(function (h, i) { o[h] = (r[i] || '').trim(); }); return o;
+    });
+  }
+
+  function normalize(rows) {
+    return rows.map(function (r) {
+      var type = (r.type || '').toLowerCase();
+      return {
+        city: r.city, region: r.region, name: r.name, type: r.type || 'Магазин', address: r.address,
+        phone: (r.phone || '').replace(/[^\d+]/g, ''),
+        lat: parseFloat(String(r.lat).replace(',', '.')), lng: parseFloat(String(r.lng).replace(',', '.')),
+        tochka: /^(да|yes|1|true|\+)$/i.test(r.tochka || ''),
+        sorts: (r.sorts || '').split(/[,;]/).map(function (s) { return s.trim(); }).filter(Boolean),
+        shop: type.indexOf('магазин') > -1, bar: type.indexOf('бар') > -1 && type !== 'магазин'
+      };
+    }).filter(function (p) { return p.city && p.address; });
+  }
+
+  function load() {
+    if (!RG_CONFIG.sheetCsvUrl) return start(normalize(FALLBACK), false);
+    fetch(RG_CONFIG.sheetCsvUrl, { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(function (t) { var pts = normalize(parseCsv(t)); if (!pts.length) throw new Error('empty'); start(pts, false); })
+      .catch(function () { start(normalize(FALLBACK), true); });
+  }
+
+  /* ===== Утилиты ===== */
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function plural(n, one, few, many) {
+    var a = n % 10, b = n % 100;
+    return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many;
+  }
+  function km(a, b) {
+    var R = 6371, rad = Math.PI / 180;
+    var dLat = (b.lat - a.lat) * rad, dLng = (b.lng - a.lng) * rad;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+  function fmtDist(d) { return d < 1 ? Math.round(d * 1000 / 10) * 10 + ' м' : (d < 10 ? d.toFixed(1).replace('.', ',') : Math.round(d)) + ' км'; }
+  function hasZero(p) { return p.sorts.some(isZero); }
+  function sortsKnown() { return state.points.some(function (p) { return p.sorts.length; }); }
+  function routeUrl(p) {
+    return isFinite(p.lat) ? 'https://yandex.by/maps/?rtext=~' + p.lat + '%2C' + p.lng + '&rtt=auto'
+      : 'https://yandex.by/maps/?text=' + encodeURIComponent(p.city + ', ' + p.address);
+  }
+
+  /* ===== Фильтрация ===== */
+  function visible() {
+    var list = state.points.filter(function (p) {
+      if (!state.me && p.city !== state.city) return false;
+      if (state.tochka && !p.tochka) return false;
+      if (state.type === 'shop' && !p.shop) return false;
+      if (state.type === 'bar' && !p.bar) return false;
+      if (state.sort !== 'all' && !p.sorts.some(SORT_RULES[state.sort])) return false;
+      return true;
+    });
+    if (state.me) {
+      list.forEach(function (p) { p.dist = isFinite(p.lat) ? km(state.me, p) : Infinity; });
+      list.sort(function (a, b) { return a.dist - b.dist; });
+    } else {
+      list.sort(function (a, b) { return (b.tochka - a.tochka) || a.name.localeCompare(b.name, 'ru') || a.address.localeCompare(b.address, 'ru'); });
+    }
+    return list;
+  }
+
+  /* ===== Отрисовка ===== */
+  function cardHtml(p, i) {
+    var tags = p.sorts.map(function (s) {
+      var dot = SORT_RULES.ipa(s) ? 'var(--rg-ipa)' : SORT_RULES.bbq(s) ? 'var(--rg-tomato)' : '';
+      return '<span class="rg-tag' + (isZero(s) ? ' is-zero' : '') + '">' + (dot ? '<span class="rg-dot" style="background:' + dot + '"></span>' : '') + esc(s) + '</span>';
+    }).join('');
+    var meta = (p.tochka ? '<span class="rg-badge">Сеть «Точка»</span>' : '') + tags;
+    var addr = (state.me || p.city !== state.city ? 'г. ' + esc(p.city) + ', ' : '') + esc(p.address);
+    return '<li class="rg-card' + (state.animate ? ' is-in' : '') + '" style="animation-delay:' + Math.min(i, 6) * 40 + 'ms">' +
+      '<div class="rg-card__top">' +
+        '<span class="rg-card__n rg-num' + (hasZero(p) ? ' is-zero' : '') + '" aria-hidden="true">' + (i + 1) + '</span>' +
+        '<div class="rg-card__main"><div class="rg-card__name">' + esc(p.name) + '</div>' +
+        '<div class="rg-card__addr">' + esc(p.type) + ' · ' + addr + '</div></div>' +
+        (state.me && isFinite(p.dist) ? '<div class="rg-card__dist rg-num">' + fmtDist(p.dist) + '</div>' : '') +
+      '</div>' +
+      (meta ? '<div class="rg-meta">' + meta + '</div>' : '') +
+      '<p class="rg-hint">Наличие лучше уточнить по телефону</p>' +
+      '<div class="rg-actions">' +
+        (p.phone ? '<a class="rg-btn rg-btn--dark" href="tel:' + esc(p.phone) + '">Позвонить</a>' : '') +
+        '<a class="rg-btn rg-btn--line" href="' + routeUrl(p) + '" target="_blank" rel="noopener">Маршрут</a>' +
+      '</div></li>';
+  }
+
+  function render() {
+    var list = visible(), page = list.slice(0, state.shown), n = list.length;
+    var where = state.me ? 'Рядом с вами' : esc(state.city);
+    $('rg-summary').innerHTML = '<b>' + where + '</b> · ' + n + ' ' + plural(n, 'точка', 'точки', 'точек') +
+      (state.me ? ', сначала ближайшие' : '');
+    $('rg-list').innerHTML = page.map(cardHtml).join('');
+    $('rg-empty').hidden = n > 0;
+    var rest = n - page.length;
+    $('rg-more').hidden = rest <= 0;
+    $('rg-more').textContent = 'Показать ещё ' + Math.min(rest, RG_CONFIG.pageSize) + ' из ' + rest;
+
+    root.querySelectorAll('[data-sort]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.sort === state.sort); });
+    root.querySelectorAll('[data-type]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.type === state.type); });
+    $('rg-tochka-chip').hidden = !state.tochka;
+    $('rg-tab-list').setAttribute('aria-selected', state.view === 'list');
+    $('rg-tab-map').setAttribute('aria-selected', state.view === 'map');
+    var desktop = window.matchMedia('(min-width: 900px)').matches;
+    $('rg-list-panel').hidden = !desktop && state.view === 'map';
+    $('rg-map').hidden = !desktop && state.view !== 'map';
+    state.animate = false;
+    if (desktop || state.view === 'map') drawMap(page);
+  }
+
+  function fillCities() {
+    var counts = {};
+    state.points.forEach(function (p) { counts[p.city] = (counts[p.city] || 0) + 1; });
+    var cities = Object.keys(counts).sort(function (a, b) {
+      return (b === RG_CONFIG.defaultCity) - (a === RG_CONFIG.defaultCity) || a.localeCompare(b, 'ru');
+    });
+    if (!counts[state.city]) state.city = cities[0];
+    $('rg-city').innerHTML = (state.me ? '<option value="" selected>Рядом со мной</option>' : '') + cities.map(function (c) {
+      return '<option value="' + esc(c) + '"' + (!state.me && c === state.city ? ' selected' : '') + '>' + esc(c) + ' (' + counts[c] + ')</option>';
+    }).join('');
+  }
+
+  function scrollToPoints() {
+    var top = $('rg-tools').getBoundingClientRect().top + window.pageYOffset - 8;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+
+  /* ===== Карта ===== */
+  var map = { kind: null, obj: null, layer: null, loading: false, pending: null };
+
+  function loadScript(src) {
+    return new Promise(function (ok, fail) { var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
+  }
+  function loadCss(href) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
+
+  function initMap() {
+    if (map.loading || map.obj) return;
+    map.loading = true;
+    var box = $('rg-map');
+    var ready = RG_CONFIG.yandexMapsKey
+      ? loadScript('https://api-maps.yandex.ru/2.1/?apikey=' + encodeURIComponent(RG_CONFIG.yandexMapsKey) + '&lang=ru_RU').then(function () {
+          return new Promise(function (ok) { window.ymaps.ready(ok); });
+        }).then(function () {
+          map.kind = 'ya';
+          map.obj = new window.ymaps.Map(box, { center: [53.9, 27.56], zoom: 11, controls: ['zoomControl'] });
+          map.layer = new window.ymaps.GeoObjectCollection();
+          map.obj.geoObjects.add(map.layer);
+        })
+      : (loadCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'), loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')).then(function () {
+          var L = window.L;
+          map.kind = 'osm';
+          map.obj = L.map(box, { scrollWheelZoom: false }).setView([53.9, 27.56], 11);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(map.obj);
+          map.layer = L.layerGroup().addTo(map.obj);
+        });
+    ready.then(function () {
+      $('rg-map-msg').hidden = true;
+      map.loading = false;
+      if (map.pending) drawMap(map.pending);
+    }).catch(function () {
+      map.loading = false;
+      $('rg-map-msg').textContent = 'Карта не загрузилась. Список точек и кнопки «Маршрут» работают.';
+    });
+  }
+
+  function popupHtml(p, i) {
+    return '<div class="rg-pop"><b>' + (i + 1) + '. ' + esc(p.name) + '</b><br>' + esc(p.type) + ' · ' + esc(p.address) +
+      '<br>' + (p.phone ? '<a href="tel:' + esc(p.phone) + '">Позвонить</a> · ' : '') +
+      '<a href="' + routeUrl(p) + '" target="_blank" rel="noopener">Маршрут</a></div>';
+  }
+
+  function drawMap(page) {
+    if (!map.obj) { map.pending = page; initMap(); return; }
+    map.pending = null;
+    var pts = page.filter(function (p) { return isFinite(p.lat); });
+    if (map.kind === 'osm') {
+      var L = window.L;
+      map.layer.clearLayers();
+      var bounds = [];
+      pts.forEach(function (p) {
+        var i = page.indexOf(p);
+        var icon = L.divIcon({ className: '', iconSize: [30, 30], iconAnchor: [15, 15], html: '<div class="rg-pin' + (hasZero(p) ? ' is-zero' : '') + '">' + (i + 1) + '</div>' });
+        L.marker([p.lat, p.lng], { icon: icon, title: p.name }).bindPopup(popupHtml(p, i)).addTo(map.layer);
+        bounds.push([p.lat, p.lng]);
+      });
+      if (state.me) {
+        L.marker([state.me.lat, state.me.lng], { icon: L.divIcon({ className: '', iconSize: [18, 18], html: '<div class="rg-me"></div>' }), title: 'Вы здесь' }).addTo(map.layer);
+        bounds.push([state.me.lat, state.me.lng]);
+      }
+      map.obj.invalidateSize();
+      if (bounds.length) map.obj.fitBounds(bounds, { padding: [36, 36], maxZoom: 15 });
+    } else {
+      var ym = window.ymaps;
+      map.layer.removeAll();
+      var Pin = ym.templateLayoutFactory.createClass('<div class="rg-pin {{ properties.cls }}">{{ properties.n }}</div>');
+      pts.forEach(function (p) {
+        var i = page.indexOf(p);
+        map.layer.add(new ym.Placemark([p.lat, p.lng], { n: i + 1, cls: hasZero(p) ? 'is-zero' : '', balloonContent: popupHtml(p, i), hintContent: p.name }, {
+          iconLayout: Pin, iconShape: { type: 'Circle', coordinates: [15, 15], radius: 15 }, iconOffset: [-15, -15]
+        }));
+      });
+      if (state.me) map.layer.add(new ym.Placemark([state.me.lat, state.me.lng], { hintContent: 'Вы здесь' }, { preset: 'islands#blueCircleDotIcon' }));
+      map.obj.container.fitToViewport();
+      if (map.layer.getLength()) map.obj.setBounds(map.layer.getBounds(), { checkZoomRange: true, zoomMargin: 36 }).then(function () { if (map.obj.getZoom() > 15) map.obj.setZoom(15); });
+    }
+  }
+
+  /* ===== События ===== */
+  function bind() {
+    $('rg-locate').addEventListener('click', function () {
+      var btn = this, note = $('rg-geo-note');
+      if (!navigator.geolocation) { note.hidden = false; note.textContent = 'Телефон не даёт определить место. Выберите город.'; $('rg-city').focus(); return; }
+      btn.setAttribute('aria-busy', 'true');
+      btn.querySelector('span').textContent = 'Определяем, где вы…';
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        btn.removeAttribute('aria-busy');
+        btn.querySelector('span').textContent = 'Обновить расстояния';
+        note.hidden = true;
+        state.me = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        state.shown = RG_CONFIG.pageSize; state.animate = true;
+        fillCities(); render(); scrollToPoints();
+      }, function () {
+        btn.removeAttribute('aria-busy');
+        btn.querySelector('span').textContent = 'Найти рядом со мной';
+        note.hidden = false;
+        note.textContent = 'Не получилось определить место. Выберите город из списка.';
+        $('rg-city').focus();
+      }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+    });
+
+    $('rg-city').addEventListener('change', function () {
+      if (!this.value) return;
+      state.city = this.value; state.me = null; state.shown = RG_CONFIG.pageSize; state.animate = true;
+      $('rg-locate').querySelector('span').textContent = 'Найти рядом со мной';
+      fillCities(); render();
+    });
+
+    $('rg-sorts').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-sort]'); if (!b) return;
+      state.sort = b.dataset.sort; state.shown = RG_CONFIG.pageSize; render();
+    });
+    $('rg-types').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-type]');
+      if (b) { state.type = state.type === b.dataset.type ? 'all' : b.dataset.type; }
+      else if (e.target.closest('#rg-tochka-chip')) { state.tochka = false; }
+      else return;
+      state.shown = RG_CONFIG.pageSize; render();
+    });
+    $('rg-tab-list').addEventListener('click', function () { state.view = 'list'; render(); scrollToPoints(); });
+    $('rg-tab-map').addEventListener('click', function () { state.view = 'map'; render(); scrollToPoints(); });
+    $('rg-more').addEventListener('click', function () { state.shown += RG_CONFIG.pageSize; render(); });
+    $('rg-reset').addEventListener('click', function () { state.sort = 'all'; state.type = 'all'; state.tochka = false; render(); });
+
+    $('rg-tochka-go').addEventListener('click', function () {
+      state.tochka = true; state.view = 'list'; state.shown = RG_CONFIG.pageSize; state.animate = true;
+      if (!state.me && !state.points.some(function (p) { return p.tochka && p.city === state.city; })) state.city = RG_CONFIG.defaultCity;
+      fillCities(); render(); scrollToPoints();
+    });
+    $('rg-zero-go').addEventListener('click', function () {
+      if (sortsKnown()) state.sort = 'zero';
+      state.view = 'list'; state.shown = RG_CONFIG.pageSize; state.animate = true;
+      render(); scrollToPoints();
+    });
+    window.matchMedia('(min-width: 900px)').addEventListener('change', render);
+  }
+
+  function start(points, fromBackup) {
+    state.points = points;
+    var n = points.length;
+    $('rg-lead').textContent = (n >= 100 ? 'Больше ' + Math.floor(n / 10) * 10 : n) + ' магазинов и баров по всей Беларуси. Найдите ближайший.';
+    $('rg-sorts').hidden = !sortsKnown();
+    if (fromBackup) { $('rg-status').hidden = false; $('rg-status').textContent = 'Показан сохранённый список точек: свежий не загрузился.'; }
+    fillCities(); render();
+  }
+
+  bind();
+  load();
+})();
+</script>

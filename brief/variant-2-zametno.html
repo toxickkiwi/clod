@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Где купить Robim Good в банке — вариант 2 «Заметно» (референс)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Токены: цвета и шрифты временные, заменить на фирменные Robim Good */
+:root{
+  --ground:#F4EFE6; --card:#FFFFFF; --ink:#1B1A17; --muted:#5C574E;
+  --line:#E4DCCD; --line-strong:#CFC6B5; --tag:#F1EADC; --dashed:#A79E8E;
+  --accent:#E3A21A;   /* главная кнопка */
+  --zero:#155E75;     /* цвет Zero-серии */
+  --radius:10px; --radius-card:12px;
+  --display:'Oswald','Arial Narrow',sans-serif;
+  --body:'Manrope','Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#D9D2C5;font-family:var(--body);color:var(--ink);font-size:15px;line-height:1.45}
+.page{max-width:430px;margin:0 auto;background:var(--ground);min-height:100vh}
+a{color:var(--ink)}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--zero);outline-offset:2px}
+.h-display{font-family:var(--display);font-weight:600;text-transform:uppercase;line-height:1.1;margin:0}
+
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--ink);color:var(--ground);position:sticky;top:0;z-index:5}
+.logo{font-family:var(--display);font-size:20px;font-weight:600;letter-spacing:1px}
+.icon-btn{width:44px;height:44px;border:0;background:transparent;color:inherit;display:flex;align-items:center;justify-content:center}
+
+.hero{padding:28px 16px 20px;display:flex;flex-direction:column;gap:14px}
+.hero h1{font-size:34px}
+.lead{margin:0;color:var(--muted)}
+.btn{height:48px;border-radius:var(--radius);font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border:0;font-size:15px}
+.btn-primary{height:52px;background:var(--accent);color:var(--ink);font-size:16px}
+.btn-dark{height:44px;background:var(--ink);color:var(--ground)}
+.btn-outline{height:44px;background:transparent;border:1px solid var(--ink);color:var(--ink)}
+.btn-ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+.label{font-size:13px;font-weight:600;color:var(--muted)}
+.select{height:48px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--card);padding:0 12px;font:inherit;color:var(--ink)}
+
+.filters{padding:0 16px 12px;display:flex;flex-direction:column;gap:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.chip{height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);font-size:14px;font-weight:700}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip.zero[aria-pressed="true"]{background:var(--zero);border-color:var(--zero)}
+.chip-sm{height:32px;padding:0 12px;border-radius:16px;font-size:13px;font-weight:600;background:transparent}
+.chip-sm[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+
+.segmented{margin:8px 16px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));background:var(--line);border-radius:var(--radius);padding:4px}
+.segmented button{height:40px;border:0;border-radius:8px;background:transparent;font-weight:700;color:var(--ink)}
+.segmented button[aria-selected="true"]{background:var(--card)}
+
+.results{padding:16px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:72px}
+.summary{font-size:13px;color:var(--muted)}
+.map{height:300px;border-radius:var(--radius-card);background:var(--line);position:relative;overflow:hidden}
+.map .road{position:absolute;background:var(--ground)}
+.map .me{position:absolute;left:172px;top:140px;width:18px;height:18px;border-radius:50%;background:#2563EB;border:3px solid #fff}
+.pin{position:absolute;width:30px;height:30px;border-radius:50%;color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;background:var(--ink)}
+.pin.zero{background:var(--zero)}
+.map-note{position:absolute;right:10px;bottom:10px;font-size:11px;color:var(--muted);background:var(--ground);padding:2px 6px;border-radius:4px}
+.empty{padding:18px;border-radius:var(--radius-card);border:1px dashed var(--dashed);font-size:14px}
+
+.card{background:var(--card);border-radius:var(--radius-card);padding:16px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.card-name{font-weight:700;font-size:16px}
+.card-addr{color:var(--muted);font-size:14px}
+.dist{font-weight:700;font-size:14px;white-space:nowrap}
+.badge-net{align-self:flex-start;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--ink);color:var(--ground)}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:12px;font-weight:600;padding:4px 8px;border-radius:6px;background:var(--tag)}
+.tag.zero{background:var(--zero);color:#fff;font-weight:700}
+.hint{font-size:13px;color:var(--muted)}
+.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+
+.partner{margin:8px 16px;padding:18px;border-radius:var(--radius-card);background:var(--ink);color:var(--ground);display:flex;flex-direction:column;gap:10px}
+.partner .kicker{font-size:13px;color:var(--line-strong)}
+.partner h2{font-family:var(--display);font-size:24px;font-weight:600;margin:0}
+.partner p{margin:0;color:#DDD5C7;font-size:14px}
+.partner .btn{height:44px;background:transparent;border:1px solid var(--ground);color:var(--ground)}
+
+.zero-block{margin:24px 16px 0;padding:20px 18px;border-radius:14px;background:var(--zero);color:#fff;display:flex;flex-direction:column;gap:14px}
+.zero-block h2{font-family:var(--display);font-size:30px;font-weight:600;letter-spacing:1px;margin:0}
+.zero-block p{margin:0;font-size:14px}
+.cans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.can{display:flex;flex-direction:column;gap:6px;align-items:center;font-weight:700;font-size:13px}
+.photo{width:100%;height:130px;border-radius:var(--radius);border:1px dashed #fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:400}
+.zero-block .btn{background:#fff;color:var(--ink)}
+
+.section{padding:32px 16px 0;display:flex;flex-direction:column;gap:12px}
+.section h2{font-size:26px}
+.beer{display:flex;gap:14px;background:var(--card);border-radius:var(--radius-card);padding:12px;border:1px solid var(--line)}
+.beer .photo{width:84px;height:110px;flex-shrink:0;border-color:var(--dashed);color:var(--muted)}
+.beer-body{display:flex;flex-direction:column;gap:4px;justify-content:center}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.social{height:52px;background:var(--ink);color:var(--ground)}
+
+.nopoint{margin:28px 16px 0;padding:18px;border-radius:var(--radius-card);border:1px solid var(--line-strong);display:flex;flex-direction:column;gap:10px}
+.nopoint h2{margin:0;font-size:18px}
+.nopoint p{margin:0;font-size:14px;color:var(--muted)}
+
+.footer{margin-top:32px;padding:24px 16px calc(24px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ground);display:flex;flex-direction:column;gap:8px;font-size:14px}
+.footer a{color:var(--ground)}
+.footer .phone{font-weight:700;font-size:16px}
+.warning{margin-top:12px;padding-top:12px;border-top:1px solid #47433C;font-size:12px;color:var(--line-strong)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="header">
+  <div class="logo">ROBIM GOOD</div>
+  <button class="icon-btn" type="button" aria-label="Меню"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+</header>
+
+<!-- 1. Первый экран: поиск -->
+<section class="hero">
+  <h1 class="h-display">Где купить Robim Good в банке</h1>
+  <p class="lead">Больше 120 магазинов и баров по всей Беларуси. Найдите ближайший.</p>
+  <button class="btn btn-primary" type="button" id="locate">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    Найти рядом со мной
+  </button>
+  <label class="label" for="city">или выберите город</label>
+  <select class="select" id="city">
+    <option>Минск</option><option>Брест</option><option>Гомель</option><option>Гродно</option><option>Могилёв</option><option>Витебск</option>
+  </select>
+</section>
+
+<!-- 2. Фильтры -->
+<section class="filters" aria-label="Фильтры">
+  <div class="row" id="sortChips">
+    <button class="chip" type="button" data-sort="all" aria-pressed="true">Все сорта</button>
+    <button class="chip zero" type="button" data-sort="zero" aria-pressed="false">ZERO</button>
+    <button class="chip" type="button" data-sort="ipa" aria-pressed="false">FACTORY IPA</button>
+    <button class="chip" type="button" data-sort="bbq" aria-pressed="false">TOMATO BBQ</button>
+  </div>
+  <div class="row" id="typeChips">
+    <button class="chip chip-sm" type="button" data-type="shop" aria-pressed="false">Магазины</button>
+    <button class="chip chip-sm" type="button" data-type="bar" aria-pressed="false">Бары</button>
+  </div>
+</section>
+
+<!-- 3. Список / Карта -->
+<div class="segmented" role="tablist" aria-label="Вид">
+  <button type="button" role="tab" id="tabList" aria-selected="true">Список</button>
+  <button type="button" role="tab" id="tabMap" aria-selected="false">Карта</button>
+</div>
+
+<section class="results" id="points" aria-live="polite">
+  <div class="summary" id="summary"></div>
+  <div class="map" id="map" hidden>
+    <div class="road" style="left:0;right:0;top:90px;height:10px"></div>
+    <div class="road" style="left:0;right:0;top:200px;height:14px"></div>
+    <div class="road" style="top:0;bottom:0;left:120px;width:12px"></div>
+    <div class="road" style="top:0;bottom:0;left:260px;width:10px"></div>
+    <div class="me" aria-label="Вы здесь"></div>
+    <div id="pins"></div>
+    <div class="map-note">Карта: Яндекс или Google</div>
+  </div>
+  <div class="empty" id="empty" hidden>Рядом нет точек с таким фильтром. Попробуйте «Все сорта» или напишите нам.</div>
+  <div id="cards" style="display:flex;flex-direction:column;gap:12px"></div>
+  <button class="btn btn-ghost" type="button">Показать ещё точки в Минске</button>
+</section>
+
+<!-- 4. Партнёр «Точка» -->
+<section class="partner">
+  <div class="kicker">Наш партнёр</div>
+  <h2>Сеть «Точка»</h2>
+  <p>Банки Robim Good всегда в наличии в магазинах и барах сети в Минске, Бобруйске и Лиде.</p>
+  <button class="btn" type="button">Все адреса «Точки»</button>
+</section>
+
+<!-- 5. Zero-серия -->
+<section class="zero-block">
+  <h2>ZERO-СЕРИЯ</h2>
+  <p>[Одна строка о серии Zero от пивоварни]</p>
+  <div class="cans">
+    <div class="can"><div class="photo">Фото банки</div>Zero IPA</div>
+    <div class="can"><div class="photo">Фото банки</div>Zero Lager</div>
+    <div class="can"><div class="photo">Фото банки</div>Zero Stout</div>
+  </div>
+  <a class="btn" href="#points" id="zeroGo">Где купить Zero</a>
+</section>
+
+<!-- 6. Наши банки -->
+<section class="section">
+  <h2 class="h-display">Наши банки</h2>
+  <article class="beer"><div class="photo">Фото</div><div class="beer-body"><div class="card-name">FACTORY I.P.A Vista</div><div class="hint">[стиль] · [крепость]</div><div>[вкус в одной строке из ваших описаний]</div><a href="#" style="font-weight:700;font-size:14px">Подробнее</a></div></article>
+  <article class="beer"><div class="photo">Фото</div><div class="beer-body"><div class="card-name">FACTORY TOMATO BBQ</div><div class="hint">[стиль] · [крепость]</div><div>[вкус в одной строке из ваших описаний]</div><a href="#" style="font-weight:700;font-size:14px">Подробнее</a></div></article>
+  <article class="beer"><div class="photo">Фото</div><div class="beer-body"><div class="card-name">FACTORY IPA [хмель]</div><div class="hint">[стиль] · [крепость]</div><div>[вкус в одной строке из ваших описаний]</div><a href="#" style="font-weight:700;font-size:14px">Подробнее</a></div></article>
+</section>
+
+<!-- 7. Соцсети -->
+<section class="section">
+  <h2 class="h-display">Следите за новинками</h2>
+  <div class="grid2">
+    <a class="btn social" href="https://www.instagram.com/robimgoodbrewery/">Instagram</a>
+    <a class="btn social" href="#">Telegram</a>
+  </div>
+  <p class="hint" style="margin:0;font-size:14px">Отметьте банку в Untappd: нам важно, что вы думаете.</p>
+</section>
+
+<!-- 8. Нет точки рядом -->
+<section class="nopoint">
+  <h2>Нет точки рядом?</h2>
+  <p>Напишите, в каком городе вы хотите Robim Good. Мы передадим это партнёрам.</p>
+  <a class="btn" style="height:44px;background:var(--accent);color:var(--ink)" href="#">Написать в Telegram</a>
+  <a href="#" style="font-size:14px;font-weight:600">Хотите продавать наше пиво?</a>
+</section>
+
+<!-- 9. Подвал -->
+<footer class="footer">
+  <a class="phone" href="tel:+375296611701">+375 29 661-17-01</a>
+  <a href="mailto:info@robimgood.beer">info@robimgood.beer</a>
+  <div style="display:flex;gap:16px"><a href="#">Telegram</a><a href="#">Viber</a><a href="https://www.instagram.com/robimgoodbrewery/">Instagram</a></div>
+  <div class="warning">Чрезмерное употребление пива вредит вашему здоровью</div>
+</footer>
+</div>
+
+<script>
+/* Данные — пример. В рабочей версии строки приходят из Google-таблицы (см. README). */
+const POINTS = [
+  { name:'«Точка»', kind:'Магазин-бар', shop:true, bar:true, address:'пр-т Дзержинского, 22', phone:'+375447975508', dist:'0,4 км', tochka:true, sorts:['Zero IPA','Zero Lager','FACTORY IPA'], mapX:140, mapY:50 },
+  { name:'«Братья крафт»', kind:'Магазин', shop:true, bar:false, address:'ул. Московская, 7', phone:'', dist:'1,1 км', tochka:false, sorts:['Zero Lager','TOMATO BBQ'], mapX:230, mapY:168 },
+  { name:'«Груша»', kind:'Бар', shop:false, bar:true, address:'Дзержинского, 19', phone:'', dist:'1,3 км', tochka:false, sorts:['FACTORY IPA'], mapX:60, mapY:230 },
+  { name:'«Пивоваров»', kind:'Магазин', shop:true, bar:false, address:'ул. Куйбышева, 69', phone:'', dist:'2,0 км', tochka:false, sorts:['Zero Stout','FACTORY IPA'], mapX:300, mapY:60 }
+];
+const state = { sort:'all', type:'all', view:'list' };
+const isZero = s => s.startsWith('Zero');
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const plural = n => n % 10 === 1 && n % 100 !== 11 ? 'точка' : ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100) ? 'точки' : 'точек');
+
+function matches(p){
+  if (state.type === 'shop' && !p.shop) return false;
+  if (state.type === 'bar' && !p.bar) return false;
+  if (state.sort === 'zero') return p.sorts.some(isZero);
+  if (state.sort === 'ipa') return p.sorts.includes('FACTORY IPA');
+  if (state.sort === 'bbq') return p.sorts.includes('TOMATO BBQ');
+  return true;
+}
+
+function render(){
+  const list = POINTS.filter(matches);
+  document.getElementById('summary').textContent = `Минск · ${list.length} ${plural(list.length)}, сначала ближайшие`;
+  document.getElementById('empty').hidden = list.length > 0;
+  document.getElementById('map').hidden = state.view !== 'map';
+  document.getElementById('tabList').setAttribute('aria-selected', state.view === 'list');
+  document.getElementById('tabMap').setAttribute('aria-selected', state.view === 'map');
+  document.querySelectorAll('#sortChips .chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.sort === state.sort));
+  document.querySelectorAll('#typeChips .chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.type === state.type));
+
+  document.getElementById('pins').innerHTML = list.map((p, i) =>
+    `<div class="pin ${p.sorts.some(isZero) ? 'zero' : ''}" style="left:${p.mapX}px;top:${p.mapY}px">${i + 1}</div>`).join('');
+
+  document.getElementById('cards').innerHTML = list.map((p, i) => `
+    <article class="card">
+      <div class="card-top">
+        <div><div class="card-name">${i + 1}. ${esc(p.name)}</div><div class="card-addr">${esc(p.kind)} · ${esc(p.address)}</div></div>
+        <div class="dist">${p.dist}</div>
+      </div>
+      ${p.tochka ? '<div class="badge-net">Сеть «Точка»</div>' : ''}
+      <div class="tags">${p.sorts.map(s => `<span class="tag ${isZero(s) ? 'zero' : ''}">${esc(s)}</span>`).join('')}</div>
+      <div class="hint">Наличие лучше уточнить по телефону</div>
+      <div class="actions">
+        <a class="btn btn-dark" href="${p.phone ? 'tel:' + p.phone : '#'}">Позвонить</a>
+        <a class="btn btn-outline" href="https://yandex.by/maps/?text=${encodeURIComponent('Минск, ' + p.address)}" target="_blank" rel="noopener">Маршрут</a>
+      </div>
+    </article>`).join('');
+}
+
+document.getElementById('sortChips').addEventListener('click', e => { const b = e.target.closest('[data-sort]'); if (b){ state.sort = b.dataset.sort; render(); } });
+document.getElementById('typeChips').addEventListener('click', e => { const b = e.target.closest('[data-type]'); if (b){ state.type = state.type === b.dataset.type ? 'all' : b.dataset.type; render(); } });
+document.getElementById('tabList').addEventListener('click', () => { state.view = 'list'; render(); });
+document.getElementById('tabMap').addEventListener('click', () => { state.view = 'map'; render(); });
+document.getElementById('zeroGo').addEventListener('click', () => { state.sort = 'zero'; state.view = 'list'; render(); });
+document.getElementById('locate').addEventListener('click', () => {
+  /* В рабочей версии: navigator.geolocation → сортировка точек по расстоянию */
+  document.getElementById('points').scrollIntoView();
+});
+render();
+</script>
+</body>
+</html>

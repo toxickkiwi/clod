@@ -12,7 +12,7 @@ Tilda. Live site robimgood.beer is built on Tilda; new or reworked page sections
 
 ## Users
 
-Beer buyers in Belarus. They come to the site to find out where to buy Robim Good cans near them and to learn about the beers. Many arrive on a phone, often when they are already out and about (confirmed: primary audience is the consumer, not trade buyers).
+Beer buyers in Belarus. Almost all visitors to the where-to-buy page arrive by scanning the QR code on a can (one QR for all beers): on a phone, on mobile internet, having just tried a can and wanting more. Primary action: find the nearest venue, then call it or build a route. Secondary: see the range, follow socials. The consumer is the primary audience, not trade buyers.
 
 ## Product Purpose
 
@@ -37,10 +37,13 @@ Visitors use the site to plan a purchase: check which venue near them stocks the
   - FACTORY TOMATO BBQ, Tomato Sour: 5.1% / 0 IBU / 16.5%
   - Zero Lager, non-alcoholic: 0% / 20 IBU / 7%
   - Zero IPA, non-alcoholic: 0% / 40 IBU / 7.5%
-- Venue data lives in `site/data.json`: «Точка» entries (type, city, address, phone) and partners grouped by region (name, address). Partner entries have no phone numbers.
+- Venue data: managed by a manager in one Google Sheet published as CSV (columns city, region, name, type, address, phone, lat, lng, tochka, sorts, updated); the page loads it on open and falls back to an embedded copy. Seed copy: `where-to-buy/data/points.csv` (132 venues, geocoded via OpenStreetMap). Original scrape: `site/data.json`: «Точка» entries (type, city, address, phone) and partners grouped by region (name, address). Partner entries have no phone numbers.
 - Delivery constraint: output must work inside a Tilda T123 HTML block. Styles must be scoped so they don't clash with Tilda's CSS. No build step on Tilda's side. Tilda's header and footer are not part of the deliverable.
 - Site language: Russian.
-- Undecided: whether stock differs between venues (which beer is available where); opening hours; map coordinates.
+- Mandatory on every page: «Чрезмерное употребление пива вредит вашему здоровью».
+- Accessibility floor from the brief: touch targets ≥44px, text contrast ≥4.5:1, visible keyboard focus.
+- Map: Yandex Maps preferred (key pending), OpenStreetMap until then; routes open in Yandex Maps.
+- Undecided: per-venue stock (`sorts` column empty until the client fills it); per-beer delivery dates (stage 2); opening hours; the brewery's Telegram channel.
 
 ## Brand Commitments
 
