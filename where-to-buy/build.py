@@ -105,9 +105,10 @@ header_js = """<script>
 for src, block_out, preview_out in VARIANTS:
     block = ((HERE / "src" / src).read_text(encoding="utf-8")
              .replace("{{FALLBACK_JSON}}", fallback).replace("{{UNTAPPD_JSON}}", untappd_json))
-    # Картинки банок встраиваются в блок, чтобы не загружать их на Tilda отдельно.
-    block = re.sub(r"\{\{IMG:([\w-]+)\}\}", lambda m: "data:image/webp;base64," + base64.b64encode(
-        (HERE / "img" / f"{m.group(1)}.webp").read_bytes()).decode(), block)
+    # Фото банок встраиваются в блок один раз (объект RG_IMG), чтобы не загружать их на Tilda отдельно.
+    used = sorted(set(re.findall(r'data-rg-img="([\w-]+)"', block)))
+    images = {n: "data:image/webp;base64," + base64.b64encode((HERE / "img" / f"{n}.webp").read_bytes()).decode() for n in used}
+    block = block.replace("{{IMAGES_JSON}}", json.dumps(images))
     (DIST / block_out).write_text(block, encoding="utf-8")
     preview = f"""<!doctype html>
     <html lang="ru">

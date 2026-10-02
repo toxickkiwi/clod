@@ -226,6 +226,32 @@
 #rg-wtb .rg-nopoint { border-radius: var(--rg-radius); border: 1px solid var(--rg-line-strong); padding: 20px; display: grid; gap: 12px; }
 #rg-wtb .rg-nopoint .rg-btn--primary { min-height: 50px; font-size: 17px; }
 
+/* ---------- Наши банки: полка ---------- */
+#rg-wtb .rg-shelf__head { display: grid; gap: 6px; }
+#rg-wtb .rg-shelf {
+  list-style: none; margin: 4px -16px 0; padding: 4px 16px 8px; display: flex; gap: 12px;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 16px; scrollbar-width: none; overscroll-behavior-x: contain;
+}
+#rg-wtb .rg-shelf::-webkit-scrollbar { display: none; }
+#rg-wtb .rg-bcan { flex: 0 0 42%; scroll-snap-align: start; display: grid; align-content: start; gap: 2px; }
+#rg-wtb .rg-bcan__stage {
+  position: relative; height: 232px; border-radius: 16px; background: var(--tint); margin-bottom: 10px; overflow: hidden;
+}
+#rg-wtb .rg-bcan__stage::after { /* тень на «полу» */
+  content: ""; position: absolute; left: 50%; bottom: 10px; width: 62%; height: 14px; transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(16,32,46,.28), rgba(16,32,46,0));
+}
+#rg-wtb .rg-bcan__stage img {
+  position: absolute; z-index: 1; left: 0; right: 0; top: 18px; bottom: 16px; margin: auto;
+  width: 88%; height: calc(100% - 34px); object-fit: contain; object-position: center bottom;
+  transition: transform .5s cubic-bezier(.16,1,.3,1);
+}
+#rg-wtb .rg-bcan__name { font-size: 17px; line-height: 1.15; }
+#rg-wtb .rg-bcan__style { font-size: 15px; color: var(--rg-muted); display: flex; align-items: center; gap: 6px; }
+#rg-wtb .rg-bcan__style::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--rg-accent); flex: none; }
+#rg-wtb .rg-bcan__stats { font-size: 15px; font-weight: 600; margin-top: 2px; }
+@media (hover: hover) { #rg-wtb .rg-bcan:hover img { transform: translateY(-8px) rotate(-2deg); } }
+
 /* ---------- Untappd ---------- */
 #rg-wtb .rg-ut { background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: 16px; padding: 20px; display: grid; gap: 18px; }
 #rg-wtb .rg-ut__head { display: grid; gap: 14px; }
@@ -326,6 +352,8 @@
   #rg-wtb .rg-zero::before { left: 70%; width: 80%; bottom: 10%; }
   #rg-wtb .rg-zero__title { font-size: 88px; }
   #rg-wtb .rg-beers { grid-template-columns: repeat(4, 1fr); }
+  #rg-wtb .rg-shelf { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin: 4px 0 0; padding: 4px 0 8px; overflow: visible; }
+  #rg-wtb .rg-bcan__stage { height: 260px; }
   #rg-wtb .rg-ut { padding: 28px 32px; }
   #rg-wtb .rg-ut__head { grid-template-columns: 1fr auto; align-items: end; }
   #rg-wtb .rg-ut__list { grid-template-columns: repeat(4, 1fr); gap: 0 24px; }
@@ -408,21 +436,26 @@
             <p class="rg-zero__text">Лагер, IPA и стаут. 0% алкоголя.</p>
           </div>
           <ul class="rg-zero__cans">
-            <li class="rg-zcan"><img src="{{IMG:zero-lager}}" width="220" height="576" alt="Банка Zero Lager" loading="lazy" decoding="async"><b>Zero Lager</b><span>Лагер</span></li>
-            <li class="rg-zcan rg-zcan--lead"><img src="{{IMG:zero-ipa}}" width="220" height="584" alt="Банка Zero IPA" loading="lazy" decoding="async"><b>Zero IPA</b><span>IPA</span></li>
-            <li class="rg-zcan"><img src="{{IMG:zero-stout}}" width="220" height="579" alt="Банка Zero Stout" loading="lazy" decoding="async"><b>Zero Stout</b><span>Стаут</span></li>
+            <li class="rg-zcan"><img data-rg-img="zero-lager" width="220" height="576" alt="Банка Zero Lager" loading="lazy" decoding="async"><b>Zero Lager</b><span>Лагер</span></li>
+            <li class="rg-zcan rg-zcan--lead"><img data-rg-img="zero-ipa" width="220" height="584" alt="Банка Zero IPA" loading="lazy" decoding="async"><b>Zero IPA</b><span>IPA</span></li>
+            <li class="rg-zcan"><img data-rg-img="zero-stout" width="220" height="579" alt="Банка Zero Stout" loading="lazy" decoding="async"><b>Zero Stout</b><span>Стаут</span></li>
           </ul>
           <div class="rg-zero__cta"><button class="rg-btn" type="button" id="rg-zero-go">Где купить Zero</button></div>
         </div>
       </section>
 
       <section class="rg-section rg-section--wide" aria-labelledby="rg-beers-h">
-        <h2 class="rg-h2" id="rg-beers-h">Наши банки</h2>
-        <ul class="rg-beers">
-          <li class="rg-beer" style="--rg-accent:var(--rg-ipa)"><div class="rg-can rg-can--ipa" role="img" aria-label="Банка FACTORY I.P.A Vista"></div><div class="rg-beer__body"><span class="rg-beer__name">FACTORY I.P.A&nbsp;Vista</span><span class="rg-beer__style">American IPA</span><span class="rg-beer__stats rg-num">6,3% · 65 IBU</span></div></li>
-          <li class="rg-beer" style="--rg-accent:var(--rg-tomato)"><div class="rg-can rg-can--bbq" role="img" aria-label="Банка FACTORY TOMATO BBQ"></div><div class="rg-beer__body"><span class="rg-beer__name">FACTORY TOMATO&nbsp;BBQ</span><span class="rg-beer__style">Tomato Sour</span><span class="rg-beer__stats rg-num">5,1% · 0 IBU</span></div></li>
-          <li class="rg-beer" style="--rg-accent:var(--rg-zero)"><div class="rg-can rg-can--zipa" role="img" aria-label="Банка Zero IPA"></div><div class="rg-beer__body"><span class="rg-beer__name">Zero IPA</span><span class="rg-beer__style">Безалкогольное</span><span class="rg-beer__stats rg-num">0% · 40 IBU</span></div></li>
-          <li class="rg-beer" style="--rg-accent:var(--rg-zero)"><div class="rg-can rg-can--lager" role="img" aria-label="Банка Zero Lager"></div><div class="rg-beer__body"><span class="rg-beer__name">Zero Lager</span><span class="rg-beer__style">Безалкогольное</span><span class="rg-beer__stats rg-num">0% · 20 IBU</span></div></li>
+        <div class="rg-shelf__head">
+          <h2 class="rg-h2" id="rg-beers-h">Наши банки</h2>
+          <p class="rg-lead">Шесть сортов: от американского IPA до томатного саура и безалкогольной серии.</p>
+        </div>
+        <ul class="rg-shelf" aria-label="Сорта в банке">
+          <li class="rg-bcan" style="--tint:#e3eedc;--rg-accent:var(--rg-ipa)"><div class="rg-bcan__stage"><img data-rg-img="ipa-vista" alt="Банка FACTORY I.P.A Vista" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">FACTORY I.P.A&nbsp;Vista</b><span class="rg-bcan__style">American IPA</span><span class="rg-bcan__stats rg-num">6,3% · 65 IBU</span></li>
+          <li class="rg-bcan" style="--tint:#f8e1d9;--rg-accent:var(--rg-tomato)"><div class="rg-bcan__stage"><img data-rg-img="tomato-bbq" alt="Банка FACTORY TOMATO BBQ" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">FACTORY TOMATO&nbsp;BBQ</b><span class="rg-bcan__style">Tomato Sour</span><span class="rg-bcan__stats rg-num">5,1% · 0 IBU</span></li>
+          <li class="rg-bcan" style="--tint:#faecc9;--rg-accent:#e39b12"><div class="rg-bcan__stage"><img data-rg-img="ipa-strata" alt="Банка IPA American Strata" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">IPA American Strata</b><span class="rg-bcan__style">Single hop: Strata</span><span class="rg-bcan__stats rg-num">6%</span></li>
+          <li class="rg-bcan" style="--tint:#dfeaf6;--rg-accent:var(--rg-zero)"><div class="rg-bcan__stage"><img data-rg-img="zero-lager" alt="Банка Zero Lager" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">Zero Lager</b><span class="rg-bcan__style">Безалкогольный лагер</span><span class="rg-bcan__stats rg-num">0% · 20 IBU</span></li>
+          <li class="rg-bcan" style="--tint:#dfeaf6;--rg-accent:var(--rg-zero)"><div class="rg-bcan__stage"><img data-rg-img="zero-ipa" alt="Банка Zero IPA" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">Zero IPA</b><span class="rg-bcan__style">Безалкогольный IPA</span><span class="rg-bcan__stats rg-num">0% · 40 IBU</span></li>
+          <li class="rg-bcan" style="--tint:#dfeaf6;--rg-accent:var(--rg-zero)"><div class="rg-bcan__stage"><img data-rg-img="zero-stout" alt="Банка Zero Stout" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">Zero Stout</b><span class="rg-bcan__style">Безалкогольный стаут</span><span class="rg-bcan__stats rg-num">0%</span></li>
         </ul>
         <a class="rg-link" href="https://robimgood.beer">Всё наше пиво</a>
       </section>
@@ -493,6 +526,8 @@
   var FALLBACK = {{FALLBACK_JSON}};
   /* Резервная копия рейтингов Untappd (data/untappd.csv) */
   var UNTAPPD_FALLBACK = {{UNTAPPD_JSON}};
+  /* Фото банок (WebP с прозрачным фоном). Каждое хранится один раз и подставляется во все места с data-rg-img. */
+  var RG_IMG = {{IMAGES_JSON}};
 
   var root = document.getElementById('rg-wtb');
   var $ = function (id) { return document.getElementById(id); };
@@ -802,6 +837,7 @@
     initMap();
   }
 
+  Array.prototype.forEach.call(root.querySelectorAll('[data-rg-img]'), function (img) { img.src = RG_IMG[img.getAttribute('data-rg-img')]; });
   bind();
   load();
   loadUntappd();
