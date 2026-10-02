@@ -2,8 +2,9 @@
 
     python3 where-to-buy/build.py
 
-dist/tilda-block.html  — вставить целиком в блок «HTML-код» (T123) на Tilda.
-dist/preview.html      — тот же блок под шапкой, похожей на шапку сайта, для проверки в браузере.
+dist/tilda-block.html     — версия 1 (поиск по городу, список и карта): вставить целиком в блок «HTML-код» (T123) на Tilda.
+dist/tilda-block-v2.html  — версия 2 (только карта со всеми точками, адреса «Точки» в выпадающем списке).
+dist/preview.html, dist/preview-v2.html — те же блоки под шапкой, как на сайте, для проверки в браузере.
 """
 import csv
 import json
@@ -16,11 +17,9 @@ rows = list(csv.DictReader((HERE / "data" / "points.csv").open(encoding="utf-8")
 fallback = json.dumps(rows, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 untappd = list(csv.DictReader((HERE / "data" / "untappd.csv").open(encoding="utf-8")))
 untappd_json = json.dumps(untappd, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-block = ((HERE / "src" / "block.html").read_text(encoding="utf-8")
-         .replace("{{FALLBACK_JSON}}", fallback).replace("{{UNTAPPD_JSON}}", untappd_json))
-
+VARIANTS = [("block.html", "tilda-block.html", "preview.html"),
+            ("block-v2.html", "tilda-block-v2.html", "preview-v2.html")]
 DIST.mkdir(exist_ok=True)
-(DIST / "tilda-block.html").write_text(block, encoding="utf-8")
 
 # Предпросмотр: копия шапки сайта на Tilda. На компьютере (больше 980px) это закреплённая
 # полупрозрачная полоса T228, от 641 до 980px та же полоса в потоке, на телефоне (до 640px)
@@ -101,21 +100,27 @@ header_js = """<script>
   })();
 </script>"""
 
-preview = f"""<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Где купить Robim Good в банке — Минск и вся Беларусь</title>
-<meta name="description" content="Магазины и бары, где продают баночное пиво Robim Good: Zero IPA, Zero Lager, FACTORY I.P.A Vista и TOMATO BBQ. Найдите ближайшую точку.">
-<style>{header_css}</style>
-</head>
-<body>
-{header}
-{block}
-{header_js}
-</body>
-</html>
-"""
-(DIST / "preview.html").write_text(preview, encoding="utf-8")
-print(f"Готово: {len(rows)} точек в резервном списке, {len(block) // 1024} КБ блок")
+for src, block_out, preview_out in VARIANTS:
+    block = ((HERE / "src" / src).read_text(encoding="utf-8")
+             .replace("{{FALLBACK_JSON}}", fallback).replace("{{UNTAPPD_JSON}}", untappd_json))
+    (DIST / block_out).write_text(block, encoding="utf-8")
+    preview = f"""<!doctype html>
+    <html lang="ru">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Где купить Robim Good в банке — Минск и вся Беларусь</title>
+    <meta name="description" content="Магазины и бары, где продают баночное пиво Robim Good: Zero IPA, Zero Lager, FACTORY I.P.A Vista и TOMATO BBQ. Найдите ближайшую точку.">
+    <style>{header_css}</style>
+    </head>
+    <body>
+    {header}
+    {block}
+    {header_js}
+    </body>
+    </html>
+    """
+    (DIST / preview_out).write_text(preview, encoding="utf-8")
+    print(f"{block_out}: {len(block) // 1024} КБ")
+print(f"Резервный список: {len(rows)} точек")
+
