@@ -20,10 +20,13 @@ rows = list(csv.DictReader((HERE / "data" / "points.csv").open(encoding="utf-8")
 PUBLIC_FIELDS = ["city", "name", "type", "address", "phone", "lat", "lng", "tochka", "sorts"]
 fallback = json.dumps([{k: r[k] for k in PUBLIC_FIELDS} for r in rows],
                       ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+fallback_tochka = json.dumps([{k: r[k] for k in PUBLIC_FIELDS} for r in rows if r["tochka"] == "да"],
+                             ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 untappd = list(csv.DictReader((HERE / "data" / "untappd.csv").open(encoding="utf-8")))
 untappd_json = json.dumps(untappd, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 VARIANTS = [("block.html", "tilda-block.html", "preview.html"),
-            ("block-v2.html", "tilda-block-v2.html", "preview-v2.html")]
+            ("block-v2.html", "tilda-block-v2.html", "preview-v2.html"),
+            ("block-v3.html", "tilda-block-v3.html", "preview-v3.html")]  # v3: только сеть «Точка»
 DIST.mkdir(exist_ok=True)
 
 # Предпросмотр: копия шапки сайта на Tilda. На компьютере (больше 980px) это закреплённая
@@ -106,8 +109,9 @@ header_js = """<script>
 </script>"""
 
 for src, block_out, preview_out in VARIANTS:
+    pts = fallback_tochka if src == "block-v3.html" else fallback
     block = ((HERE / "src" / src).read_text(encoding="utf-8")
-             .replace("{{FALLBACK_JSON}}", fallback).replace("{{UNTAPPD_JSON}}", untappd_json))
+             .replace("{{FALLBACK_JSON}}", pts).replace("{{UNTAPPD_JSON}}", untappd_json))
     # Фото банок встраиваются в блок один раз (объект RG_IMG), чтобы не загружать их на Tilda отдельно.
     used = sorted(set(re.findall(r'data-rg-img="([\w-]+)"', block)))
     images = {n: "data:image/webp;base64," + base64.b64encode((HERE / "img" / f"{n}.webp").read_bytes()).decode() for n in used}
