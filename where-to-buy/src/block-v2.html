@@ -514,12 +514,11 @@
 
   /* ===== Настройки ===== */
   var RG_CONFIG = {
-    // Ссылка на Google-таблицу, опубликованную как CSV. Пусто — берётся встроенный список ниже.
-    sheetCsvUrl: '',
+    // Ссылка на веб-приложение Google-таблицы (…/exec), см. integrations/robimgood.gs.
+    // Таблица при этом закрыта: приходят только поля для карты. Пусто — встроенный список ниже.
+    dataUrl: '',
     // Ключ JavaScript API Яндекс Карт. Пусто — карта OpenStreetMap.
     yandexMapsKey: '',
-    // Лист «untappd» той же Google-таблицы, опубликованный как CSV. Пусто — встроенная копия рейтингов.
-    untappdCsvUrl: '',
   };
 
   /* Резервный список: последняя сохранённая копия таблицы. Собирается build.py из data/points.csv */
@@ -571,19 +570,25 @@
         city: r.city, region: r.region, name: r.name, type: r.type || 'Магазин', address: r.address,
         phone: (r.phone || '').replace(/[^\d+]/g, ''),
         lat: parseFloat(String(r.lat).replace(',', '.')), lng: parseFloat(String(r.lng).replace(',', '.')),
-        tochka: /^(да|yes|1|true|\+)$/i.test(r.tochka || ''),
-        sorts: (r.sorts || '').split(/[,;]/).map(function (s) { return s.trim(); }).filter(Boolean),
+        tochka: r.tochka === true || /^(да|yes|1|true|\+)$/i.test(r.tochka || ''),
+        sorts: Array.isArray(r.sorts) ? r.sorts : String(r.sorts || '').split(/[,;]/).map(function (s) { return s.trim(); }).filter(Boolean),
         shop: type.indexOf('магазин') > -1, bar: type.indexOf('бар') > -1 && type !== 'магазин'
       };
     }).filter(function (p) { return p.city && p.address; });
   }
 
+  // Точки и рейтинги приходят одним запросом из веб-приложения таблицы.
   function load() {
-    if (!RG_CONFIG.sheetCsvUrl) return start(normalize(FALLBACK), false);
-    fetch(RG_CONFIG.sheetCsvUrl, { cache: 'no-store' })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
-      .then(function (t) { var pts = normalize(parseCsv(t)); if (!pts.length) throw new Error('empty'); start(pts, false); })
-      .catch(function () { start(normalize(FALLBACK), true); });
+    if (!RG_CONFIG.dataUrl) { start(normalize(FALLBACK), false); renderUntappd(UNTAPPD_FALLBACK); return; }
+    fetch(RG_CONFIG.dataUrl, { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) {
+        var pts = normalize(data.points || []);
+        if (!pts.length) throw new Error('empty');
+        start(pts, false);
+        renderUntappd(data.untappd && data.untappd.length ? data.untappd : UNTAPPD_FALLBACK);
+      })
+      .catch(function () { start(normalize(FALLBACK), true); renderUntappd(UNTAPPD_FALLBACK); });
   }
 
   /* ===== Утилиты ===== */
@@ -781,13 +786,6 @@
     $('rg-untappd').hidden = false;
   }
 
-  function loadUntappd() {
-    if (!RG_CONFIG.untappdCsvUrl) return renderUntappd(UNTAPPD_FALLBACK);
-    fetch(RG_CONFIG.untappdCsvUrl, { cache: 'no-store' })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
-      .then(function (t) { var rows = parseCsv(t); if (!rows.length) throw new Error('empty'); renderUntappd(rows); })
-      .catch(function () { renderUntappd(UNTAPPD_FALLBACK); });
-  }
 
   /* ===== События ===== */
   function bind() {
@@ -840,6 +838,5 @@
   Array.prototype.forEach.call(root.querySelectorAll('[data-rg-img]'), function (img) { img.src = RG_IMG[img.getAttribute('data-rg-img')]; });
   bind();
   load();
-  loadUntappd();
 })();
 </script>

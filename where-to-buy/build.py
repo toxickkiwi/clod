@@ -16,7 +16,10 @@ HERE = Path(__file__).parent
 DIST = HERE / "dist"
 
 rows = list(csv.DictReader((HERE / "data" / "points.csv").open(encoding="utf-8")))
-fallback = json.dumps(rows, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+# Во встроенную копию — только поля, нужные для карты и карточек (без служебных колонок).
+PUBLIC_FIELDS = ["city", "name", "type", "address", "phone", "lat", "lng", "tochka", "sorts"]
+fallback = json.dumps([{k: r[k] for k in PUBLIC_FIELDS} for r in rows],
+                      ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 untappd = list(csv.DictReader((HERE / "data" / "untappd.csv").open(encoding="utf-8")))
 untappd_json = json.dumps(untappd, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 VARIANTS = [("block.html", "tilda-block.html", "preview.html"),
