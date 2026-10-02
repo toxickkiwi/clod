@@ -199,6 +199,9 @@ function updateUntappd() {
   var sheet = ss.getSheetByName(SHEET_UNTAPPD) || ss.insertSheet(SHEET_UNTAPPD);
   var rows = untappdRows_();
   if (!rows.length) rows = UNTAPPD_DEFAULTS.map(function (d) { return { key: d[0], beer: d[1], url: d[2] }; });
+  var today;
+  try { today = Utilities.formatDate(new Date(), ss.getSpreadsheetTimeZone() || 'Europe/Minsk', 'yyyy-MM-dd'); }
+  catch (e) { today = new Date().toISOString().slice(0, 10); }
 
   rows.forEach(function (row) {
     if (!row.url) return;
@@ -208,7 +211,7 @@ function updateUntappd() {
       if (res.getResponseCode() === 200 && m) {
         row.rating = Math.round(parseFloat(m[1]) * 1000) / 1000;
         row.ratings = parseInt(m[2], 10);
-        row.updated = Utilities.formatDate(new Date(), ss.getSpreadsheetTimeZone(), 'yyyy-MM-dd');
+        row.updated = today;
       }
     } catch (e) { console.warn(row.url + ': ' + e); }
     Utilities.sleep(1500);
@@ -225,6 +228,10 @@ function untappdRows_() {
   var sh = SpreadsheetApp.getActive().getSheetByName(SHEET_UNTAPPD);
   if (!sh || sh.getLastRow() < 2) return [];
   return sh.getRange(2, 1, sh.getLastRow() - 1, UNTAPPD_FIELDS.length).getValues().map(function (v) {
-    var r = {}; UNTAPPD_FIELDS.forEach(function (f, i) { r[f] = v[i]; }); return r;
+    var r = {};
+    UNTAPPD_FIELDS.forEach(function (f, i) {
+      r[f] = v[i] instanceof Date ? Utilities.formatDate(v[i], 'Europe/Minsk', 'yyyy-MM-dd') : v[i];
+    });
+    return r;
   }).filter(function (r) { return r.key; });
 }
