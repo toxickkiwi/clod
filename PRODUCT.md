@@ -56,7 +56,8 @@ Visitors use the site to plan a purchase: check which venue near them stocks the
 - Hero photos: `site/img/hero.jpg`, `site/img/hero-alt.jpg`. Footer texture: `site/img/footer.jpg`.
 - Full venue list: `site/data.json` (22 «Точка» + 110 partners in 7 regions).
 - Contacts: +375 29 661-17-01 (also Telegram/Viber), info@robimgood.beer, Facebook and Instagram @robimgoodbrewery.
-- Absent, never fabricate: customer reviews, ratings, sales figures, awards, prices, per-venue stock, opening hours, map coordinates.
+- Untappd: brewery page https://untappd.com/Robim_Good_Brewery (3.72 from 26 217 ratings on 2026-10-02); can beers matched by label ABV/IBU: Factory IPA Vista 3.98 (129), BBQ Tomato Beer 4.13 (53), ZERO IPA 3.95 (90), ZERO = Zero Lager 3.64 (62). Ratings refresh daily via `where-to-buy/integrations/untappd.gs`.
+- Absent, never fabricate: customer reviews (quotes only with the author's permission), ratings other than Untappd's, sales figures, awards, prices, per-venue stock, opening hours, map coordinates.
 
 ## Product Principles
 

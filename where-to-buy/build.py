@@ -14,7 +14,10 @@ DIST = HERE / "dist"
 
 rows = list(csv.DictReader((HERE / "data" / "points.csv").open(encoding="utf-8")))
 fallback = json.dumps(rows, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-block = (HERE / "src" / "block.html").read_text(encoding="utf-8").replace("{{FALLBACK_JSON}}", fallback)
+untappd = list(csv.DictReader((HERE / "data" / "untappd.csv").open(encoding="utf-8")))
+untappd_json = json.dumps(untappd, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+block = ((HERE / "src" / "block.html").read_text(encoding="utf-8")
+         .replace("{{FALLBACK_JSON}}", fallback).replace("{{UNTAPPD_JSON}}", untappd_json))
 
 DIST.mkdir(exist_ok=True)
 (DIST / "tilda-block.html").write_text(block, encoding="utf-8")

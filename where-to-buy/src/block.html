@@ -203,6 +203,30 @@
 #rg-wtb .rg-nopoint { border-radius: var(--rg-radius); border: 1px solid var(--rg-line-strong); padding: 20px; display: grid; gap: 12px; }
 #rg-wtb .rg-nopoint .rg-btn--primary { min-height: 50px; font-size: 17px; }
 
+/* ---------- Untappd ---------- */
+#rg-wtb .rg-ut { background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: 16px; padding: 20px; display: grid; gap: 18px; }
+#rg-wtb .rg-ut__head { display: grid; gap: 14px; }
+#rg-wtb .rg-ut__head > div { display: grid; gap: 6px; }
+#rg-wtb .rg-ut__total { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 2px 12px; text-decoration: none; justify-self: start; }
+#rg-wtb .rg-ut__big { grid-row: span 2; font-size: 52px; line-height: .9; font-weight: 800; letter-spacing: -0.02em; }
+#rg-wtb .rg-ut__total small { font-size: 15px; color: var(--rg-muted); }
+#rg-wtb .rg-ut__total:hover small { text-decoration: underline; }
+#rg-wtb .rg-stars { position: relative; display: inline-block; width: 100px; height: 20px; flex: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27%23cfd9e3%27%3E%3Cpath d=%27M12 2.5l2.83 6.5 7.07.63-5.36 4.68 1.6 6.92L12 17.6l-6.14 3.63 1.6-6.92L2.1 9.63l7.07-.63z%27/%3E%3C/svg%3E") left center / 20px 20px repeat-x; }
+#rg-wtb .rg-stars__fill { position: absolute; inset: 0 auto 0 0; width: var(--v);
+  background: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27%23fab040%27%3E%3Cpath d=%27M12 2.5l2.83 6.5 7.07.63-5.36 4.68 1.6 6.92L12 17.6l-6.14 3.63 1.6-6.92L2.1 9.63l7.07-.63z%27/%3E%3C/svg%3E") left center / 20px 20px repeat-x; }
+#rg-wtb .rg-ut__list { list-style: none; margin: 0; padding: 0; display: grid; }
+#rg-wtb .rg-ut__item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; padding: 14px 0; border-top: 1px solid var(--rg-line); }
+#rg-wtb .rg-ut__name { font-weight: 700; font-size: 17px; display: flex; align-items: center; gap: 8px; }
+#rg-wtb .rg-ut__name::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--rg-accent); flex: none; }
+#rg-wtb .rg-ut__score { grid-column: 1; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 15px; color: var(--rg-muted); }
+#rg-wtb .rg-ut__score b { font-size: 19px; color: var(--rg-ink); }
+#rg-wtb .rg-ut__item .rg-btn { grid-column: 2; grid-row: 1 / span 2; min-height: 44px; padding: 0 16px; font-size: 16px; }
+#rg-wtb .rg-ut__quote { margin: 0; padding: 16px 18px; background: var(--rg-ground); border-radius: 12px; }
+#rg-wtb .rg-ut__quote blockquote { margin: 0; font-size: 18px; line-height: 1.4; }
+#rg-wtb .rg-ut__quote figcaption { margin-top: 6px; font-size: 15px; color: var(--rg-muted); }
+#rg-wtb .rg-ut__note { font-size: 14px; color: var(--rg-muted); }
+
 /* ---------- Подвал как на сайте ---------- */
 #rg-wtb .rg-contact { margin-top: 56px; background: #111111; color: #fff; text-align: center; padding: 64px 16px; }
 #rg-wtb .rg-contact h2 { font-size: 26px; line-height: 1.23; font-weight: 600; margin-bottom: 24px; }
@@ -244,6 +268,11 @@
   #rg-wtb .rg-zero__body { padding: 32px; align-content: center; }
   #rg-wtb .rg-zero__title { font-size: 64px; }
   #rg-wtb .rg-beers { grid-template-columns: repeat(4, 1fr); }
+  #rg-wtb .rg-ut { padding: 28px 32px; }
+  #rg-wtb .rg-ut__head { grid-template-columns: 1fr auto; align-items: end; }
+  #rg-wtb .rg-ut__list { grid-template-columns: repeat(4, 1fr); gap: 0 24px; }
+  #rg-wtb .rg-ut__item { grid-template-columns: 1fr; align-content: start; gap: 8px; }
+  #rg-wtb .rg-ut__item .rg-btn { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 4px; }
 }
 /* Шапка Tilda закреплена: на компьютере (больше 980px) — тёмная полоса 80px, на телефоне (до 640px) — прозрачная 80px */
 @media (min-width: 981px) {
@@ -361,13 +390,27 @@
         <a class="rg-link" href="https://robimgood.beer">Всё наше пиво</a>
       </section>
 
+      <section class="rg-section rg-section--wide" id="rg-untappd" aria-labelledby="rg-untappd-h" hidden>
+        <div class="rg-ut">
+          <div class="rg-ut__head">
+            <div>
+              <h2 class="rg-h2" id="rg-untappd-h">Оценки в Untappd</h2>
+              <p class="rg-lead">Пили наше пиво? Отметьте банку в Untappd: нам важно, что вы думаете.</p>
+            </div>
+            <a class="rg-ut__total" id="rg-ut-total" target="_blank" rel="noopener" hidden></a>
+          </div>
+          <ul class="rg-ut__list" id="rg-ut-list"></ul>
+          <figure class="rg-ut__quote" id="rg-ut-quote" hidden><blockquote></blockquote><figcaption></figcaption></figure>
+          <p class="rg-ut__note" id="rg-ut-note"></p>
+        </div>
+      </section>
+
       <section class="rg-section rg-section--wide" aria-labelledby="rg-social-h">
         <h2 class="rg-h2" id="rg-social-h">Следите за новинками</h2>
         <div class="rg-social">
           <a class="rg-btn rg-btn--dark" href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener">Instagram</a>
           <a class="rg-btn rg-btn--dark" href="https://www.facebook.com/robimgoodbrewery/" target="_blank" rel="noopener">Facebook</a>
         </div>
-        <p class="rg-lead">Отметьте банку в <a class="rg-link" href="https://untappd.com/search?q=Robim%20Good&amp;type=beer" target="_blank" rel="noopener">Untappd</a>: нам важно, что вы думаете.</p>
       </section>
     </div>
   </div>
@@ -405,12 +448,16 @@
     sheetCsvUrl: '',
     // Ключ JavaScript API Яндекс Карт. Пусто — карта OpenStreetMap.
     yandexMapsKey: '',
+    // Лист «untappd» той же Google-таблицы, опубликованный как CSV. Пусто — встроенная копия рейтингов.
+    untappdCsvUrl: '',
     pageSize: 10,
     defaultCity: 'Минск'
   };
 
   /* Резервный список: последняя сохранённая копия таблицы. Собирается build.py из data/points.csv */
   var FALLBACK = {{FALLBACK_JSON}};
+  /* Резервная копия рейтингов Untappd (data/untappd.csv) */
+  var UNTAPPD_FALLBACK = {{UNTAPPD_JSON}};
 
   var root = document.getElementById('rg-wtb');
   var $ = function (id) { return document.getElementById(id); };
@@ -656,6 +703,67 @@
     }
   }
 
+  /* ===== Untappd ===== */
+  var UT_ACCENT = { vista: 'var(--rg-ipa)', bbq: 'var(--rg-tomato)', zipa: 'var(--rg-zero)', zlager: 'var(--rg-zero)' };
+  var MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+
+  function fmtRating(v) { return (Math.round(v * 100 + 1e-6) / 100).toFixed(2).replace('.', ','); }
+  function fmtCount(n) { return n.toLocaleString('ru-RU') + ' ' + plural(n, 'оценка', 'оценки', 'оценок'); }
+  function fmtDate(s) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || '');
+    return m ? +m[3] + ' ' + MONTHS[+m[2] - 1] + ' ' + m[1] : s;
+  }
+  function stars(v) {
+    return '<span class="rg-stars" style="--v:' + Math.max(0, Math.min(100, v / 5 * 100)).toFixed(1) + '%" aria-hidden="true"><span class="rg-stars__fill"></span></span>';
+  }
+
+  function renderUntappd(rows) {
+    rows = rows.map(function (r) {
+      return { key: r.key, beer: r.beer, url: r.url, quote: r.quote, author: r.quote_author, updated: r.updated,
+        rating: parseFloat(String(r.rating).replace(',', '.')) || 0, ratings: parseInt(r.ratings, 10) || 0 };
+    }).filter(function (r) { return r.url && /^https:\/\/untappd\.com\//.test(r.url); });
+    var brewery = rows.filter(function (r) { return r.key === 'brewery'; })[0];
+    var beers = rows.filter(function (r) { return r.key !== 'brewery'; });
+    if (!beers.length) return;
+
+    if (brewery && brewery.rating) {
+      var total = $('rg-ut-total');
+      total.href = brewery.url; total.hidden = false;
+      total.setAttribute('aria-label', 'Пивоварня в Untappd: ' + fmtRating(brewery.rating) + ' из 5, ' + fmtCount(brewery.ratings));
+      total.innerHTML = '<span class="rg-ut__big rg-num">' + fmtRating(brewery.rating) + '</span>' + stars(brewery.rating) +
+        '<small class="rg-num">' + fmtCount(brewery.ratings) + ' пивоварни</small>';
+    }
+
+    $('rg-ut-list').innerHTML = beers.map(function (b) {
+      var score = b.rating
+        ? stars(b.rating) + '<b class="rg-num">' + fmtRating(b.rating) + '</b><span class="rg-num">' + fmtCount(b.ratings) + '</span>'
+        : '<span>Пока мало оценок</span>';
+      return '<li class="rg-ut__item" style="--rg-accent:' + (UT_ACCENT[b.key] || 'var(--rg-ink)') + '">' +
+        '<span class="rg-ut__name">' + esc(b.beer) + '</span>' +
+        '<span class="rg-ut__score"' + (b.rating ? ' aria-label="' + fmtRating(b.rating) + ' из 5, ' + fmtCount(b.ratings) + '"' : '') + '>' + score + '</span>' +
+        '<a class="rg-btn rg-btn--line" href="' + esc(b.url) + '" target="_blank" rel="noopener" aria-label="Оценить ' + esc(b.beer) + ' в Untappd">' +
+        (b.rating ? 'Оценить' : 'Оценить первым') + '</a></li>';
+    }).join('');
+
+    var q = rows.filter(function (r) { return r.quote; })[0];
+    $('rg-ut-quote').hidden = !q;
+    if (q) {
+      $('rg-ut-quote').querySelector('blockquote').textContent = '«' + q.quote.replace(/^[«"]|[»"]$/g, '') + '»';
+      $('rg-ut-quote').querySelector('figcaption').textContent = (q.author ? q.author + ', ' : '') + 'о ' + q.beer;
+    }
+    var last = rows.map(function (r) { return r.updated || ''; }).sort().pop();
+    $('rg-ut-note').textContent = 'Рейтинг по данным Untappd' + (last ? ' на ' + fmtDate(last) : '') + '.';
+    $('rg-untappd').hidden = false;
+  }
+
+  function loadUntappd() {
+    if (!RG_CONFIG.untappdCsvUrl) return renderUntappd(UNTAPPD_FALLBACK);
+    fetch(RG_CONFIG.untappdCsvUrl, { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(function (t) { var rows = parseCsv(t); if (!rows.length) throw new Error('empty'); renderUntappd(rows); })
+      .catch(function () { renderUntappd(UNTAPPD_FALLBACK); });
+  }
+
   /* ===== События ===== */
   function bind() {
     $('rg-locate').addEventListener('click', function () {
@@ -726,5 +834,6 @@
 
   bind();
   load();
+  loadUntappd();
 })();
 </script>
