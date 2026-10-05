@@ -263,7 +263,8 @@
 #rg-wtb .rg-zcan--lead img { width: 100%; transform: translateY(-14px); }
 #rg-wtb .rg-zcan b { font-size: 17px; line-height: 1.15; }
 #rg-wtb .rg-zcan span { font-size: 15px; color: #d6e6f5; }
-#rg-wtb .rg-zero__cta { grid-area: cta; position: relative; margin-top: 18px; }
+#rg-wtb .rg-zero__cta { grid-area: cta; position: relative; margin-top: 18px; display: grid; gap: 10px; }
+#rg-wtb .rg-zero__note { font-size: 15px; color: #d6e6f5; text-align: center; }
 #rg-wtb .rg-zero .rg-btn { width: 100%; background: #fff; color: var(--rg-zero); }
 #rg-wtb .rg-zero .rg-btn:hover { background: #e7f0f9; }
 #rg-wtb .rg-zero :focus-visible { outline-color: #fff; }
@@ -468,7 +469,8 @@
   #rg-wtb .rg-below > .rg-section--wide { grid-column: 1 / -1; }
   #rg-wtb .rg-zero { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: "body cans" "cta cans"; padding: 48px 48px 40px; column-gap: 40px; }
   #rg-wtb .rg-zero__body { text-align: left; align-self: end; }
-  #rg-wtb .rg-zero__cta { align-self: start; margin-top: 24px; }
+  #rg-wtb .rg-zero__cta { align-self: start; margin-top: 24px; justify-items: start; }
+  #rg-wtb .rg-zero__note { text-align: left; }
   #rg-wtb .rg-zero .rg-btn { width: auto; }
   #rg-wtb .rg-zero__cans { margin: 0; gap: 20px; }
   #rg-wtb .rg-zcan b { font-size: 19px; }
@@ -538,7 +540,7 @@
           <div class="rg-map__msg" id="rg-map-msg">Загружаем карту…</div>
         </div>
       </div>
-      <p class="rg-hint">Наличие лучше уточнить по телефону.</p>
+      <p class="rg-hint">Наличие и часы работы уточняйте по телефону.</p>
     </section>
 
     <div class="rg-below">
@@ -562,7 +564,7 @@
             <li class="rg-zcan rg-zcan--lead"><img data-rg-img="zero-ipa" width="220" height="584" alt="Банка Zero IPA" loading="lazy" decoding="async"><b>Zero IPA</b><span>IPA</span></li>
             <li class="rg-zcan"><img data-rg-img="zero-stout" width="220" height="579" alt="Банка Zero Stout" loading="lazy" decoding="async"><b>Zero Stout</b><span>Стаут</span></li>
           </ul>
-          <div class="rg-zero__cta"><button class="rg-btn" type="button" id="rg-zero-go">Где купить Zero</button></div>
+          <div class="rg-zero__cta"><button class="rg-btn" type="button" id="rg-zero-go">Ищите в точках</button><p class="rg-zero__note">Zero есть не в каждой «Точке» — лучше позвонить перед выходом.</p></div>
         </div>
       </section>
 
@@ -580,7 +582,7 @@
           <li class="rg-bcan" style="--tint:#dfeaf6;--rg-accent:var(--rg-zero)"><div class="rg-bcan__stage"><img data-rg-img="zero-stout" alt="Банка Zero Stout" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">Zero Stout</b><span class="rg-bcan__style">Безалкогольный стаут</span><span class="rg-bcan__stats rg-num">0%</span></li>
         </ul>
         <div class="rg-shelf__progress" aria-hidden="true"><i id="rg-shelf-bar"></i></div>
-        <a class="rg-link" href="https://robimgood.beer">Всё наше пиво</a>
+        <a class="rg-link" href="https://robimgood.beer/#rec181732744">Всё наше пиво на сайте</a>
       </section>
 
       <section class="rg-section rg-section--wide" id="rg-untappd" aria-labelledby="rg-untappd-h" hidden>
@@ -738,7 +740,7 @@
   function loadCss(href) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
 
   function popupHtml(p) {
-    return '<div class="rg-pop"><b>' + esc(p.name) + '</b><br>' + esc(p.type) + ' · г. ' + esc(p.city) + ', ' + esc(p.address) +
+    return '<div class="rg-pop"><b>' + esc(p.address) + '</b><br>' + esc(p.name) + ', ' + esc(p.type.toLowerCase()) + ' · г. ' + esc(p.city) +
       (p.metro ? '<br>' + metroHtml(p) : '') +
       (state.me && isFinite(p.dist) ? '<br>' + fmtDist(p.dist) + ' от вас' : '') +
       '<br>' + (p.phone ? '<a href="tel:' + esc(p.phone) + '">Позвонить</a> · ' : '') +
@@ -887,10 +889,6 @@
 
   /* ===== Адреса «Точки» ===== */
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>';
-  function yandexUrl(p) {
-    var u = 'https://yandex.by/maps/?text=' + encodeURIComponent('Точка, ' + p.city + ', ' + p.address);
-    return isFinite(p.lat) ? u + '&ll=' + p.lng + '%2C' + p.lat + '&z=17' : u;
-  }
   var LINE_COLOR = { 1: '#1d5fbf', 2: '#d3302f', 3: '#2f8a3c' };
   function metroHtml(p) {
     if (!p.metro) return '';
@@ -910,7 +908,7 @@
     else pts.sort(function (a, b) { return a.address.localeCompare(b.address, 'ru'); });
     $('rg-plist-label').textContent = near ? 'Все адреса, ближе к вам' : 'Адреса: ' + state.city;
     $('rg-plist-n').textContent = pts.length;
-    $('rg-plist').innerHTML = '<p class="rg-hint rg-plist__hint">Нажмите на адрес, чтобы увидеть его на карте.</p>' +
+    $('rg-plist').innerHTML = '<p class="rg-hint rg-plist__hint">Нажмите на адрес — покажем его на карте.</p>' +
       '<ul>' + pts.map(itemHtml).join('') + '</ul>';
   }
   function renderCities() {
@@ -935,7 +933,7 @@
       '<button class="rg-pitem__main" type="button" data-show="' + i + '" aria-label="Показать на карте: ' + esc(p.address) + '">' +
         '<b>' + esc(p.address) + '</b><span class="rg-pitem__meta">' + meta + '</span></button>' +
       (p.phone ? '<a class="rg-ico-btn rg-ico-btn--dark" href="tel:' + esc(p.phone) + '" aria-label="Позвонить: ' + esc(p.address) + '" title="Позвонить">' + ICON_PHONE + '</a>' : '') +
-      '<a class="rg-ico-btn rg-ico-btn--line" href="' + yandexUrl(p) + '" target="_blank" rel="noopener" aria-label="Открыть в Яндекс Картах: ' + esc(p.address) + '" title="Яндекс Карты">' + ICON_ROUTE + '</a>' +
+      '<a class="rg-ico-btn rg-ico-btn--line" href="' + routeUrl(p) + '" target="_blank" rel="noopener" aria-label="Маршрут: ' + esc(p.address) + '" title="Маршрут">' + ICON_ROUTE + '</a>' +
       '</li>';
   }
   function setListOpen(open) {
@@ -1033,8 +1031,8 @@
         near.sort(function (a, b) { return a.dist - b.dist; });
         var p = near[0], box = $('rg-nearest');
         box.hidden = false;
-        box.innerHTML = '<div><div class="rg-hint">Ближайшая точка · ' + fmtDist(p.dist) + '</div><div class="rg-nearest__name">' + esc(p.name) + '</div>' +
-          '<div class="rg-nearest__addr">' + esc(p.type) + ' · г. ' + esc(p.city) + ', ' + esc(p.address) + '</div>' + (p.metro ? '<div class="rg-pitem__meta">' + metroHtml(p) + '</div>' : '') + '</div>' +
+        box.innerHTML = '<div><div class="rg-hint">Ближайшая «Точка» · ' + fmtDist(p.dist) + ' от вас</div><div class="rg-nearest__name">' + esc(p.address) + '</div>' +
+          '<div class="rg-nearest__addr">' + esc(p.type) + ' · г. ' + esc(p.city) + '</div>' + (p.metro ? '<div class="rg-pitem__meta">' + metroHtml(p) + '</div>' : '') + '</div>' +
           '<div class="rg-actions">' + (p.phone ? '<a class="rg-btn rg-btn--dark" href="tel:' + esc(p.phone) + '">Позвонить</a>' : '') +
           '<a class="rg-btn rg-btn--line" href="' + routeUrl(p) + '" target="_blank" rel="noopener">Маршрут</a></div>';
         state.city = null;
