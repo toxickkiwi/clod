@@ -509,7 +509,7 @@
     // Ссылка на Google-таблицу, опубликованную как CSV. Пусто — берётся встроенный список ниже.
     sheetCsvUrl: '',
     // Ключ JavaScript API Яндекс Карт. Пусто — карта OpenStreetMap.
-    yandexMapsKey: '',
+    yandexMapsKey: '9b579bea-e186-43b0-b018-6f3fd2bb4753',  // ключ ограничен адресом robimgood.beer; на других адресах карта сама переключится на OpenStreetMap
     // Лист «untappd» той же Google-таблицы, опубликованный как CSV. Пусто — встроенная копия рейтингов.
     untappdCsvUrl: '',
     pageSize: 10,
@@ -697,16 +697,8 @@
     if (map.loading || map.obj) return;
     map.loading = true;
     var box = $('rg-map');
-    var ready = RG_CONFIG.yandexMapsKey
-      ? loadScript('https://api-maps.yandex.ru/2.1/?apikey=' + encodeURIComponent(RG_CONFIG.yandexMapsKey) + '&lang=ru_RU').then(function () {
-          return new Promise(function (ok) { window.ymaps.ready(ok); });
-        }).then(function () {
-          map.kind = 'ya';
-          map.obj = new window.ymaps.Map(box, { center: [53.9, 27.56], zoom: 11, controls: ['zoomControl'] });
-          map.layer = new window.ymaps.GeoObjectCollection();
-          map.obj.geoObjects.add(map.layer);
-        })
-      : (loadCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'), loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')).then(function () {
+    var useOsm = function () {
+      return (loadCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'), loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')).then(function () {
           var L = window.L;
           map.kind = 'osm';
           map.obj = L.map(box, { scrollWheelZoom: false }).setView([53.9, 27.56], 11);
@@ -714,6 +706,25 @@
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(map.obj);
           map.layer = L.layerGroup().addTo(map.obj);
         });
+    };
+    // Сначала Яндекс Карты; если ключ не подошёл (не тот адрес сайта) или Яндекс недоступен — OpenStreetMap.
+    var ready = RG_CONFIG.yandexMapsKey
+      ? loadScript('https://api-maps.yandex.ru/2.1/?apikey=' + encodeURIComponent(RG_CONFIG.yandexMapsKey) + '&lang=ru_RU').then(function () {
+          return new Promise(function (ok, fail) { window.ymaps.ready(ok, fail); setTimeout(function () { fail(new Error('timeout')); }, 8000); });
+        }).then(function () {
+          map.kind = 'ya';
+          map.obj = new window.ymaps.Map(box, { center: [53.9, 27.56], zoom: 11, controls: [] }, { suppressMapOpenBlock: true });
+          map.obj.controls.add('zoomControl', { size: 'small', position: { left: 10, top: 10 } });
+          map.layer = new window.ymaps.GeoObjectCollection();
+          map.obj.geoObjects.add(map.layer);
+        }).catch(function (err) {
+          console.warn('Яндекс Карты недоступны, показываем OpenStreetMap', err);
+          if (map.obj && map.kind === 'ya') { try { map.obj.destroy(); } catch (e) {} }
+          map.obj = null; map.kind = null; map.layer = null;
+          Array.prototype.slice.call(box.children).forEach(function (c) { if (c.id !== 'rg-map-msg') box.removeChild(c); });
+          return useOsm();
+        })
+      : useOsm();
     ready.then(function () {
       $('rg-map-msg').hidden = true;
       map.loading = false;

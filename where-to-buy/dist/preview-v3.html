@@ -603,7 +603,7 @@
   /* ===== Настройки ===== */
   var RG_CONFIG = {
     // Ключ JavaScript API Яндекс Карт. Пусто — карта OpenStreetMap.
-    yandexMapsKey: '',
+    yandexMapsKey: '9b579bea-e186-43b0-b018-6f3fd2bb4753',  // ключ ограничен адресом robimgood.beer; на других адресах карта сама переключится на OpenStreetMap
   };
 
   /* Точки сети «Точка». Собирается build.py из data/points.csv (только строки с tochka = да) */
@@ -708,29 +708,8 @@
   function initMap() {
     var box = $('rg-map');
     var pts = state.points.filter(function (p) { return isFinite(p.lat); });
-    var ready = RG_CONFIG.yandexMapsKey
-      ? loadScript('https://api-maps.yandex.ru/2.1/?apikey=' + encodeURIComponent(RG_CONFIG.yandexMapsKey) + '&lang=ru_RU').then(function () {
-          return new Promise(function (ok) { window.ymaps.ready(ok); });
-        }).then(function () {
-          var ym = window.ymaps;
-          map.kind = 'ya';
-          map.obj = new ym.Map(box, { center: [53.7, 27.9], zoom: 7, controls: ['zoomControl'] });
-          map.obj.behaviors.disable('scrollZoom');
-          if ('ontouchstart' in window) map.obj.behaviors.disable('drag'); // на телефоне двигаем двумя пальцами (multiTouch)
-          var Pin = ym.templateLayoutFactory.createClass('<div class="rg-dotpin {{ properties.cls }}"></div>');
-          map.layer = new ym.Clusterer({ preset: 'islands#invertedDarkBlueClusterIcons', groupByCoordinates: false, clusterDisableClickZoom: false });
-          map.items = pts.map(function (p) {
-            var pm = new ym.Placemark([p.lat, p.lng], { cls: p.tochka ? 'is-tochka' : '', balloonContent: popupHtml(p), hintContent: p.name }, {
-              iconLayout: Pin, iconShape: { type: 'Circle', coordinates: [11, 11], radius: 11 }, iconOffset: [-11, -11]
-            });
-            pm.rgPoint = p;
-            return pm;
-          });
-          map.layer.add(map.items);
-          map.obj.geoObjects.add(map.layer);
-          map.obj.setBounds(map.layer.getBounds(), { checkZoomRange: true, zoomMargin: 30 });
-        })
-      : (loadCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'), loadCss('https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css'), loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')).then(function () {
+    var useOsm = function () {
+      return (loadCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'), loadCss('https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css'), loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')).then(function () {
           loadCss('https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.css');
           return Promise.all([
             loadScript('https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js'),
@@ -762,6 +741,44 @@
           map.obj.addLayer(map.layer);
           map.obj.fitBounds(map.layer.getBounds(), { padding: [12, 12] });
         });
+    };
+    // Сначала Яндекс Карты; если ключ не подошёл (не тот адрес сайта) или Яндекс недоступен — OpenStreetMap.
+    var ready = RG_CONFIG.yandexMapsKey
+      ? loadScript('https://api-maps.yandex.ru/2.1/?apikey=' + encodeURIComponent(RG_CONFIG.yandexMapsKey) + '&lang=ru_RU').then(function () {
+          return new Promise(function (ok, fail) { window.ymaps.ready(ok, fail); setTimeout(function () { fail(new Error('timeout')); }, 8000); });
+        }).then(function () {
+          var ym = window.ymaps;
+          map.kind = 'ya';
+          map.obj = new ym.Map(box, { center: [53.7, 27.9], zoom: 7, controls: [] }, { suppressMapOpenBlock: true });
+          map.obj.controls.add('zoomControl', { size: 'small', position: { left: 10, top: 10 } });
+          map.obj.behaviors.disable('scrollZoom');
+          if ('ontouchstart' in window) map.obj.behaviors.disable('drag'); // на телефоне двигаем двумя пальцами (multiTouch)
+          var Pin = ym.templateLayoutFactory.createClass('<div class="rg-dotpin {{ properties.cls }}"></div>');
+          // Группы точек в том же стиле, что и на карте OpenStreetMap.
+          var ClusterIcon = ym.templateLayoutFactory.createClass('<div class="rg-cluster is-tochka" style="margin:-20px 0 0 -20px">{{ properties.geoObjects.length }}</div>');
+          map.layer = new ym.Clusterer({
+            clusterIconLayout: ClusterIcon, clusterIconShape: { type: 'Circle', coordinates: [0, 0], radius: 20 },
+            groupByCoordinates: false, gridSize: 80, clusterDisableClickZoom: false, hasBalloon: true
+          });
+          map.items = pts.map(function (p) {
+            var pm = new ym.Placemark([p.lat, p.lng], { cls: p.tochka ? 'is-tochka' : '', balloonContent: popupHtml(p), hintContent: p.name }, {
+              iconLayout: Pin, iconShape: { type: 'Circle', coordinates: [11, 11], radius: 11 }, iconOffset: [-11, -11]
+            });
+            pm.rgPoint = p;
+            pm.events.add('click', function () { highlight(state.points.indexOf(p)); });
+            return pm;
+          });
+          map.layer.add(map.items);
+          map.obj.geoObjects.add(map.layer);
+          map.obj.setBounds(map.layer.getBounds(), { checkZoomRange: true, zoomMargin: 30 });
+        }).catch(function (err) {
+          console.warn('Яндекс Карты недоступны, показываем OpenStreetMap', err);
+          if (map.obj && map.kind === 'ya') { try { map.obj.destroy(); } catch (e) {} }
+          map.obj = null; map.kind = null; map.layer = null;
+          Array.prototype.slice.call(box.children).forEach(function (c) { if (c.id !== 'rg-map-msg') box.removeChild(c); });
+          return useOsm();
+        })
+      : useOsm();
     ready.then(function () { $('rg-map-msg').hidden = true; })
       .catch(function () { $('rg-map-msg').textContent = 'Карта не загрузилась. Обновите страницу или напишите нам в Telegram.'; });
   }
@@ -772,7 +789,11 @@
     if (map.kind === 'osm') {
       map.layer.zoomToShowLayer(item, function () { item.openPopup(); });
     } else {
-      map.obj.setCenter([p.lat, p.lng], zoom || 16).then(function () { item.balloon.open(); });
+      map.obj.setCenter([p.lat, p.lng], zoom || 16, { duration: 300 }).then(function () {
+        var st = map.layer.getObjectState(item);
+        if (st && st.isClustered) { st.cluster.state.set('activeObject', item); map.layer.balloon.open(st.cluster); }
+        else item.balloon.open();
+      });
     }
   }
 
