@@ -23,6 +23,10 @@ fallback = json.dumps([{k: r[k] for k in PUBLIC_FIELDS} for r in rows],
                       ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 # Ближайшее метро для минских «Точек» (data/metro-minsk.json). Подпись — только если станция не дальше 1,5 км.
 METRO = json.loads((HERE / "data" / "metro-minsk.json").read_text(encoding="utf-8"))
+# Районы Минска для «Точек» (по OpenStreetMap). Новая точка без района попадёт в группу «Другие адреса».
+DISTRICTS = json.loads((HERE / "data" / "districts-minsk.json").read_text(encoding="utf-8"))
+# Описания банок с Untappd для окошка «Наши банки».
+BEERS = json.dumps(json.loads((HERE / "data" / "beers.json").read_text(encoding="utf-8")), ensure_ascii=False).replace("</", "<\\/")
 
 
 def km(a_lat, a_lng, b_lat, b_lng):
@@ -39,6 +43,8 @@ def with_metro(r):
         dist = km(lat, lng, st["lat"], st["lng"])
         if dist <= 1.5:
             out["metro"] = {"name": st["name"], "line": st["line"], "km": round(dist, 2)}
+        if r["address"] in DISTRICTS:
+            out["district"] = DISTRICTS[r["address"]]
     return out
 
 
@@ -133,7 +139,8 @@ header_js = """<script>
 for src, block_out, preview_out in VARIANTS:
     pts = fallback_tochka if src == "block-v3.html" else fallback
     block = ((HERE / "src" / src).read_text(encoding="utf-8")
-             .replace("{{FALLBACK_JSON}}", pts).replace("{{UNTAPPD_JSON}}", untappd_json))
+             .replace("{{FALLBACK_JSON}}", pts).replace("{{UNTAPPD_JSON}}", untappd_json)
+             .replace("{{BEERS_JSON}}", BEERS))
     # Фото банок встраиваются в блок один раз (объект RG_IMG), чтобы не загружать их на Tilda отдельно.
     used = sorted(set(re.findall(r'data-rg-img="([\w-]+)"', block)))
     images = {n: "data:image/webp;base64," + base64.b64encode((HERE / "img" / f"{n}.webp").read_bytes()).decode() for n in used}
