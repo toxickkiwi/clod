@@ -409,6 +409,27 @@
 #rg-wtb .rg-ico-btn--line:hover { background: #e8eef4; }
 #rg-wtb .rg-pop .rg-metro { margin-top: 2px; }
 
+/* ---------- Телефон: жесты на карте, листание полки, кнопка под большим пальцем ---------- */
+#rg-wtb .rg-map__gesture {
+  position: absolute; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 24px; text-align: center;
+  background: rgba(16,32,46,.55); color: #fff; font: 600 18px/1.3 var(--rg-font);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease;
+}
+#rg-wtb .rg-map__gesture.is-on { opacity: 1; }
+#rg-wtb .rg-shelf__progress { height: 3px; margin: 6px 0 2px; border-radius: 2px; background: var(--rg-line); overflow: hidden; }
+#rg-wtb .rg-shelf__progress i { display: block; height: 100%; width: 40%; border-radius: 2px; background: var(--rg-ink); transform-origin: left; will-change: transform; }
+#rg-wtb .rg-fab {
+  position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 900;
+  min-height: 52px; padding: 0 22px; border: 0; border-radius: 26px; background: var(--rg-orange); color: var(--rg-ink);
+  display: inline-flex; align-items: center; gap: 8px; font: 700 17px/1 var(--rg-font); white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(16,32,46,.28), 0 1px 3px rgba(16,32,46,.25);
+  transform: translate(-50%, 140%); opacity: 0; pointer-events: none;
+  transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .2s ease;
+}
+#rg-wtb .rg-fab.is-on { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+#rg-wtb .rg-fab:active { background: var(--rg-orange-press); }
+@media (min-width: 900px) { #rg-wtb .rg-shelf__progress, #rg-wtb .rg-fab { display: none; } }
+
 /* ---------- Подвал как на сайте ---------- */
 #rg-wtb .rg-contact { margin-top: 56px; background: #111111; color: #fff; text-align: center; padding: 64px 16px; }
 #rg-wtb .rg-contact h2 { font-size: 26px; line-height: 1.23; font-weight: 600; margin-bottom: 24px; }
@@ -558,6 +579,7 @@
           <li class="rg-bcan" style="--tint:#dfeaf6;--rg-accent:var(--rg-zero)"><div class="rg-bcan__stage"><img data-rg-img="zero-ipa" alt="Банка Zero IPA" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">Zero IPA</b><span class="rg-bcan__style">Безалкогольный IPA</span><span class="rg-bcan__stats rg-num">0% · 40 IBU</span></li>
           <li class="rg-bcan" style="--tint:#dfeaf6;--rg-accent:var(--rg-zero)"><div class="rg-bcan__stage"><img data-rg-img="zero-stout" alt="Банка Zero Stout" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">Zero Stout</b><span class="rg-bcan__style">Безалкогольный стаут</span><span class="rg-bcan__stats rg-num">0%</span></li>
         </ul>
+        <div class="rg-shelf__progress" aria-hidden="true"><i id="rg-shelf-bar"></i></div>
         <a class="rg-link" href="https://robimgood.beer">Всё наше пиво</a>
       </section>
 
@@ -585,6 +607,11 @@
       </section>
     </div>
   </div>
+
+  <button class="rg-fab" type="button" id="rg-fab" tabindex="-1" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    <span id="rg-fab-text">Найти ближайшую «Точку»</span>
+  </button>
 
   <footer>
     <section class="rg-contact" aria-labelledby="rg-contact-h">
@@ -703,7 +730,7 @@
   }
 
   /* ===== Карта: все точки сразу, близкие группируются ===== */
-  var map = { kind: null, obj: null, layer: null, items: [] };
+  var map = { kind: null, obj: null, layer: null, items: [], ready: null };
 
   function loadScript(src) {
     return new Promise(function (ok, fail) { var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
@@ -718,7 +745,9 @@
       '<a href="' + routeUrl(p) + '" target="_blank" rel="noopener">Маршрут</a></div>';
   }
 
+  // Карта грузится один раз; повторные вызовы возвращают то же обещание.
   function initMap() {
+    if (map.ready) return map.ready;
     var box = $('rg-map');
     var pts = state.points.filter(function (p) { return isFinite(p.lat); });
     var useOsm = function () {
@@ -765,13 +794,26 @@
           map.obj = new ym.Map(box, { center: [53.7, 27.9], zoom: 7, controls: [] }, { suppressMapOpenBlock: true });
           map.obj.controls.add('zoomControl', { size: 'small', position: { left: 10, top: 10 } });
           map.obj.behaviors.disable('scrollZoom');
-          if ('ontouchstart' in window) map.obj.behaviors.disable('drag'); // на телефоне двигаем двумя пальцами (multiTouch)
+          // На маленькой карте подсказка о точке открывается панелью снизу, а не обрезается у края.
+          map.obj.options.set('balloonPanelMaxMapArea', 160000);
+          if ('ontouchstart' in window) {
+            // Страница листается одним пальцем, карта двигается двумя — и говорит об этом.
+            map.obj.behaviors.disable('drag');
+            var hint = document.createElement('div'), hideT;
+            hint.className = 'rg-map__gesture'; hint.textContent = 'Чтобы двигать карту, используйте два пальца';
+            box.appendChild(hint);
+            box.addEventListener('touchstart', function (e) {
+              clearTimeout(hideT);
+              if (e.touches.length === 1) { hint.classList.add('is-on'); hideT = setTimeout(function () { hint.classList.remove('is-on'); }, 1400); }
+              else hint.classList.remove('is-on');
+            }, { passive: true });
+          }
           var Pin = ym.templateLayoutFactory.createClass('<div class="rg-dotpin {{ properties.cls }}"></div>');
           // Группы точек в том же стиле, что и на карте OpenStreetMap.
           var ClusterIcon = ym.templateLayoutFactory.createClass('<div class="rg-cluster is-tochka" style="margin:-20px 0 0 -20px">{{ properties.geoObjects.length }}</div>');
           map.layer = new ym.Clusterer({
             clusterIconLayout: ClusterIcon, clusterIconShape: { type: 'Circle', coordinates: [0, 0], radius: 20 },
-            groupByCoordinates: false, gridSize: 80, clusterDisableClickZoom: false, hasBalloon: true
+            groupByCoordinates: false, gridSize: 112, clusterDisableClickZoom: false, hasBalloon: true
           });
           map.items = pts.map(function (p) {
             var pm = new ym.Placemark([p.lat, p.lng], { cls: p.tochka ? 'is-tochka' : '', balloonContent: popupHtml(p), hintContent: p.name }, {
@@ -792,9 +834,12 @@
           return useOsm();
         })
       : useOsm();
-    ready.then(function () { $('rg-map-msg').hidden = true; })
-      .catch(function () { $('rg-map-msg').textContent = 'Карта не загрузилась. Обновите страницу или напишите нам в Telegram.'; });
+    map.ready = ready.then(function () { $('rg-map-msg').hidden = true; })
+      .catch(function () { $('rg-map-msg').textContent = 'Карта не загрузилась. Адреса в списке выше, кнопки «Позвонить» и маршрут работают.'; });
+    return map.ready;
   }
+  // Действие с картой выполняется, когда она загрузится (если нажали раньше).
+  function whenMap(fn) { initMap().then(function () { if (map.obj) fn(); }); }
 
   function fitPoints(pts) {
     pts = pts.filter(function (p) { return isFinite(p.lat); });
@@ -880,7 +925,7 @@
     state.city = c;
     Array.prototype.forEach.call($('rg-cities').children, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-city') === c); });
     renderList();
-    fitPoints(cityPoints());
+    if (map.obj) fitPoints(cityPoints());
   }
   function itemHtml(p) {
     var i = state.points.indexOf(p);
@@ -994,7 +1039,9 @@
           '<a class="rg-btn rg-btn--line" href="' + routeUrl(p) + '" target="_blank" rel="noopener">Маршрут</a></div>';
         state.city = null;
         Array.prototype.forEach.call($('rg-cities').children, function (b) { b.setAttribute('aria-pressed', 'false'); });
-        renderList(); setListOpen(true); showMe(); focusPoint(p, 15); highlight(state.points.indexOf(p)); scrollToMap();
+        renderList(); setListOpen(true); highlight(state.points.indexOf(p)); scrollToMap();
+        whenMap(function () { showMe(); focusPoint(p, 15); });
+        $('rg-fab-text').textContent = 'Ближайшая · ' + fmtDist(p.dist);
       }, function () {
         btn.removeAttribute('aria-busy');
         btn.querySelector('span').textContent = 'Найти рядом со мной';
@@ -1006,7 +1053,8 @@
     $('rg-plist').addEventListener('click', function (e) {
       var b = e.target.closest('[data-show]'); if (!b) return;
       var i = +b.getAttribute('data-show');
-      highlight(i); focusPoint(state.points[i], 16);
+      highlight(i);
+      whenMap(function () { focusPoint(state.points[i], 16); });
       if (window.innerWidth < 900) scrollToMap();
     });
     $('rg-zero-go').addEventListener('click', scrollToMap);
@@ -1024,7 +1072,45 @@
     renderCities();
     renderList();
     setListOpen(window.innerWidth >= 900); // на компьютере список открыт рядом с картой, на телефоне свёрнут
-    initMap();
+    // Карта (Яндекс ~700 КБ) грузится, когда до неё почти долистали: первый экран открывается быстрее.
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); initMap(); }
+      }, { rootMargin: '600px 0px' });
+      io.observe($('rg-map'));
+    } else initMap();
+    bindMobile();
+  }
+
+  /* ===== Телефон: индикатор полки и кнопка под большим пальцем ===== */
+  function bindMobile() {
+    var shelf = root.querySelector('.rg-shelf'), bar = $('rg-shelf-bar');
+    function shelfProgress() {
+      var max = shelf.scrollWidth - shelf.clientWidth, w = shelf.clientWidth / shelf.scrollWidth;
+      bar.style.width = (w * 100) + '%';
+      bar.style.transform = 'translateX(' + (max > 0 ? shelf.scrollLeft / max * (1 / w - 1) * 100 : 0) + '%)';
+    }
+    shelf.addEventListener('scroll', shelfProgress, { passive: true });
+    window.addEventListener('resize', shelfProgress);
+    shelfProgress();
+
+    // Кнопка появляется, когда главная кнопка ушла за верх экрана, а список с картой ещё не на экране.
+    var fab = $('rg-fab');
+    if (!('IntersectionObserver' in window)) return;
+    var seen = { hero: true, points: false, foot: false };
+    var watch = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { seen[e.target.getAttribute('data-rg-watch')] = e.isIntersecting; });
+      var on = !seen.hero && !seen.points && !seen.foot;
+      fab.classList.toggle('is-on', on);
+      fab.setAttribute('tabindex', on ? '0' : '-1');
+      fab.setAttribute('aria-hidden', on ? 'false' : 'true');
+    });
+    [['hero', $('rg-locate')], ['points', $('rg-points')], ['foot', root.querySelector('footer')]].forEach(function (w) {
+      w[1].setAttribute('data-rg-watch', w[0]); watch.observe(w[1]);
+    });
+    fab.addEventListener('click', function () {
+      if (state.me) scrollToMap(); else $('rg-locate').click();
+    });
   }
 
   Array.prototype.forEach.call(root.querySelectorAll('[data-rg-img]'), function (img) { img.src = RG_IMG[img.getAttribute('data-rg-img')]; });
