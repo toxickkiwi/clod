@@ -10,6 +10,7 @@ import base64
 import csv
 import re
 import json
+import math
 from pathlib import Path
 
 HERE = Path(__file__).parent
@@ -20,7 +21,28 @@ rows = list(csv.DictReader((HERE / "data" / "points.csv").open(encoding="utf-8")
 PUBLIC_FIELDS = ["city", "name", "type", "address", "phone", "lat", "lng", "tochka", "sorts"]
 fallback = json.dumps([{k: r[k] for k in PUBLIC_FIELDS} for r in rows],
                       ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-fallback_tochka = json.dumps([{k: r[k] for k in PUBLIC_FIELDS} for r in rows if r["tochka"] == "да"],
+# Ближайшее метро для минских «Точек» (data/metro-minsk.json). Подпись — только если станция не дальше 1,5 км.
+METRO = json.loads((HERE / "data" / "metro-minsk.json").read_text(encoding="utf-8"))
+
+
+def km(a_lat, a_lng, b_lat, b_lng):
+    la1, lo1, la2, lo2 = map(math.radians, (a_lat, a_lng, b_lat, b_lng))
+    h = math.sin((la2 - la1) / 2) ** 2 + math.cos(la1) * math.cos(la2) * math.sin((lo2 - lo1) / 2) ** 2
+    return 12742 * math.asin(math.sqrt(h))
+
+
+def with_metro(r):
+    out = {k: r[k] for k in PUBLIC_FIELDS}
+    if r["city"] == "Минск":
+        lat, lng = float(r["lat"]), float(r["lng"])
+        st = min(METRO, key=lambda s: km(lat, lng, s["lat"], s["lng"]))
+        dist = km(lat, lng, st["lat"], st["lng"])
+        if dist <= 1.5:
+            out["metro"] = {"name": st["name"], "line": st["line"], "km": round(dist, 2)}
+    return out
+
+
+fallback_tochka = json.dumps([with_metro(r) for r in rows if r["tochka"] == "да"],
                              ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 untappd = list(csv.DictReader((HERE / "data" / "untappd.csv").open(encoding="utf-8")))
 untappd_json = json.dumps(untappd, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
