@@ -148,6 +148,12 @@
   background-repeat: no-repeat; background-position: right 16px center;
 }
 #rg-wtb .rg-geo-note { font-size: 15px; color: var(--rg-muted); }
+#rg-wtb .rg-cities { display: grid; gap: 8px; }
+#rg-wtb .rg-cities__label { font-size: 15px; font-weight: 500; color: var(--rg-muted); }
+#rg-wtb .rg-cities__row { display: flex; flex-wrap: wrap; gap: 8px; }
+#rg-wtb .rg-cities .rg-chip { gap: 8px; }
+#rg-wtb .rg-cities .rg-chip span { font-size: 14px; font-weight: 600; color: var(--rg-muted); }
+#rg-wtb .rg-cities .rg-chip[aria-pressed="true"] span { color: #c9d5e0; }
 
 /* ---------- Фильтры и вид ---------- */
 #rg-wtb .rg-tools { background: var(--rg-ground); padding: 10px 0 8px; border-bottom: 1px solid var(--rg-line); }
@@ -370,7 +376,10 @@
 #rg-wtb .rg-tochka :focus-visible { outline-color: #fff; }
 
 /* ---------- Версия 3: выпадающий список «Точки» рядом с картой ---------- */
-#rg-wtb .rg-mapsec__grid { display: grid; gap: 16px; }
+#rg-wtb .rg-mapsec__grid { display: grid; gap: 12px; grid-template-areas: "list" "map"; }
+#rg-wtb .rg-mapsec__grid > .rg-map { grid-area: map; height: 46vh; min-height: 300px; max-height: 460px; }
+#rg-wtb .rg-plist-wrap { grid-area: list; }
+#rg-wtb .rg-plist__hint { margin: -2px 0 0; }
 #rg-wtb .rg-plist-wrap { display: grid; gap: 12px; align-content: start; }
 #rg-wtb .rg-plist__toggle {
   width: 100%; min-height: 52px; padding: 0 18px; border-radius: 12px; border: 1.5px solid var(--rg-ink); background: var(--rg-card);
@@ -445,7 +454,8 @@
   #rg-wtb .rg-zero::before { left: 70%; width: 80%; bottom: 10%; }
   #rg-wtb .rg-zero__title { font-size: 88px; }
   #rg-wtb .rg-beers { grid-template-columns: repeat(4, 1fr); }
-  #rg-wtb .rg-mapsec__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: start; }
+  #rg-wtb .rg-mapsec__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); grid-template-areas: "map list"; align-items: start; gap: 16px; }
+  #rg-wtb .rg-mapsec__grid > .rg-map { height: 72vh; min-height: 420px; max-height: 680px; }
   #rg-wtb .rg-plist { max-height: 620px; overflow-y: auto; padding-right: 4px; }
   #rg-wtb .rg-shelf { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin: 4px 0 0; padding: 4px 0 8px; overflow: visible; }
   #rg-wtb .rg-bcan__stage { height: 260px; }
@@ -462,7 +472,6 @@
 }
 @media (max-width: 640px) {
   #rg-wtb .rg-hero__photo { height: 172px; background-position: 46% 70%; }
-  #rg-wtb .rg-mapsec .rg-map { height: 64vh; }
 }
 @media (prefers-reduced-motion: reduce) {
   #rg-wtb *, #rg-wtb *::before, #rg-wtb *::after { animation: none !important; transition: none !important; }
@@ -480,6 +489,10 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
           <span>Найти рядом со мной</span>
         </button>
+        <div class="rg-cities">
+          <span class="rg-cities__label" id="rg-cities-label">или выберите город</span>
+          <div class="rg-cities__row" id="rg-cities" role="group" aria-labelledby="rg-cities-label"></div>
+        </div>
         <p class="rg-geo-note" id="rg-geo-note" role="status" hidden></p>
       </div>
     </div>
@@ -493,15 +506,15 @@
       </div>
       <div class="rg-nearest" id="rg-nearest" aria-live="polite" hidden></div>
       <div class="rg-mapsec__grid">
-        <div class="rg-map" id="rg-map" role="region" aria-label="Карта магазинов и баров «Точка»">
-          <div class="rg-map__msg" id="rg-map-msg">Загружаем карту…</div>
-        </div>
         <div class="rg-plist-wrap">
           <button class="rg-plist__toggle" type="button" id="rg-plist-toggle" aria-expanded="false" aria-controls="rg-plist">
-            <span>Все адреса «Точки» <b class="rg-num" id="rg-plist-n"></b></span>
+            <span><span id="rg-plist-label">Адреса</span> <b class="rg-num" id="rg-plist-n"></b></span>
             <svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l6 6 6-6"/></svg>
           </button>
           <div class="rg-plist" id="rg-plist" aria-label="Список адресов" hidden></div>
+        </div>
+        <div class="rg-map" id="rg-map" role="region" aria-label="Карта магазинов и баров «Точка»">
+          <div class="rg-map__msg" id="rg-map-msg">Загружаем карту…</div>
         </div>
       </div>
       <p class="rg-hint">Наличие лучше уточнить по телефону.</p>
@@ -623,7 +636,7 @@
   };
   var isZero = SORT_RULES.zero;
 
-  var state = { points: [], me: null };
+  var state = { points: [], me: null, city: null };
 
   /* ===== Данные ===== */
   function parseCsv(text) {
@@ -739,7 +752,7 @@
           });
           map.layer.addLayers(map.items);
           map.obj.addLayer(map.layer);
-          map.obj.fitBounds(map.layer.getBounds(), { padding: [12, 12] });
+          fitPoints(cityPoints());
         });
     };
     // Сначала Яндекс Карты; если ключ не подошёл (не тот адрес сайта) или Яндекс недоступен — OpenStreetMap.
@@ -770,7 +783,7 @@
           });
           map.layer.add(map.items);
           map.obj.geoObjects.add(map.layer);
-          map.obj.setBounds(map.layer.getBounds(), { checkZoomRange: true, zoomMargin: 30 });
+          fitPoints(cityPoints());
         }).catch(function (err) {
           console.warn('Яндекс Карты недоступны, показываем OpenStreetMap', err);
           if (map.obj && map.kind === 'ya') { try { map.obj.destroy(); } catch (e) {} }
@@ -781,6 +794,18 @@
       : useOsm();
     ready.then(function () { $('rg-map-msg').hidden = true; })
       .catch(function () { $('rg-map-msg').textContent = 'Карта не загрузилась. Обновите страницу или напишите нам в Telegram.'; });
+  }
+
+  function fitPoints(pts) {
+    pts = pts.filter(function (p) { return isFinite(p.lat); });
+    if (!map.obj || !pts.length) return;
+    if (map.kind === 'osm') {
+      if (pts.length === 1) map.obj.setView([pts[0].lat, pts[0].lng], 15);
+      else map.obj.fitBounds(pts.map(function (p) { return [p.lat, p.lng]; }), { padding: [24, 24], maxZoom: 15 });
+    } else {
+      if (pts.length === 1) map.obj.setCenter([pts[0].lat, pts[0].lng], 15);
+      else map.obj.setBounds(window.ymaps.util.bounds.fromPoints(pts.map(function (p) { return [p.lat, p.lng]; })), { checkZoomRange: true, zoomMargin: 30 });
+    }
   }
 
   function focusPoint(p, zoom) {
@@ -830,19 +855,32 @@
   var ICON_PHONE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>';
   var ICON_ROUTE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>';
 
+  // Список показывает один город (выбранный кнопкой) или, после «Найти рядом», все точки по расстоянию.
+  function cityPoints() {
+    return state.city ? state.points.filter(function (p) { return p.city === state.city; }) : state.points.slice();
+  }
   function renderList() {
-    var pts = state.points.slice(), html;
-    if (state.me) {
-      pts.sort(function (a, b) { return a.dist - b.dist; });
-      html = '<div><h3>Ближе к вам</h3><ul>' + pts.map(itemHtml).join('') + '</ul></div>';
-    } else {
-      var byCity = {};
-      pts.forEach(function (p) { (byCity[p.city] = byCity[p.city] || []).push(p); });
-      html = Object.keys(byCity).sort(function (a, b) { return byCity[b].length - byCity[a].length || a.localeCompare(b, 'ru'); }).map(function (c) {
-        return '<div><h3>' + esc(c) + '</h3><ul>' + byCity[c].sort(function (a, b) { return a.address.localeCompare(b.address, 'ru'); }).map(itemHtml).join('') + '</ul></div>';
-      }).join('');
-    }
-    $('rg-plist').innerHTML = html;
+    var pts = cityPoints(), near = !state.city;
+    if (state.me) pts.sort(function (a, b) { return a.dist - b.dist; });
+    else pts.sort(function (a, b) { return a.address.localeCompare(b.address, 'ru'); });
+    $('rg-plist-label').textContent = near ? 'Все адреса, ближе к вам' : 'Адреса: ' + state.city;
+    $('rg-plist-n').textContent = pts.length;
+    $('rg-plist').innerHTML = '<p class="rg-hint rg-plist__hint">Нажмите на адрес, чтобы увидеть его на карте.</p>' +
+      '<ul>' + pts.map(itemHtml).join('') + '</ul>';
+  }
+  function renderCities() {
+    var counts = {};
+    state.points.forEach(function (p) { counts[p.city] = (counts[p.city] || 0) + 1; });
+    $('rg-cities').innerHTML = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b, 'ru'); }).map(function (c) {
+      return '<button class="rg-chip" type="button" data-city="' + esc(c) + '" aria-pressed="' + (c === state.city) + '">' + esc(c) +
+        ' <span class="rg-num" aria-label="' + counts[c] + ' ' + plural(counts[c], 'адрес', 'адреса', 'адресов') + '">' + counts[c] + '</span></button>';
+    }).join('');
+  }
+  function setCity(c) {
+    state.city = c;
+    Array.prototype.forEach.call($('rg-cities').children, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-city') === c); });
+    renderList();
+    fitPoints(cityPoints());
   }
   function itemHtml(p) {
     var i = state.points.indexOf(p);
@@ -918,10 +956,26 @@
 
 
   /* ===== События ===== */
+  // Без геолокации главный путь — город: показываем подсказку, раскрываем список и ставим фокус на кнопку города.
+  function geoFailed(text) {
+    var note = $('rg-geo-note');
+    note.hidden = false; note.textContent = text;
+    if (!state.city) setCity(state.points.length ? $('rg-cities').firstChild.getAttribute('data-city') : null);
+    setListOpen(true);
+    var chip = $('rg-cities').querySelector('[aria-pressed="true"]') || $('rg-cities').firstChild;
+    if (chip) chip.focus();
+  }
+
   function bind() {
+    $('rg-cities').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-city]'); if (!b) return;
+      setCity(b.getAttribute('data-city'));
+      setListOpen(true);
+      scrollToMap();
+    });
     $('rg-locate').addEventListener('click', function () {
       var btn = this, note = $('rg-geo-note');
-      if (!navigator.geolocation) { note.hidden = false; note.textContent = 'Телефон не даёт определить место. Найдите свой город на карте.'; scrollToMap(); return; }
+      if (!navigator.geolocation) { geoFailed('Телефон не даёт определить место. Выберите город — адреса откроются ниже.'); return; }
       btn.setAttribute('aria-busy', 'true');
       btn.querySelector('span').textContent = 'Определяем, где вы…';
       navigator.geolocation.getCurrentPosition(function (pos) {
@@ -938,13 +992,13 @@
           '<div class="rg-nearest__addr">' + esc(p.type) + ' · г. ' + esc(p.city) + ', ' + esc(p.address) + '</div>' + (p.metro ? '<div class="rg-pitem__meta">' + metroHtml(p) + '</div>' : '') + '</div>' +
           '<div class="rg-actions">' + (p.phone ? '<a class="rg-btn rg-btn--dark" href="tel:' + esc(p.phone) + '">Позвонить</a>' : '') +
           '<a class="rg-btn rg-btn--line" href="' + routeUrl(p) + '" target="_blank" rel="noopener">Маршрут</a></div>';
+        state.city = null;
+        Array.prototype.forEach.call($('rg-cities').children, function (b) { b.setAttribute('aria-pressed', 'false'); });
         renderList(); setListOpen(true); showMe(); focusPoint(p, 15); highlight(state.points.indexOf(p)); scrollToMap();
       }, function () {
         btn.removeAttribute('aria-busy');
         btn.querySelector('span').textContent = 'Найти рядом со мной';
-        note.hidden = false;
-        note.textContent = 'Не получилось определить место. Найдите свой город на карте: её можно приближать.';
-        scrollToMap();
+        geoFailed('Не получилось определить место. Выберите город — адреса откроются ниже.');
       }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
     });
 
@@ -961,8 +1015,13 @@
   function start(points) {
     state.points = points;
     var n = points.length;
-    $('rg-count').textContent = n + ' ' + plural(n, 'адрес', 'адреса', 'адресов') + '. Нажмите на адрес, чтобы увидеть его на карте.';
-    $('rg-plist-n').textContent = n;
+    var cities = {};
+    points.forEach(function (p) { cities[p.city] = (cities[p.city] || 0) + 1; });
+    var nc = Object.keys(cities).length;
+    $('rg-count').textContent = n + ' ' + plural(n, 'адрес', 'адреса', 'адресов') + ' в ' + nc + ' ' + plural(nc, 'городе', 'городах', 'городах') + '.';
+    // По умолчанию — город, где больше всего точек (Минск): карта открывается на нём, а не на всей стране.
+    state.city = Object.keys(cities).sort(function (a, b) { return cities[b] - cities[a]; })[0] || null;
+    renderCities();
     renderList();
     setListOpen(window.innerWidth >= 900); // на компьютере список открыт рядом с картой, на телефоне свёрнут
     initMap();
