@@ -10,6 +10,7 @@ target_fingerprint: "sha256:45ef58ebd383c014eb67f9f437bf0dda7ba85266150766edd797
 target_path: /home/user/clod/where-to-buy/src/block-v3.html
 timestamp: 2026-10-05T09-37-20Z
 slug: where-to-buy-src-block-v3-html
+closed: true
 ---
 # Разбор: «Где купить Robim Good в банке», версия 3 (where-to-buy/src/block-v3.html)
 
