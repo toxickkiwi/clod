@@ -679,6 +679,7 @@
           map.kind = 'osm';
           // Страница листается одним пальцем, карта двигается двумя (подсказка появляется сама).
           map.obj = L.map(box, { gestureHandling: true, zoomSnap: 0.25 });
+          map.obj.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>'); // подпись без флага
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(map.obj);
           map.layer = L.markerClusterGroup({
             showCoverageOnHover: false, maxClusterRadius: 46, spiderfyOnMaxZoom: true,

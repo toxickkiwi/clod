@@ -710,6 +710,7 @@
           var L = window.L;
           map.kind = 'osm';
           map.obj = L.map(box, { scrollWheelZoom: false }).setView([53.9, 27.56], 11);
+          map.obj.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>'); // подпись без флага
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(map.obj);
           map.layer = L.layerGroup().addTo(map.obj);
         });
