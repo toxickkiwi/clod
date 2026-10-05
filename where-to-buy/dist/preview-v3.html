@@ -134,19 +134,7 @@
 #rg-wtb .rg-btn--dark:hover { background: #22384c; }
 #rg-wtb .rg-btn--line { background: transparent; color: var(--rg-ink); border: 1.5px solid var(--rg-ink); }
 #rg-wtb .rg-btn--line:hover { background: #e8eef4; }
-#rg-wtb .rg-btn--soft { background: transparent; border: 1px solid var(--rg-line-strong); width: 100%; }
-#rg-wtb .rg-btn--soft:hover { background: #e8eef4; }
 @keyframes rg-pulse { 50% { transform: translateY(-3px); } }
-
-#rg-wtb .rg-city { display: grid; gap: 6px; }
-#rg-wtb .rg-city label { font-size: 15px; color: var(--rg-muted); font-weight: 500; }
-#rg-wtb .rg-select {
-  height: 50px; width: 100%; padding: 0 44px 0 14px; border-radius: 10px;
-  border: 1px solid var(--rg-line-strong); background: var(--rg-card); font-size: 17px; font-weight: 600;
-  appearance: none; -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none' stroke='%2310202e' stroke-width='2'%3E%3Cpath d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 16px center;
-}
 #rg-wtb .rg-geo-note { font-size: 15px; color: var(--rg-muted); }
 #rg-wtb .rg-cities { display: grid; gap: 8px; }
 #rg-wtb .rg-cities__label { font-size: 15px; font-weight: 500; color: var(--rg-muted); }
@@ -156,70 +144,24 @@
 #rg-wtb .rg-cities .rg-chip[aria-pressed="true"] span { color: #c9d5e0; }
 
 /* ---------- Фильтры и вид ---------- */
-#rg-wtb .rg-tools { background: var(--rg-ground); padding: 10px 0 8px; border-bottom: 1px solid var(--rg-line); }
-#rg-wtb .rg-chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px 16px; margin: 0 -16px; }
-#rg-wtb .rg-chips::-webkit-scrollbar { display: none; }
-#rg-wtb .rg-chips + .rg-chips { margin-top: 8px; }
 #rg-wtb .rg-chip {
   flex: none; min-height: 44px; padding: 0 16px; border-radius: 22px;
   border: 1px solid var(--rg-line-strong); background: var(--rg-card);
   font-size: 16px; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;
 }
-#rg-wtb .rg-chip--sm { font-weight: 600; background: transparent; }
 #rg-wtb .rg-chip[aria-pressed="true"] { background: var(--rg-ink); border-color: var(--rg-ink); color: #fff; }
-#rg-wtb .rg-chip--zero[aria-pressed="true"] { background: var(--rg-zero); border-color: var(--rg-zero); }
-#rg-wtb .rg-chip .rg-x { width: 10px; height: 10px; }
-#rg-wtb .rg-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
-
-#rg-wtb .rg-view { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; background: #e3eaf1; border-radius: 10px; padding: 4px; }
-#rg-wtb .rg-view button { min-height: 44px; border: 0; border-radius: 7px; background: transparent; font-weight: 700; font-size: 16px; }
-#rg-wtb .rg-view button[aria-selected="true"] { background: var(--rg-card); box-shadow: 0 1px 3px rgba(16,32,46,.14); }
 
 /* ---------- Результаты ---------- */
-#rg-wtb .rg-results { padding: 16px 0 8px; scroll-margin-top: 0; }
-#rg-wtb .rg-summary { font-size: 15px; color: var(--rg-muted); margin-bottom: 12px; }
-#rg-wtb .rg-summary b { color: var(--rg-ink); }
-#rg-wtb .rg-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-#rg-wtb .rg-card {
-  background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: var(--rg-radius);
-  padding: 16px; display: grid; gap: 10px;
-}
-#rg-wtb .rg-card.is-in { animation: rg-in .42s cubic-bezier(.16,1,.3,1) both; }
 @keyframes rg-in { from { opacity: 0; transform: translateY(10px); } }
-#rg-wtb .rg-card__top { display: flex; align-items: flex-start; gap: 12px; }
-#rg-wtb .rg-card__n {
-  flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--rg-ink); color: #fff;
-  display: grid; place-items: center; font-weight: 700; font-size: 15px;
-}
-#rg-wtb .rg-card__n.is-zero { background: var(--rg-zero); }
-#rg-wtb .rg-card__main { flex: 1; min-width: 0; }
-#rg-wtb .rg-card__name { font-size: 19px; font-weight: 700; line-height: 1.2; }
-#rg-wtb .rg-card__addr { color: var(--rg-muted); font-size: 16px; }
-#rg-wtb .rg-card__dist { flex: none; font-weight: 700; font-size: 16px; white-space: nowrap; padding-top: 2px; }
-#rg-wtb .rg-meta { display: flex; flex-wrap: wrap; gap: 6px; }
-#rg-wtb .rg-badge { font-size: 14px; font-weight: 700; padding: 3px 9px; border-radius: 6px; background: var(--rg-ink); color: #fff; }
-#rg-wtb .rg-tag { font-size: 14px; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: #e8eef4; display: inline-flex; align-items: center; gap: 6px; }
-#rg-wtb .rg-tag.is-zero { background: var(--rg-zero); color: #fff; }
 #rg-wtb .rg-hint { font-size: 15px; color: var(--rg-muted); }
 #rg-wtb .rg-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 #rg-wtb .rg-actions > :only-child { grid-column: 1 / -1; }
-#rg-wtb .rg-more { margin-top: 12px; }
-#rg-wtb .rg-empty {
-  padding: 20px; border-radius: var(--rg-radius); border: 1px dashed var(--rg-line-strong);
-  display: grid; gap: 12px; justify-items: start;
-}
-#rg-wtb .rg-status { font-size: 15px; color: var(--rg-muted); padding: 8px 0 0; }
 
 #rg-wtb .rg-map {
   height: 62vh; min-height: 340px; max-height: 560px; border-radius: var(--rg-radius); overflow: hidden;
   background: #dfe8f0; border: 1px solid var(--rg-line); position: relative; z-index: 0;
 }
 #rg-wtb .rg-map__msg { position: absolute; inset: 0; display: grid; place-items: center; color: var(--rg-muted); font-size: 15px; padding: 20px; text-align: center; }
-#rg-wtb .rg-pin {
-  width: 30px; height: 30px; border-radius: 50%; background: var(--rg-ink); color: #fff; border: 2px solid #fff;
-  display: grid; place-items: center; font: 700 14px/1 var(--rg-font); box-shadow: 0 2px 6px rgba(16,32,46,.35);
-}
-#rg-wtb .rg-pin.is-zero { background: var(--rg-zero); }
 #rg-wtb .rg-me { width: 18px; height: 18px; border-radius: 50%; background: #2563eb; border: 3px solid #fff; box-shadow: 0 0 0 6px rgba(37,99,235,.2); }
 #rg-wtb .leaflet-container { font-family: var(--rg-font); }
 #rg-wtb .rg-pop { font: 15px/1.35 var(--rg-font); color: var(--rg-ink); }
@@ -229,14 +171,6 @@
 /* ---------- Блоки ниже списка ---------- */
 #rg-wtb .rg-section { padding: 40px 0 0; display: grid; gap: 14px; }
 #rg-wtb .rg-h2 { font-size: 28px; line-height: 1.05; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
-
-#rg-wtb .rg-tochka {
-  border-radius: var(--rg-radius); background: var(--rg-ink); color: #fff; padding: 20px;
-  display: grid; gap: 12px;
-}
-#rg-wtb .rg-tochka p { color: #c9d5e0; }
-#rg-wtb .rg-tochka .rg-btn--line { color: #fff; border-color: #fff; justify-self: start; }
-#rg-wtb .rg-tochka .rg-btn--line:hover { background: rgba(255,255,255,.08); }
 
 #rg-wtb .rg-zero {
   position: relative; overflow: hidden; border-radius: 20px; color: #fff; background: var(--rg-zero);
@@ -271,25 +205,9 @@
 @media (hover: hover) {
   #rg-wtb .rg-zcan:hover img { transform: translateY(-6px); }
   #rg-wtb .rg-zcan--lead:hover img { transform: translateY(-20px); }
-}
 
-#rg-wtb .rg-can {
-  aspect-ratio: 390 / 600; background-color: #4aa3e6; background-image: var(--rg-hero-img);
-  background-size: 430.77% auto; background-repeat: no-repeat;
 }
-#rg-wtb .rg-can--ipa { background-position: 7.36% 71.7%; }
-#rg-wtb .rg-can--bbq { background-position: 36.43% 81.67%; }
-#rg-wtb .rg-can--lager { background-position: 65.89% 23.33%; }
-#rg-wtb .rg-can--zipa { background-position: 90.31% 85%; }
-
-#rg-wtb .rg-beers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-#rg-wtb .rg-beer { background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: var(--rg-radius); overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
-#rg-wtb .rg-beer__body { padding: 12px; display: grid; gap: 2px; align-content: start; }
-#rg-wtb .rg-beer__name { font-weight: 700; font-size: 17px; line-height: 1.15; }
-#rg-wtb .rg-beer__style { font-size: 15px; color: var(--rg-muted); display: inline-flex; align-items: center; gap: 6px; }
-#rg-wtb .rg-beer__style::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--rg-accent); }
-#rg-wtb .rg-beer__stats { font-size: 15px; font-weight: 600; margin-top: 4px; }
-#rg-wtb .rg-link { font-weight: 700; color: var(--rg-zero); }
+#rg-wtb .rg-link { font-weight: 700; color: var(--rg-zero); display: inline-flex; align-items: center; min-height: 44px; }
 
 #rg-wtb .rg-social { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 #rg-wtb .rg-nopoint { border-radius: var(--rg-radius); border: 1px solid var(--rg-line-strong); padding: 20px; display: grid; gap: 12px; }
@@ -319,7 +237,8 @@
 #rg-wtb .rg-bcan__style { font-size: 15px; color: var(--rg-muted); display: flex; align-items: center; gap: 6px; }
 #rg-wtb .rg-bcan__style::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--rg-accent); flex: none; }
 #rg-wtb .rg-bcan__stats { font-size: 15px; font-weight: 600; margin-top: 2px; }
-@media (hover: hover) { #rg-wtb .rg-bcan:hover img { transform: translateY(-8px) rotate(-2deg); } }
+@media (hover: hover) { #rg-wtb .rg-bcan:hover img { transform: translateY(-8px) rotate(-2deg); } 
+}
 
 /* ---------- Untappd ---------- */
 #rg-wtb .rg-ut { background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: 16px; padding: 20px; display: grid; gap: 18px; }
@@ -348,10 +267,6 @@
 /* ---------- Версия 2: карта и выпадающий список «Точки» ---------- */
 #rg-wtb .rg-mapsec { padding: 28px 0 8px; display: grid; gap: 12px; }
 #rg-wtb .rg-mapsec__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 20px; }
-#rg-wtb .rg-legend { list-style: none; margin: 0; padding: 0; display: flex; gap: 16px; font-size: 15px; color: var(--rg-muted); }
-#rg-wtb .rg-legend li { display: flex; align-items: center; gap: 7px; }
-#rg-wtb .rg-legend__dot { width: 14px; height: 14px; border-radius: 50%; background: var(--rg-ink); border: 2px solid #fff; box-shadow: 0 1px 3px rgba(16,32,46,.35); }
-#rg-wtb .rg-legend__dot.is-tochka { background: var(--rg-orange); }
 #rg-wtb .rg-mapsec .rg-map { display: block; height: 72vh; min-height: 420px; max-height: 680px; }
 #rg-wtb .rg-dotpin { width: 22px; height: 22px; border-radius: 50%; background: var(--rg-ink); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(16,32,46,.4); }
 #rg-wtb .rg-dotpin.is-tochka { background: var(--rg-orange); }
@@ -361,20 +276,6 @@
 #rg-wtb .rg-nearest { background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: var(--rg-radius); padding: 14px 16px; display: grid; gap: 10px; }
 #rg-wtb .rg-nearest__name { font-weight: 700; font-size: 18px; }
 #rg-wtb .rg-nearest__addr { color: var(--rg-muted); font-size: 16px; }
-
-#rg-wtb .rg-tochka__toggle svg { transition: transform .2s ease; }
-#rg-wtb .rg-tochka__toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
-#rg-wtb .rg-tochka__list { display: grid; gap: 16px; margin-top: 4px; animation: rg-in .3s cubic-bezier(.16,1,.3,1) both; }
-#rg-wtb .rg-tochka__list h3 { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: #c9d5e0; text-transform: uppercase; letter-spacing: .04em; }
-#rg-wtb .rg-tochka__list ul { list-style: none; margin: 0; padding: 0; }
-#rg-wtb .rg-tochka__list li { display: flex; align-items: center; gap: 12px; border-top: 1px solid #2c4256; }
-#rg-wtb .rg-addr { flex: 1; min-width: 0; min-height: 52px; padding: 8px 0; display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; }
-#rg-wtb .rg-addr span { display: block; }
-#rg-wtb .rg-addr small { display: block; font-size: 14px; color: #c9d5e0; }
-#rg-wtb .rg-addr svg { flex: none; margin-left: auto; opacity: .7; }
-#rg-wtb .rg-addr:hover b { text-decoration: underline; }
-#rg-wtb .rg-addr__tel { flex: none; min-height: 44px; display: flex; align-items: center; color: #fff; font-size: 15px; font-weight: 600; white-space: nowrap; }
-#rg-wtb .rg-tochka :focus-visible { outline-color: #fff; }
 
 /* ---------- Версия 3: выпадающий список «Точки» рядом с картой ---------- */
 #rg-wtb .rg-mapsec__grid { display: grid; gap: 12px; grid-template-areas: "list" "map"; }
@@ -429,13 +330,27 @@
 }
 #rg-wtb .rg-fab.is-on { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 #rg-wtb .rg-fab:active { background: var(--rg-orange-press); }
-@media (min-width: 900px) { #rg-wtb .rg-shelf__progress, #rg-wtb .rg-fab { display: none; } }
+@media (min-width: 900px) { #rg-wtb .rg-shelf__progress, #rg-wtb .rg-fab { display: none; } 
+}
+
+/* ---------- Подложка под прозрачную шапку Tilda на телефоне ---------- */
+#rg-wtb .rg-headbg { display: none; }
+@media (max-width: 640px) {
+  #rg-wtb .rg-headbg {
+    display: block; position: fixed; inset: 0 0 auto 0; height: 80px; z-index: 950; pointer-events: none;
+    background: rgba(244, 248, 251, .96); box-shadow: 0 1px 0 var(--rg-line), 0 4px 12px rgba(16, 32, 46, .06);
+    opacity: 0; transition: opacity .2s ease;
+  }
+  #rg-wtb .rg-headbg.is-on { opacity: 1; }
+
+}
 
 /* ---------- Подвал как на сайте ---------- */
 #rg-wtb .rg-contact { margin-top: 56px; background: #111111; color: #fff; text-align: center; padding: 64px 16px; }
 #rg-wtb .rg-contact h2 { font-size: 26px; line-height: 1.23; font-weight: 600; margin-bottom: 24px; }
 #rg-wtb .rg-contact__text { font-size: 20px; line-height: 1.55; }
-#rg-wtb .rg-contact__text a { text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.35); }
+#rg-wtb .rg-contact__text a { text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.35); display: inline-block; padding: 11px 0 7px; }
+#rg-wtb .rg-contact__text { line-height: 1.3; }
 #rg-wtb .rg-contact__text a:hover { border-bottom-color: #fff; }
 #rg-wtb .rg-icons { display: flex; justify-content: center; gap: 4px; margin-top: 20px; }
 #rg-wtb .rg-ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; transition: opacity .15s ease; }
@@ -444,12 +359,14 @@
 #rg-wtb .rg-strip { height: 115px; background: #fbb040 url(https://thb.tildacdn.biz/tild3534-3561-4334-a361-613065646235/-/resize/1680x/htader.jpg) center / cover no-repeat; }
 #rg-wtb .rg-strip__inner { max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 #rg-wtb .rg-strip__text { order: 2; text-align: right; font-weight: 700; font-size: 16px; line-height: 1.55; color: rgba(0,0,0,.75); }
-#rg-wtb .rg-strip__text a { text-decoration: none; }
+#rg-wtb .rg-strip__text a { text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
+#rg-wtb .rg-strip__text { line-height: 1.2; }
 #rg-wtb .rg-strip .rg-icons { margin: 0; }
 @media (min-width: 640px) {
   #rg-wtb .rg-strip { height: 122px; }
   #rg-wtb .rg-strip__inner { justify-content: flex-end; gap: 24px; }
   #rg-wtb .rg-strip__text { order: 0; font-size: 21px; }
+
 }
 
 /* ---------- Компьютер ---------- */
@@ -458,13 +375,6 @@
   #rg-wtb .rg-hero__photo { order: 2; height: 380px; border-radius: 16px; background-size: cover; background-position: 50% 40%; }
   #rg-wtb .rg-hero__body { padding: 0; }
   #rg-wtb .rg-hero h1 { font-size: 56px; }
-  #rg-wtb .rg-tools { position: sticky; top: 0; z-index: 4; }
-  #rg-wtb .rg-tools .rg-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  #rg-wtb .rg-chips { margin: 0; padding: 2px 0; overflow: visible; }
-  #rg-wtb .rg-chips + .rg-chips { margin-top: 0; }
-  #rg-wtb .rg-chips:not([hidden]) + .rg-chips::before { content: ""; width: 1px; height: 28px; background: var(--rg-line-strong); align-self: center; margin-right: 4px; }
-  #rg-wtb .rg-view { display: none; }
-  #rg-wtb .rg-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; align-items: start; }
   #rg-wtb .rg-below { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
   #rg-wtb .rg-below > .rg-section--wide { grid-column: 1 / -1; }
   #rg-wtb .rg-zero { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: "body cans" "cta cans"; padding: 48px 48px 40px; column-gap: 40px; }
@@ -476,7 +386,6 @@
   #rg-wtb .rg-zcan b { font-size: 19px; }
   #rg-wtb .rg-zero::before { left: 70%; width: 80%; bottom: 10%; }
   #rg-wtb .rg-zero__title { font-size: 88px; }
-  #rg-wtb .rg-beers { grid-template-columns: repeat(4, 1fr); }
   #rg-wtb .rg-mapsec__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); grid-template-areas: "map list"; align-items: start; gap: 16px; }
   #rg-wtb .rg-mapsec__grid > .rg-map { height: 72vh; min-height: 420px; max-height: 680px; }
   #rg-wtb .rg-plist { max-height: 620px; overflow-y: auto; padding-right: 4px; }
@@ -487,17 +396,20 @@
   #rg-wtb .rg-ut__list { grid-template-columns: repeat(4, 1fr); gap: 0 24px; }
   #rg-wtb .rg-ut__item { grid-template-columns: 1fr; align-content: start; gap: 8px; }
   #rg-wtb .rg-ut__item .rg-btn { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 4px; }
+
 }
 /* Шапка Tilda закреплена: на компьютере (больше 980px) — тёмная полоса 80px, на телефоне (до 640px) — прозрачная 80px */
 @media (min-width: 981px) {
   #rg-wtb .rg-hero { padding-top: 80px; }
-  #rg-wtb .rg-tools { top: 80px; }
+
 }
 @media (max-width: 640px) {
   #rg-wtb .rg-hero__photo { height: 172px; background-position: 46% 70%; }
+
 }
 @media (prefers-reduced-motion: reduce) {
   #rg-wtb *, #rg-wtb *::before, #rg-wtb *::after { animation: none !important; transition: none !important; }
+
 }
 </style>
 
@@ -614,6 +526,10 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
     <span id="rg-fab-text">Найти ближайшую «Точку»</span>
   </button>
+
+  <div class="rg-headbg" id="rg-headbg" aria-hidden="true"></div>
+
+  <noscript><p class="rg-wrap rg-lead">Адреса и карта показываются с включённым JavaScript. Узнать ближайшую «Точку» можно по телефону <a href="tel:+375296611701">+375 29 661-17-01</a>.</p></noscript>
 
   <footer>
     <section class="rg-contact" aria-labelledby="rg-contact-h">
@@ -889,7 +805,7 @@
 
   /* ===== Адреса «Точки» ===== */
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>';
-  var LINE_COLOR = { 1: '#1d5fbf', 2: '#d3302f', 3: '#2f8a3c' };
+  var LINE_COLOR = { 1: '#1d5fbf', 2: '#d3302f', 3: '#2b7f37' };
   function metroHtml(p) {
     if (!p.metro) return '';
     return '<span class="rg-metro" style="--line:' + (LINE_COLOR[p.metro.line] || 'var(--rg-ink)') + '"><i aria-hidden="true">' + p.metro.line + '</i>м. ' + esc(p.metro.name) +
@@ -1078,6 +994,20 @@
       io.observe($('rg-map'));
     } else initMap();
     bindMobile();
+    bindHeaderBackdrop();
+  }
+
+  // Шапка сайта на телефоне прозрачная и закреплена сверху: когда фото ушло вверх, подкладываем под неё светлую полосу,
+  // чтобы логотип и кнопка меню не наезжали на текст. Саму шапку Tilda блок не трогает.
+  function bindHeaderBackdrop() {
+    var bg = $('rg-headbg'), photo = root.querySelector('.rg-hero__photo');
+    function update() {
+      var r = root.getBoundingClientRect(), p = photo.getBoundingClientRect();
+      bg.classList.toggle('is-on', p.bottom < 80 && r.bottom > 80);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
   }
 
   /* ===== Телефон: индикатор полки и кнопка под большим пальцем ===== */
