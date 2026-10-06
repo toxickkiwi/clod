@@ -369,6 +369,9 @@
   #rg-wtb .rg-hero__photo { height: 172px; background-position: 46% 70%; }
   #rg-wtb .rg-mapsec .rg-map { height: 64vh; }
 }
+#rg-wtb img[data-rg-img]:not(.is-ready) { opacity: 0; filter: none !important; }
+#rg-wtb img[data-rg-img].is-ready { animation: rg-fade .3s ease both; }
+@keyframes rg-fade { from { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   #rg-wtb *, #rg-wtb *::before, #rg-wtb *::after { animation: none !important; transition: none !important; }
 }
@@ -436,9 +439,9 @@
             <p class="rg-zero__text">Лагер, IPA и стаут. 0% алкоголя.</p>
           </div>
           <ul class="rg-zero__cans">
-            <li class="rg-zcan"><img data-rg-img="zero-lager" width="220" height="576" alt="Банка Zero Lager" loading="lazy" decoding="async"><b>Zero Lager</b><span>Лагер</span></li>
-            <li class="rg-zcan rg-zcan--lead"><img data-rg-img="zero-ipa" width="220" height="584" alt="Банка Zero IPA" loading="lazy" decoding="async"><b>Zero IPA</b><span>IPA</span></li>
-            <li class="rg-zcan"><img data-rg-img="zero-stout" width="220" height="579" alt="Банка Zero Stout" loading="lazy" decoding="async"><b>Zero Stout</b><span>Стаут</span></li>
+            <li class="rg-zcan"><img data-rg-img="zero-lager" width="220" height="576" alt="Банка Zero Lager" decoding="async"><b>Zero Lager</b><span>Лагер</span></li>
+            <li class="rg-zcan rg-zcan--lead"><img data-rg-img="zero-ipa" width="220" height="584" alt="Банка Zero IPA" decoding="async"><b>Zero IPA</b><span>IPA</span></li>
+            <li class="rg-zcan"><img data-rg-img="zero-stout" width="220" height="579" alt="Банка Zero Stout" decoding="async"><b>Zero Stout</b><span>Стаут</span></li>
           </ul>
           <div class="rg-zero__cta"><button class="rg-btn" type="button" id="rg-zero-go">Где купить Zero</button></div>
         </div>
@@ -856,7 +859,13 @@
     initMap();
   }
 
-  Array.prototype.forEach.call(root.querySelectorAll('[data-rg-img]'), function (img) { img.src = RG_IMG[img.getAttribute('data-rg-img')]; });
+  // Банка и её тень показываются, только когда картинка готова: иначе мобильные браузеры рисуют тень квадратом.
+  Array.prototype.forEach.call(root.querySelectorAll('[data-rg-img]'), function (img) {
+    function ready() { img.classList.add('is-ready'); }
+    img.addEventListener('load', function () { (img.decode ? img.decode() : Promise.resolve()).then(ready, ready); });
+    img.src = RG_IMG[img.getAttribute('data-rg-img')];
+    if (img.complete && img.naturalWidth) ready();
+  });
   bind();
   load();
 })();
