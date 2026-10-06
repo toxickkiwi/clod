@@ -1110,8 +1110,9 @@
   }
 
   function bind() {
-    $('rg-city').addEventListener('change', function () { setCity(this.value); setListOpen(true); });
-    $('rg-district').addEventListener('change', function () { setDistrict(this.value); setListOpen(true); });
+    // Выбор города или района только двигает карту; список адресов раскрывается своей кнопкой.
+    $('rg-city').addEventListener('change', function () { setCity(this.value); });
+    $('rg-district').addEventListener('change', function () { setDistrict(this.value); });
     $('rg-locate').addEventListener('click', function () {
       var btn = this, note = $('rg-geo-note');
       if (!navigator.geolocation) { geoFailed('Телефон не даёт определить место. Выберите город под картой.'); return; }
