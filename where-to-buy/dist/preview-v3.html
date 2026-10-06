@@ -1091,7 +1091,9 @@
       var b = e.target.closest('[data-city]'); if (!b) return;
       setCity(b.getAttribute('data-city'));
       setListOpen(true);
-      scrollToMap();
+      // В городе с районами (Минск) сначала показываем выбор района, в остальных — сразу карту.
+      var dw = $('rg-districts-wrap');
+      if (!dw.hidden) dw.scrollIntoView({ behavior: 'smooth', block: 'center' }); else scrollToMap();
     });
     $('rg-locate').addEventListener('click', function () {
       var btn = this, note = $('rg-geo-note');
