@@ -210,6 +210,9 @@
 #rg-wtb .rg-link { font-weight: 700; color: var(--rg-zero); display: inline-flex; align-items: center; min-height: 44px; }
 
 #rg-wtb .rg-social { display: grid; grid-template-columns: 1fr; gap: 8px; }
+#rg-wtb .rg-follow { text-align: center; }
+#rg-wtb .rg-follow__note { margin: 0 auto; display: flex; align-items: center; gap: 12px; width: 100%; max-width: 520px; font-size: 14px; color: var(--rg-muted); white-space: nowrap; }
+#rg-wtb .rg-follow__note::before, #rg-wtb .rg-follow__note::after { content: ""; flex: 1; height: 1px; background: var(--rg-line-strong); min-width: 24px; }
 #rg-wtb .rg-nopoint { border-radius: var(--rg-radius); border: 1px solid var(--rg-line-strong); padding: 20px; display: grid; gap: 12px; }
 #rg-wtb .rg-nopoint .rg-btn--dark { min-height: 50px; font-size: 17px; }
 
@@ -262,7 +265,7 @@
 #rg-wtb .rg-ut__quote { margin: 0; padding: 16px 18px; background: var(--rg-ground); border-radius: 12px; }
 #rg-wtb .rg-ut__quote blockquote { margin: 0; font-size: 18px; line-height: 1.4; }
 #rg-wtb .rg-ut__quote figcaption { margin-top: 6px; font-size: 15px; color: var(--rg-muted); }
-#rg-wtb .rg-ut__note { font-size: 14px; color: var(--rg-muted); }
+#rg-wtb .rg-ut__note { font-size: 14px; color: var(--rg-muted); white-space: nowrap; }
 
 /* ---------- Версия 2: карта и выпадающий список «Точки» ---------- */
 #rg-wtb .rg-mapsec { padding: 28px 0 8px; display: grid; gap: 12px; }
@@ -313,7 +316,7 @@
 #rg-wtb .rg-pitem__main { flex: 1; min-width: 0; min-height: 48px; background: none; border: 0; padding: 4px 0; text-align: left; cursor: pointer; display: grid; align-content: center; gap: 1px; }
 #rg-wtb .rg-pitem__main b { font-size: 16px; line-height: 1.25; }
 #rg-wtb .rg-pitem__main:hover b { text-decoration: underline; text-underline-offset: 3px; }
-#rg-wtb .rg-pitem__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; font-size: 14px; color: var(--rg-muted); }
+#rg-wtb .rg-pitem__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; font-size: 14px; color: var(--rg-muted); white-space: nowrap; }
 #rg-wtb .rg-metro { display: inline-flex; align-items: center; gap: 5px; color: var(--rg-ink); }
 #rg-wtb .rg-metro i { width: 17px; height: 17px; border-radius: 50%; background: var(--line); color: #fff; font: 700 11px/17px var(--rg-font); font-style: normal; text-align: center; flex: none; }
 #rg-wtb .rg-pitem__dist { font-weight: 700; color: var(--rg-ink); }
@@ -448,7 +451,7 @@
 #rg-wtb .rg-modal__rating b { font-size: 20px; color: var(--rg-ink); }
 #rg-wtb .rg-modal__body { grid-column: 1 / -1; display: grid; gap: 12px; margin-top: 14px; }
 #rg-wtb .rg-modal__desc { margin: 0; font-size: 17px; line-height: 1.45; max-width: 60ch; }
-#rg-wtb .rg-modal__src { margin: -4px 0 0; font-size: 14px; color: var(--rg-muted); }
+#rg-wtb .rg-modal__src { margin: -4px 0 0; font-size: 14px; color: var(--rg-muted); white-space: nowrap; }
 #rg-wtb .rg-modal__actions { display: grid; gap: 8px; margin-top: 4px; }
 #rg-wtb .rg-modal__close { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #eef3f8; color: var(--rg-ink); display: grid; place-items: center; cursor: pointer; }
 #rg-wtb .rg-modal__close:hover { background: #dfe8f0; }
@@ -576,11 +579,12 @@
         </div>
       </section>
 
-      <section class="rg-section rg-section--wide" aria-labelledby="rg-social-h">
+      <section class="rg-section rg-section--wide rg-follow" aria-labelledby="rg-social-h">
         <h2 class="rg-h2" id="rg-social-h">Следите за новинками</h2>
         <div class="rg-social">
           <a class="rg-btn rg-btn--dark" href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener">Instagram</a>
         </div>
+        <p class="rg-follow__note">новые сорта и новости пивоварни</p>
       </section>
     </div>
   </div>
