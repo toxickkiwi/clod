@@ -97,6 +97,9 @@
   -webkit-text-size-adjust: 100%;
 }
 #rg-wtb *, #rg-wtb *::before, #rg-wtb *::after { box-sizing: border-box; }
+/* Элементы Яндекс-карты рассчитаны на обычную модель размеров — иначе «+» и «−» съезжают в кнопках */
+#rg-wtb ymaps, #rg-wtb ymaps::before, #rg-wtb ymaps::after { box-sizing: content-box; }
+#rg-wtb ymaps .rg-pop, #rg-wtb ymaps .rg-pop *, #rg-wtb ymaps .rg-dotpin, #rg-wtb ymaps .rg-cluster { box-sizing: border-box; }
 /* Бегущая строка-разделитель, как на старой странице. Полоса во всю ширину экрана. */
 #rg-wtb { overflow-x: hidden; overflow-x: clip; }
 #rg-wtb .rg-band { margin: 28px calc(50% - 50vw) 0; height: 40px; background: var(--rg-orange); color: var(--rg-ink); overflow: hidden; display: flex; align-items: center; }
@@ -348,12 +351,6 @@
 #rg-wtb .rg-pop .rg-metro { margin-top: 2px; }
 
 /* ---------- Телефон: жесты на карте, листание полки, кнопка под большим пальцем ---------- */
-#rg-wtb .rg-map__gesture {
-  position: absolute; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 24px; text-align: center;
-  background: rgba(16,32,46,.68); color: #fff; font: 600 18px/1.3 var(--rg-font);
-  opacity: 0; pointer-events: none; transition: opacity .2s ease;
-}
-#rg-wtb .rg-map__gesture.is-on { opacity: 1; }
 #rg-wtb .rg-shelf__progress { height: 3px; margin: 6px 0 2px; border-radius: 2px; background: var(--rg-line); overflow: hidden; }
 #rg-wtb .rg-shelf__progress i { display: block; height: 100%; width: 40%; border-radius: 2px; background: var(--rg-ink); transform-origin: left; will-change: transform; }
 #rg-wtb .rg-fab {
@@ -396,7 +393,7 @@
 #rg-wtb .rg-contact__more b { color: #fff; font-weight: 600; }
 #rg-wtb .rg-contact__more a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.45); display: inline-block; padding: 12px 0; margin: -12px 0; }
 #rg-wtb .rg-contact__more p { margin: 0; padding: 4px 0; }
-#rg-wtb .rg-warning { margin: 10px auto 0; max-width: 520px; padding-top: 10px; border-top: 1px solid #333; font-size: 13px; color: #bdbdbd; }
+#rg-wtb .rg-warning { margin: 0; padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); text-align: center; font-size: 13px; line-height: 1.4; color: var(--rg-muted); background: var(--rg-ground); }
 #rg-wtb .rg-strip { height: 72px; background: #fbb040 url(https://thb.tildacdn.biz/tild3534-3561-4334-a361-613065646235/-/resize/1680x/htader.jpg) center / cover no-repeat; }
 @media (min-width: 640px) {
   #rg-wtb .rg-strip { height: 96px; }
@@ -645,12 +642,12 @@
         <a class="rg-ico" href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100ZM25 39.3918C25 31.4558 31.4566 25 39.3918 25H60.6082C68.5442 25 75 31.4566 75 39.3918V60.8028C75 68.738 68.5442 75.1946 60.6082 75.1946H39.3918C31.4558 75.1946 25 68.738 25 60.8028V39.3918ZM36.9883 50.0054C36.9883 42.8847 42.8438 37.0922 50.0397 37.0922C57.2356 37.0922 63.0911 42.8847 63.0911 50.0054C63.0911 57.1252 57.2356 62.9177 50.0397 62.9177C42.843 62.9177 36.9883 57.1252 36.9883 50.0054ZM41.7422 50.0054C41.7422 54.5033 45.4641 58.1638 50.0397 58.1638C54.6153 58.1638 58.3372 54.5041 58.3372 50.0054C58.3372 45.5066 54.6145 41.8469 50.0397 41.8469C45.4641 41.8469 41.7422 45.5066 41.7422 50.0054ZM63.3248 39.6355C65.0208 39.6355 66.3956 38.2606 66.3956 36.5646C66.3956 34.8687 65.0208 33.4938 63.3248 33.4938C61.6288 33.4938 60.2539 34.8687 60.2539 36.5646C60.2539 38.2606 61.6288 39.6355 63.3248 39.6355Z" fill="#ffffff"/></svg></a>
       </div>
       <div class="rg-contact__more">
-        <p><b>Нет «Точки» в вашем городе?</b> <a href="https://t.me/+375296611701" target="_blank" rel="noopener">Напишите нам</a>, где вы хотите Robim Good, — передадим партнёрам.</p>
+        <p><a href="mailto:info@robimgood.beer?subject=%D0%94%D0%BB%D1%8F%20%D0%BE%D1%82%D0%B4%D0%B5%D0%BB%D0%B0%20%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3%D0%B0">Связаться с отделом маркетинга</a></p>
         <p><b>Хотите продавать наше пиво?</b> <a href="mailto:info@robimgood.beer?subject=%D0%A5%D0%BE%D1%82%D0%B8%D0%BC%20%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D1%8C%20Robim%20Good">info@robimgood.beer</a></p>
       </div>
-      <p class="rg-warning">Чрезмерное употребление пива вредит вашему здоровью</p>
     </section>
     <div class="rg-strip" aria-hidden="true"></div>
+    <p class="rg-warning">Чрезмерное употребление пива вредит вашему здоровью</p>
   </footer>
 </div>
 
@@ -771,16 +768,11 @@
     var pts = state.points.filter(function (p) { return isFinite(p.lat); });
     var useOsm = function () {
       return (loadCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'), loadCss('https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css'), loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')).then(function () {
-          loadCss('https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.css');
-          return Promise.all([
-            loadScript('https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js'),
-            loadScript('https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.js')
-          ]);
+          return loadScript('https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js');
         }).then(function () {
           var L = window.L;
           map.kind = 'osm';
-          // Страница листается одним пальцем, карта двигается двумя (подсказка появляется сама).
-          map.obj = L.map(box, { gestureHandling: true, zoomSnap: 0.25 });
+          map.obj = L.map(box, { zoomSnap: 0.25 });
           map.obj.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>'); // подпись без флага
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(map.obj);
           map.layer = L.markerClusterGroup({
@@ -815,18 +807,13 @@
           map.obj.behaviors.disable('scrollZoom');
           // На маленькой карте подсказка о точке открывается панелью снизу, а не обрезается у края.
           map.obj.options.set('balloonPanelMaxMapArea', 160000);
-          if ('ontouchstart' in window) {
-            // Страница листается одним пальцем, карта двигается двумя — и говорит об этом.
-            map.obj.behaviors.disable('drag');
-            var hint = document.createElement('div'), hideT;
-            hint.className = 'rg-map__gesture'; hint.textContent = 'Чтобы двигать карту, используйте два пальца';
-            box.appendChild(hint);
-            box.addEventListener('touchstart', function (e) {
-              clearTimeout(hideT);
-              if (e.touches.length === 1) { hint.classList.add('is-on'); hideT = setTimeout(function () { hint.classList.remove('is-on'); }, 1400); }
-              else hint.classList.remove('is-on');
-            }, { passive: true });
-          }
+          // Кнопка Яндекса «Открыть в Картах» открывает поиск «Точки» в том месте, которое сейчас на карте.
+          box.addEventListener('click', function (e) {
+            if (!e.target.closest || !e.target.closest('[class*="gotoymaps"]')) return;
+            e.preventDefault(); e.stopPropagation();
+            var c = map.obj.getCenter();
+            window.open('https://yandex.by/maps/?text=' + encodeURIComponent('Точка') + '&ll=' + c[1].toFixed(5) + '%2C' + c[0].toFixed(5) + '&z=' + Math.round(map.obj.getZoom()), '_blank', 'noopener');
+          }, true);
           var Pin = ym.templateLayoutFactory.createClass('<div class="rg-dotpin {{ properties.cls }}"></div>');
           // Группы точек в том же стиле, что и на карте OpenStreetMap.
           var ClusterIcon = ym.templateLayoutFactory.createClass('<div class="rg-cluster is-tochka" style="margin:-20px 0 0 -20px">{{ properties.geoObjects.length }}</div>');
