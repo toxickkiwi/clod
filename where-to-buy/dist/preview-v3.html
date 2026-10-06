@@ -145,12 +145,6 @@
 #rg-wtb .rg-btn--line:hover { background: #e8eef4; }
 @keyframes rg-pulse { 50% { transform: translateY(-3px); } }
 #rg-wtb .rg-geo-note { font-size: 15px; color: var(--rg-muted); }
-#rg-wtb .rg-cities { display: grid; gap: 8px; }
-#rg-wtb .rg-cities__label { font-size: 15px; font-weight: 500; color: var(--rg-muted); }
-#rg-wtb .rg-cities__row { display: flex; flex-wrap: wrap; gap: 8px; }
-#rg-wtb .rg-cities .rg-chip { gap: 8px; }
-#rg-wtb .rg-cities .rg-chip span { font-size: 14px; font-weight: 600; color: var(--rg-muted); }
-#rg-wtb .rg-cities .rg-chip[aria-pressed="true"] span { color: #c9d5e0; }
 
 /* ---------- Фильтры и вид ---------- */
 #rg-wtb .rg-chip {
@@ -309,15 +303,19 @@
 #rg-wtb .rg-plist { display: grid; gap: 14px; animation: rg-in .3s cubic-bezier(.16,1,.3,1) both; }
 #rg-wtb .rg-plist h3 { margin: 0 0 6px; font-size: 14px; font-weight: 700; color: var(--rg-muted); text-transform: uppercase; letter-spacing: .05em; display: flex; gap: 8px; }
 #rg-wtb .rg-plist h3 span { color: var(--rg-ink); }
-#rg-wtb .rg-districts-wrap { display: grid; gap: 8px; margin-top: 6px; animation: rg-in .3s cubic-bezier(.16,1,.3,1) both; }
-#rg-wtb .rg-districts-wrap[hidden] { display: none; }
 #rg-wtb .rg-pgroups { display: grid; gap: 18px; align-items: start; }
-#rg-wtb .rg-districts { display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 2px 16px 4px; scrollbar-width: none; }
-#rg-wtb .rg-districts::-webkit-scrollbar { display: none; }
-#rg-wtb .rg-districts .rg-chip { min-height: 40px; padding: 0 14px; font-size: 15px; position: relative; }
-#rg-wtb .rg-districts .rg-chip::after { content: ""; position: absolute; inset: -2px 0; } /* зона нажатия 44px */
-#rg-wtb .rg-districts .rg-chip span { font-weight: 600; color: var(--rg-muted); }
-#rg-wtb .rg-districts .rg-chip[aria-pressed="true"] span { color: #c9d5e0; }
+#rg-wtb .rg-filters { display: grid; grid-template-columns: 1fr; gap: 8px; }
+#rg-wtb .rg-filters.is-two { grid-template-columns: 1fr 1fr; }
+#rg-wtb .rg-select { position: relative; display: block; min-width: 0; }
+#rg-wtb .rg-select[hidden] { display: none; }
+#rg-wtb .rg-select__label { position: absolute; left: 14px; top: 7px; font-size: 12px; font-weight: 600; color: var(--rg-muted); pointer-events: none; }
+#rg-wtb .rg-select select {
+  -webkit-appearance: none; appearance: none; width: 100%; min-height: 52px; padding: 20px 36px 5px 14px; margin: 0;
+  border: 1px solid var(--rg-line-strong); border-radius: 12px; background: var(--rg-card); color: var(--rg-ink);
+  font: 700 16px/1.2 var(--rg-font); text-overflow: ellipsis; cursor: pointer;
+}
+#rg-wtb .rg-select::after { content: ""; position: absolute; right: 15px; top: 50%; width: 8px; height: 8px; margin-top: -6px; border: solid var(--rg-ink); border-width: 0 2px 2px 0; transform: rotate(45deg); pointer-events: none; }
+#rg-wtb .rg-select select:hover { border-color: var(--rg-ink); }
 #rg-wtb .rg-plist ul { list-style: none; margin: 0; padding: 0; background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: var(--rg-radius); overflow: hidden; }
 #rg-wtb .rg-pitem { display: flex; align-items: center; gap: 6px; padding: 6px 8px 6px 14px; transition: background-color .2s ease; }
 #rg-wtb .rg-pitem + .rg-pitem { border-top: 1px solid var(--rg-line); }
@@ -415,7 +413,7 @@
   #rg-wtb .rg-mapsec__grid { gap: 16px; }
   #rg-wtb .rg-mapsec__grid > .rg-map { height: 62vh; min-height: 420px; max-height: 600px; }
   #rg-wtb .rg-pgroups { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px 16px; }
-  #rg-wtb .rg-districts { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
+  #rg-wtb .rg-filters, #rg-wtb .rg-filters.is-two { grid-template-columns: repeat(2, 260px); }
   #rg-wtb .rg-shelf { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin: 4px 0 0; padding: 4px 0 8px; overflow: visible; }
   #rg-wtb .rg-bcan__stage { height: 260px; }
   #rg-wtb .rg-ut { padding: 28px 32px; }
@@ -497,16 +495,8 @@
         <p class="rg-lead" id="rg-lead">Магазины и бары сети «Точка» в Минске, Лиде и Бобруйске.</p>
         <button class="rg-btn rg-btn--primary" type="button" id="rg-locate">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-          <span>Найти рядом со мной</span>
+          <span>Найти ближайшую «Точку»</span>
         </button>
-        <div class="rg-cities">
-          <span class="rg-cities__label" id="rg-cities-label">или выберите город</span>
-          <div class="rg-cities__row" id="rg-cities" role="group" aria-labelledby="rg-cities-label"></div>
-          <div class="rg-districts-wrap" id="rg-districts-wrap" hidden>
-            <span class="rg-cities__label" id="rg-districts-label">Районы Минска</span>
-            <div class="rg-districts" id="rg-districts" role="group" aria-labelledby="rg-districts-label"></div>
-          </div>
-        </div>
         <p class="rg-geo-note" id="rg-geo-note" role="status" hidden></p>
       </div>
     </div>
@@ -521,6 +511,12 @@
       <div class="rg-nearest" id="rg-nearest" aria-live="polite" hidden></div>
       <div class="rg-mapsec__grid">
         <div class="rg-plist-wrap">
+          <div class="rg-filters">
+            <label class="rg-select"><span class="rg-select__label">Город</span>
+              <select id="rg-city"></select></label>
+            <label class="rg-select" id="rg-district-field" hidden><span class="rg-select__label">Район</span>
+              <select id="rg-district"></select></label>
+          </div>
           <button class="rg-plist__toggle" type="button" id="rg-plist-toggle" aria-expanded="false" aria-controls="rg-plist">
             <span><span id="rg-plist-label">Адреса</span> <b class="rg-num" id="rg-plist-n"></b></span>
             <svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l6 6 6-6"/></svg>
@@ -942,14 +938,12 @@
     names.sort(function (a, b) { return (a === 'Другие адреса') - (b === 'Другие адреса') || a.localeCompare(b, 'ru'); });
     $('rg-plist-label').textContent = near ? 'Все адреса, ближе к вам' : 'Адреса: ' + state.city + (state.district ? ' — ' + state.district : '');
     $('rg-plist-n').textContent = pts.length;
-    // Кнопки районов — под выбором города, видны только когда выбран Минск.
-    $('rg-districts-wrap').hidden = !useGroups;
-    $('rg-districts').innerHTML = !useGroups ? '' :
-      '<button class="rg-chip" type="button" data-district="" aria-pressed="' + !state.district + '">Все районы</button>' +
-      names.map(function (n) {
-        return '<button class="rg-chip" type="button" data-district="' + esc(n) + '" aria-pressed="' + (n === state.district) + '">' + esc(n) +
-          ' <span class="rg-num">' + groups[n].length + '</span></button>';
-      }).join('');
+    // Район — выпадающий список рядом с городом, только когда у города есть районы (Минск).
+    $('rg-district-field').hidden = !useGroups;
+    $('rg-district-field').parentNode.classList.toggle('is-two', useGroups);
+    $('rg-district').innerHTML = !useGroups ? '' : '<option value="">Все районы</option>' +
+      names.map(function (n) { return '<option value="' + esc(n) + '">' + esc(n) + ' (' + groups[n].length + ')</option>'; }).join('');
+    $('rg-district').value = state.district || '';
     var html = '<p class="rg-hint rg-plist__hint">Нажмите на адрес — покажем его на карте.</p>';
     if (useGroups) {
       html += '<div class="rg-pgroups">' + names.filter(function (n) { return !state.district || n === state.district; }).map(function (n) {
@@ -965,10 +959,11 @@
   function renderCities() {
     var counts = {};
     state.points.forEach(function (p) { counts[p.city] = (counts[p.city] || 0) + 1; });
-    $('rg-cities').innerHTML = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b, 'ru'); }).map(function (c) {
-      return '<button class="rg-chip" type="button" data-city="' + esc(c) + '" aria-pressed="' + (c === state.city) + '">' + esc(c) +
-        ' <span class="rg-num" aria-label="' + counts[c] + ' ' + plural(counts[c], 'адрес', 'адреса', 'адресов') + '">' + counts[c] + '</span></button>';
-    }).join('');
+    $('rg-city').innerHTML = (state.me ? '<option value="">Все, ближе к вам</option>' : '') +
+      Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b, 'ru'); }).map(function (c) {
+        return '<option value="' + esc(c) + '">' + esc(c) + ' (' + counts[c] + ')</option>';
+      }).join('');
+    $('rg-city').value = state.city || '';
   }
   function setDistrict(d) {
     state.district = d || null;
@@ -977,8 +972,8 @@
     if (map.obj) fitPoints(pts);
   }
   function setCity(c) {
-    state.city = c; state.district = null;
-    Array.prototype.forEach.call($('rg-cities').children, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-city') === c); });
+    state.city = c || null; state.district = null;
+    $('rg-city').value = state.city || '';
     renderList();
     if (map.obj) fitPoints(cityPoints());
   }
@@ -1108,24 +1103,18 @@
   function geoFailed(text) {
     var note = $('rg-geo-note');
     note.hidden = false; note.textContent = text;
-    if (!state.city) setCity(state.points.length ? $('rg-cities').firstChild.getAttribute('data-city') : null);
+    if (!state.city) setCity(state.points.length ? $('rg-city').options[0].value : null);
     setListOpen(true);
-    var chip = $('rg-cities').querySelector('[aria-pressed="true"]') || $('rg-cities').firstChild;
-    if (chip) chip.focus();
+    scrollToMap();
+    $('rg-city').focus({ preventScroll: true });
   }
 
   function bind() {
-    $('rg-cities').addEventListener('click', function (e) {
-      var b = e.target.closest('[data-city]'); if (!b) return;
-      setCity(b.getAttribute('data-city'));
-      setListOpen(true);
-      // В городе с районами (Минск) сначала показываем выбор района, в остальных — сразу карту.
-      var dw = $('rg-districts-wrap');
-      if (!dw.hidden) dw.scrollIntoView({ behavior: 'smooth', block: 'center' }); else scrollToMap();
-    });
+    $('rg-city').addEventListener('change', function () { setCity(this.value); setListOpen(true); });
+    $('rg-district').addEventListener('change', function () { setDistrict(this.value); setListOpen(true); });
     $('rg-locate').addEventListener('click', function () {
       var btn = this, note = $('rg-geo-note');
-      if (!navigator.geolocation) { geoFailed('Телефон не даёт определить место. Выберите город — адреса откроются ниже.'); return; }
+      if (!navigator.geolocation) { geoFailed('Телефон не даёт определить место. Выберите город под картой.'); return; }
       btn.setAttribute('aria-busy', 'true');
       btn.querySelector('span').textContent = 'Определяем, где вы…';
       navigator.geolocation.getCurrentPosition(function (pos) {
@@ -1142,15 +1131,14 @@
           '<div class="rg-nearest__addr">' + esc(p.type) + ' · г. ' + esc(p.city) + (p.district ? ', ' + esc(p.district) + ' район' : '') + '</div>' + (p.metro ? '<div class="rg-pitem__meta">' + metroHtml(p) + '</div>' : '') + '</div>' +
           '<div class="rg-actions">' + (p.phone ? '<a class="rg-btn rg-btn--dark" href="tel:' + esc(p.phone) + '">Позвонить</a>' : '') +
           '<a class="rg-btn rg-btn--line" href="' + routeUrl(p) + '" target="_blank" rel="noopener">Маршрут</a></div>';
-        state.city = null;
-        Array.prototype.forEach.call($('rg-cities').children, function (b) { b.setAttribute('aria-pressed', 'false'); });
-        renderList(); setListOpen(true); highlight(state.points.indexOf(p)); scrollToMap();
+        state.city = null; state.district = null;
+        renderCities(); renderList(); setListOpen(true); highlight(state.points.indexOf(p)); scrollToMap();
         whenMap(function () { showMe(); focusPoint(p, 15); });
         $('rg-fab-text').textContent = 'Ближайшая · ' + fmtDist(p.dist);
       }, function () {
         btn.removeAttribute('aria-busy');
-        btn.querySelector('span').textContent = 'Найти рядом со мной';
-        geoFailed('Не получилось определить место. Выберите город — адреса откроются ниже.');
+        btn.querySelector('span').textContent = 'Найти ближайшую «Точку»';
+        geoFailed('Не получилось определить место. Выберите город под картой.');
       }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
     });
 
@@ -1164,12 +1152,6 @@
     });
     bindBeerModal();
     $('rg-zero-go').addEventListener('click', scrollToMap);
-    $('rg-districts').addEventListener('click', function (e) {
-      var d = e.target.closest('[data-district]'); if (!d) return;
-      setDistrict(d.getAttribute('data-district'));
-      setListOpen(true);
-      scrollToMap();
-    });
   }
 
   function start(points) {
