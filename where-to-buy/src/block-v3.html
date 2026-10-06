@@ -33,6 +33,14 @@
   -webkit-text-size-adjust: 100%;
 }
 #rg-wtb *, #rg-wtb *::before, #rg-wtb *::after { box-sizing: border-box; }
+/* Бегущая строка-разделитель, как на старой странице. Полоса во всю ширину экрана. */
+#rg-wtb { overflow-x: hidden; overflow-x: clip; }
+#rg-wtb .rg-band { margin: 48px calc(50% - 50vw) 0; height: 56px; background: var(--rg-orange); color: var(--rg-ink); overflow: hidden; display: flex; align-items: center; }
+#rg-wtb .rg-band__track { display: flex; flex: none; white-space: nowrap; animation: rg-run 36s linear infinite; }
+#rg-wtb .rg-band__track > div { display: flex; flex: none; }
+#rg-wtb .rg-band span { display: inline-flex; align-items: center; gap: 18px; padding-right: 18px; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
+#rg-wtb .rg-band span::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+@keyframes rg-run { to { transform: translateX(-50%); } }
 #rg-wtb ::selection { background: var(--rg-sky); color: var(--rg-ink); }
 #rg-wtb a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 #rg-wtb button, #rg-wtb select { font: inherit; color: inherit; }
@@ -392,6 +400,9 @@
 #rg-wtb .rg-modal__src { margin: -4px 0 0; font-size: 14px; color: var(--rg-muted); white-space: nowrap; }
 #rg-wtb .rg-modal__actions { display: grid; gap: 8px; margin-top: 4px; }
 #rg-wtb .rg-modal__close { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #eef3f8; color: var(--rg-ink); display: grid; place-items: center; cursor: pointer; }
+/* iOS (Safari и Chrome на айфоне) добавляет кнопкам свои отступы — обнуляем, чтобы крестик стоял ровно по центру круга */
+#rg-wtb .rg-modal__close { -webkit-appearance: none; appearance: none; padding: 0; margin: 0; line-height: 0; font-size: 0; }
+#rg-wtb .rg-modal__close svg { display: block; flex: none; }
 #rg-wtb .rg-modal__close:hover { background: #dfe8f0; }
 @media (min-width: 640px) {
   #rg-wtb .rg-modal { inset: 0; margin: auto; width: min(680px, calc(100% - 48px)); height: fit-content; max-height: calc(100vh - 48px); border-radius: 20px; }
@@ -469,6 +480,10 @@
           <a class="rg-link" href="mailto:info@robimgood.beer?subject=%D0%A5%D0%BE%D1%82%D0%B8%D0%BC%20%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D1%8C%20Robim%20Good">Хотите продавать наше пиво?</a>
         </div>
       </section>
+
+      <div class="rg-band rg-section--wide" aria-hidden="true">
+        <div class="rg-band__track"><div><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span></div><div><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span></div></div>
+      </div>
 
       <section class="rg-section rg-section--wide" aria-labelledby="rg-zero-h">
         <div class="rg-zero">
