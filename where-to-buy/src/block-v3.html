@@ -339,7 +339,7 @@
   #rg-wtb .rg-mapsec__grid > .rg-map { height: 62vh; min-height: 420px; max-height: 600px; }
   #rg-wtb .rg-pgroups { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px 16px; }
   #rg-wtb .rg-districts { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
-  #rg-wtb .rg-shelf { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px; margin: 4px 0 0; padding: 4px 0 8px; overflow: visible; }
+  #rg-wtb .rg-shelf { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin: 4px 0 0; padding: 4px 0 8px; overflow: visible; }
   #rg-wtb .rg-bcan__stage { height: 260px; }
   #rg-wtb .rg-ut { padding: 28px 32px; }
   #rg-wtb .rg-ut__head { grid-template-columns: 1fr auto; align-items: end; }
@@ -479,10 +479,9 @@
       <section class="rg-section rg-section--wide" aria-labelledby="rg-beers-h">
         <div class="rg-shelf__head">
           <h2 class="rg-h2" id="rg-beers-h">Наши банки</h2>
-          <p class="rg-lead">Семь сортов: от американского IPA и томатного саура до сезонного Oktoberfest и безалкогольной серии. Нажмите на банку, чтобы узнать вкус и оценку в Untappd.</p>
+          <p class="rg-lead">Шесть сортов: томатный саур, американский IPA, сезонный Oktoberfest и безалкогольная серия Zero. Нажмите на банку, чтобы узнать вкус и оценку в Untappd.</p>
         </div>
         <ul class="rg-shelf" aria-label="Сорта в банке">
-          <li class="rg-bcan" style="--tint:#e3eedc;--rg-accent:var(--rg-ipa)"><button class="rg-bcan__btn" type="button" data-beer="vista" aria-haspopup="dialog"><div class="rg-bcan__stage"><img data-rg-img="ipa-vista" alt="" data-alt="Банка FACTORY I.P.A Vista" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">FACTORY I.P.A&nbsp;Vista</b><span class="rg-bcan__style">American IPA</span><span class="rg-bcan__stats rg-num">6,3% · 65 IBU</span><span class="rg-bcan__more">Вкус и оценка</span></button></li>
           <li class="rg-bcan" style="--tint:#f8e1d9;--rg-accent:var(--rg-tomato)"><button class="rg-bcan__btn" type="button" data-beer="bbq" aria-haspopup="dialog"><div class="rg-bcan__stage"><img data-rg-img="tomato-bbq" alt="" data-alt="Банка FACTORY TOMATO BBQ" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">FACTORY TOMATO&nbsp;BBQ</b><span class="rg-bcan__style">Tomato Sour</span><span class="rg-bcan__stats rg-num">5,1% · 0 IBU</span><span class="rg-bcan__more">Вкус и оценка</span></button></li>
           <li class="rg-bcan" style="--tint:#faecc9;--rg-accent:#e39b12"><button class="rg-bcan__btn" type="button" data-beer="strata" aria-haspopup="dialog"><div class="rg-bcan__stage"><img data-rg-img="ipa-strata" alt="" data-alt="Банка IPA American Strata" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">IPA American Strata</b><span class="rg-bcan__style">Single hop: Strata</span><span class="rg-bcan__stats rg-num">6%</span><span class="rg-bcan__more">Вкус и оценка</span></button></li>
           <li class="rg-bcan" style="--tint:#e2e9f5;--rg-accent:#b8892f"><button class="rg-bcan__btn" type="button" data-beer="okt" aria-haspopup="dialog"><div class="rg-bcan__stage"><img data-rg-img="oktoberfest" alt="" data-alt="Банка OKTOBERFEST" width="220" height="540" decoding="async"></div><b class="rg-bcan__name">OKTOBERFEST</b><span class="rg-bcan__style">Сезонный крепкий лагер</span><span class="rg-bcan__stats rg-num">6% · 20 IBU</span><span class="rg-bcan__more">Вкус и оценка</span></button></li>
@@ -937,7 +936,9 @@
     }).filter(function (r) { return r.url && /^https:\/\/untappd\.com\//.test(r.url); });
     UT_ROWS = rows;
     var brewery = rows.filter(function (r) { return r.key === 'brewery'; })[0];
-    var beers = rows.filter(function (r) { return r.key !== 'brewery'; });
+    // Оценки только тех банок, что сейчас на полке «Наши банки».
+    var onShelf = Array.prototype.map.call(root.querySelectorAll('[data-beer]'), function (b) { return b.getAttribute('data-beer'); });
+    var beers = rows.filter(function (r) { return r.key !== 'brewery' && onShelf.indexOf(r.key) > -1; });
     if (!beers.length) return;
 
     if (brewery && brewery.rating) {

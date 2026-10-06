@@ -33,7 +33,7 @@ Visitors use the site to plan a purchase: check which venue near them stocks the
 ## Capabilities and Constraints
 
 - Canned range shown on the hero (figures from the can labels: ABV / IBU / original gravity):
-  - FACTORY I.P.A Vista, American IPA: 6.3% / 65 IBU / 16%
+  - FACTORY I.P.A Vista, American IPA: 6.3% / 65 IBU / 16% (not on sale as of 2026-10-06 per the client; removed from v3)
   - FACTORY TOMATO BBQ, Tomato Sour: 5.1% / 0 IBU / 16.5%
   - Zero Lager, non-alcoholic: 0% / 20 IBU / 7%
   - Zero IPA, non-alcoholic: 0% / 40 IBU / 7.5%
