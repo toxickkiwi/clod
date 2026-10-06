@@ -97,11 +97,12 @@
 #rg-wtb *, #rg-wtb *::before, #rg-wtb *::after { box-sizing: border-box; }
 /* Бегущая строка-разделитель, как на старой странице. Полоса во всю ширину экрана. */
 #rg-wtb { overflow-x: hidden; overflow-x: clip; }
-#rg-wtb .rg-band { margin: 48px calc(50% - 50vw) 0; height: 56px; background: var(--rg-orange); color: var(--rg-ink); overflow: hidden; display: flex; align-items: center; }
+#rg-wtb .rg-band { margin: 28px calc(50% - 50vw) 0; height: 40px; background: var(--rg-orange); color: var(--rg-ink); overflow: hidden; display: flex; align-items: center; }
 #rg-wtb .rg-band__track { display: flex; flex: none; white-space: nowrap; animation: rg-run 36s linear infinite; }
 #rg-wtb .rg-band__track > div { display: flex; flex: none; }
-#rg-wtb .rg-band span { display: inline-flex; align-items: center; gap: 18px; padding-right: 18px; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
-#rg-wtb .rg-band span::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+#rg-wtb .rg-band span { display: inline-flex; align-items: center; gap: 14px; padding-right: 14px; font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
+#rg-wtb .rg-band + .rg-section { padding-top: 24px; }
+#rg-wtb .rg-band span::after { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 @keyframes rg-run { to { transform: translateX(-50%); } }
 #rg-wtb ::selection { background: var(--rg-sky); color: var(--rg-ink); }
 #rg-wtb a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
