@@ -43,6 +43,7 @@ Visitors use the site to plan a purchase: check which venue near them stocks the
 - Venue data: managed by a manager in one Google Sheet published as CSV (columns city, region, name, type, address, phone, lat, lng, tochka, sorts, updated); the page loads it on open and falls back to an embedded copy. Seed copy: `where-to-buy/data/points.csv` (132 venues, geocoded via OpenStreetMap). Original scrape: `site/data.json`: «Точка» entries (type, city, address, phone) and partners grouped by region (name, address). Partner entries have no phone numbers.
 - Delivery constraint: output must work inside a Tilda T123 HTML block. Styles must be scoped so they don't clash with Tilda's CSS. No build step on Tilda's side. Tilda's header and footer are not part of the deliverable.
 - Site language: Russian.
+- Zero line availability (client, 2026-10-06): Zero is stocked in every «Точка», but not every Zero variety may be in stock at each venue.
 - Mandatory on every page: «Чрезмерное употребление пива вредит вашему здоровью».
 - Accessibility floor from the brief: touch targets ≥44px, text contrast ≥4.5:1, visible keyboard focus.
 - Map: Yandex Maps preferred (key pending), OpenStreetMap until then; routes open in Yandex Maps.
