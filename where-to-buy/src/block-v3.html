@@ -36,12 +36,11 @@
 /* Бегущая строка-разделитель, как на старой странице. Полоса во всю ширину экрана. */
 #rg-wtb { overflow-x: hidden; overflow-x: clip; }
 #rg-wtb .rg-band { margin: 28px calc(50% - 50vw) 0; height: 40px; background: var(--rg-orange); color: var(--rg-ink); overflow: hidden; display: flex; align-items: center; }
-#rg-wtb .rg-band__track { display: flex; flex: none; white-space: nowrap; animation: rg-run 36s linear infinite; }
+#rg-wtb .rg-band__track { display: flex; flex: none; white-space: nowrap; will-change: transform; transform: translate3d(0,0,0); backface-visibility: hidden; }
 #rg-wtb .rg-band__track > div { display: flex; flex: none; }
 #rg-wtb .rg-band span { display: inline-flex; align-items: center; gap: 14px; padding-right: 14px; font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
 #rg-wtb .rg-band + .rg-section { padding-top: 24px; }
 #rg-wtb .rg-band span::after { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
-@keyframes rg-run { to { transform: translateX(-50%); } }
 #rg-wtb ::selection { background: var(--rg-sky); color: var(--rg-ink); }
 #rg-wtb a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 #rg-wtb button, #rg-wtb select { font: inherit; color: inherit; }
@@ -154,8 +153,6 @@
 #rg-wtb .rg-follow { text-align: center; }
 #rg-wtb .rg-follow__note { margin: 0 auto; display: flex; align-items: center; gap: 12px; width: 100%; max-width: 520px; font-size: 14px; color: var(--rg-muted); white-space: nowrap; }
 #rg-wtb .rg-follow__note::before, #rg-wtb .rg-follow__note::after { content: ""; flex: 1; height: 1px; background: var(--rg-line-strong); min-width: 24px; }
-#rg-wtb .rg-nopoint { border-radius: var(--rg-radius); border: 1px solid var(--rg-line-strong); padding: 20px; display: grid; gap: 12px; }
-#rg-wtb .rg-nopoint .rg-btn--dark { min-height: 50px; font-size: 17px; }
 
 /* ---------- Наши банки: полка ---------- */
 #rg-wtb .rg-shelf__head { display: grid; gap: 6px; }
@@ -317,6 +314,10 @@
 #rg-wtb .rg-icons { display: flex; justify-content: center; gap: 4px; margin-top: 4px; }
 #rg-wtb .rg-ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; transition: opacity .15s ease; }
 #rg-wtb .rg-ico:hover { opacity: .7; }
+#rg-wtb .rg-contact__more { margin-top: 10px; padding-top: 12px; border-top: 1px solid #333; display: grid; gap: 4px; font-size: 15px; line-height: 1.4; color: #cfcfcf; }
+#rg-wtb .rg-contact__more b { color: #fff; font-weight: 600; }
+#rg-wtb .rg-contact__more a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.45); display: inline-block; padding: 10px 0; margin: -10px 0; }
+#rg-wtb .rg-contact__more p { margin: 0; padding: 4px 0; }
 #rg-wtb .rg-warning { margin: 10px auto 0; max-width: 520px; padding-top: 10px; border-top: 1px solid #333; font-size: 13px; color: #bdbdbd; }
 #rg-wtb .rg-strip { height: 115px; background: #fbb040 url(https://thb.tildacdn.biz/tild3534-3561-4334-a361-613065646235/-/resize/1680x/htader.jpg) center / cover no-repeat; }
 #rg-wtb .rg-strip__inner { max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
@@ -469,14 +470,6 @@
     </section>
 
     <div class="rg-below">
-      <section class="rg-section rg-section--wide" aria-labelledby="rg-nopoint-h">
-        <div class="rg-nopoint">
-          <h2 class="rg-h2" id="rg-nopoint-h">Нет точки рядом?</h2>
-          <p class="rg-lead">Напишите, в каком городе вы хотите Robim Good. Мы передадим это партнёрам.</p>
-          <a class="rg-btn rg-btn--dark" href="https://t.me/+375296611701" target="_blank" rel="noopener">Написать в Telegram</a>
-          <a class="rg-link" href="mailto:info@robimgood.beer?subject=%D0%A5%D0%BE%D1%82%D0%B8%D0%BC%20%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D1%8C%20Robim%20Good">Хотите продавать наше пиво?</a>
-        </div>
-      </section>
 
       <div class="rg-band rg-section--wide" aria-hidden="true">
         <div class="rg-band__track"><div><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span></div><div><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Robim Good Brewery</span><span>Zero · 0%</span></div></div>
@@ -579,6 +572,10 @@
       <div class="rg-icons">
         <a class="rg-ico" href="https://t.me/+375296611701" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100c27.614 0 50-22.386 50-50S77.614 0 50 0 0 22.386 0 50s22.386 50 50 50Zm21.977-68.056c.386-4.38-4.24-2.576-4.24-2.576-3.415 1.414-6.937 2.85-10.497 4.302-11.04 4.503-22.444 9.155-32.159 13.734-5.268 1.932-2.184 3.864-2.184 3.864l8.351 2.577c3.855 1.16 5.91-.129 5.91-.129l17.988-12.238c6.424-4.38 4.882-.773 3.34.773l-13.49 12.882c-2.056 1.804-1.028 3.35-.129 4.123 2.55 2.249 8.82 6.364 11.557 8.16.712.467 1.185.778 1.292.858.642.515 4.111 2.834 6.424 2.319 2.313-.516 2.57-3.479 2.57-3.479l3.083-20.226c.462-3.511.993-6.886 1.417-9.582.4-2.546.705-4.485.751-5.362Z" fill="#ffffff"/></svg></a>
         <a class="rg-ico" href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100ZM25 39.3918C25 31.4558 31.4566 25 39.3918 25H60.6082C68.5442 25 75 31.4566 75 39.3918V60.8028C75 68.738 68.5442 75.1946 60.6082 75.1946H39.3918C31.4558 75.1946 25 68.738 25 60.8028V39.3918ZM36.9883 50.0054C36.9883 42.8847 42.8438 37.0922 50.0397 37.0922C57.2356 37.0922 63.0911 42.8847 63.0911 50.0054C63.0911 57.1252 57.2356 62.9177 50.0397 62.9177C42.843 62.9177 36.9883 57.1252 36.9883 50.0054ZM41.7422 50.0054C41.7422 54.5033 45.4641 58.1638 50.0397 58.1638C54.6153 58.1638 58.3372 54.5041 58.3372 50.0054C58.3372 45.5066 54.6145 41.8469 50.0397 41.8469C45.4641 41.8469 41.7422 45.5066 41.7422 50.0054ZM63.3248 39.6355C65.0208 39.6355 66.3956 38.2606 66.3956 36.5646C66.3956 34.8687 65.0208 33.4938 63.3248 33.4938C61.6288 33.4938 60.2539 34.8687 60.2539 36.5646C60.2539 38.2606 61.6288 39.6355 63.3248 39.6355Z" fill="#ffffff"/></svg></a>
+      </div>
+      <div class="rg-contact__more">
+        <p><b>Нет «Точки» в вашем городе?</b> <a href="https://t.me/+375296611701" target="_blank" rel="noopener">Напишите нам</a>, где вы хотите Robim Good, — передадим партнёрам.</p>
+        <p><b>Хотите продавать наше пиво?</b> <a href="mailto:info@robimgood.beer?subject=%D0%A5%D0%BE%D1%82%D0%B8%D0%BC%20%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D1%8C%20Robim%20Good">info@robimgood.beer</a></p>
       </div>
       <p class="rg-warning">Чрезмерное употребление пива вредит вашему здоровью</p>
     </section>
@@ -1113,6 +1110,7 @@
     } else initMap();
     bindMobile();
     bindHeaderBackdrop();
+    bindBand();
   }
 
   // Шапка сайта на телефоне прозрачная и закреплена сверху: когда фото ушло вверх, подкладываем под неё светлую полосу,
@@ -1126,6 +1124,26 @@
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     update();
+  }
+
+  /* ===== Бегущая строка: движется скриптом, только пока видна; после переключения вкладки и прокрутки не сбивается ===== */
+  function bindBand() {
+    var track = root.querySelector('.rg-band__track');
+    if (!track || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    var x = 0, last = 0, raf = 0, visible = false, SPEED = 40; // пикселей в секунду
+    function frame(t) {
+      var half = track.scrollWidth / 2;
+      if (last && half) { x -= SPEED * Math.min(t - last, 64) / 1000; if (-x >= half) x += half; }
+      last = t;
+      track.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
+      raf = requestAnimationFrame(frame);
+    }
+    function run() { if (!raf && visible && !document.hidden) { last = 0; raf = requestAnimationFrame(frame); } }
+    function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; }
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : run(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? run() : stop(); }).observe(track.parentNode);
+    } else { visible = true; run(); }
   }
 
   /* ===== Телефон: индикатор полки и кнопка под большим пальцем ===== */
