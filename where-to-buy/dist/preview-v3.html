@@ -659,6 +659,8 @@
   var RG_CONFIG = {
     // Ключ JavaScript API Яндекс Карт. Пусто — карта OpenStreetMap.
     yandexMapsKey: '9b579bea-e186-43b0-b018-6f3fd2bb4753',  // ключ ограничен адресом robimgood.beer; на других адресах карта сама переключится на OpenStreetMap
+    // Свежие оценки Untappd из Google-таблицы (скрипт integrations/robimgood.gs). Адреса «Точек» берутся из блока, не из таблицы.
+    ratingsUrl: 'https://script.google.com/macros/s/AKfycbyffQ7fR1plFLJEsgNtLcJDOHDyM2GbgPPu-P9UI2QRoaoa6aNiG8zdRQC29N_gpRmp/exec'
   };
 
   /* Точки сети «Точка». Собирается build.py из data/points.csv (только строки с tochka = да) */
@@ -720,9 +722,27 @@
   }
 
   // Версия 3 работает без внешних таблиц: точки и рейтинги зашиты в блок при сборке.
+  // Точки зашиты в блок. Оценки сразу показываются из копии в блоке, потом заменяются свежими из таблицы.
   function load() {
     start(normalize(FALLBACK));
     renderUntappd(UNTAPPD_FALLBACK);
+    if (!RG_CONFIG.ratingsUrl || !window.fetch) return;
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 8000);
+    fetch(RG_CONFIG.ratingsUrl, { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) {
+        clearTimeout(timer);
+        var fresh = {};
+        (data && data.untappd || []).forEach(function (r) { if (r && r.key && parseFloat(r.rating) > 0) fresh[r.key] = r; });
+        if (!Object.keys(fresh).length) return;
+        // Свежая строка заменяет резервную; сорта, которых в таблице пока нет, остаются из копии.
+        renderUntappd(UNTAPPD_FALLBACK.map(function (r) {
+          var f = fresh[r.key];
+          return f ? { key: r.key, beer: r.beer, url: f.url || r.url, rating: f.rating, ratings: f.ratings, updated: f.updated || r.updated, quote: f.quote || '', quote_author: f.quote_author || '' } : r;
+        }));
+      })
+      .catch(function () { clearTimeout(timer); }); // таблица недоступна — остаются оценки из копии
   }
 
   /* ===== Утилиты ===== */

@@ -39,7 +39,7 @@ function install() {
   ScriptApp.getProjectTriggers().forEach(function (t) { ScriptApp.deleteTrigger(t); });
   ScriptApp.newTrigger('onEditInstalled').forSpreadsheet(ss).onEdit().create();
   ScriptApp.newTrigger('checkAllPoints').timeBased().everyHours(1).create();
-  ScriptApp.newTrigger('updateUntappd').timeBased().everyDays(1).atHour(6).create();
+  ScriptApp.newTrigger('updateUntappd').timeBased().everyMinutes(UNTAPPD_EVERY_MINUTES).create();
   setupPointsSheet_();
   checkAllPoints();
   updateUntappd();
@@ -190,15 +190,23 @@ var UNTAPPD_DEFAULTS = [
   ['brewery', 'Robim Good Brewery', 'https://untappd.com/Robim_Good_Brewery'],
   ['vista', 'FACTORY I.P.A Vista', 'https://untappd.com/b/robim-good-brewery-factory-ipa-vista/6753498'],
   ['bbq', 'FACTORY TOMATO BBQ', 'https://untappd.com/b/robim-good-brewery-bbq-tomato-beer/6798506'],
+  ['strata', 'IPA American Strata', 'https://untappd.com/b/robim-good-brewery-factory-ipa-strata/6860636'],
+  ['okt', 'OKTOBERFEST', 'https://untappd.com/b/robim-good-brewery-robim-good-oktoberfest/6868970'],
   ['zipa', 'Zero IPA', 'https://untappd.com/b/robim-good-brewery-robim-good-zero-ipa/6772342'],
-  ['zlager', 'Zero Lager', 'https://untappd.com/b/robim-good-brewery-robim-good-zero/6772340']
+  ['zlager', 'Zero Lager', 'https://untappd.com/b/robim-good-brewery-robim-good-zero/6772340'],
+  ['zstout', 'Zero Stout', 'https://untappd.com/b/robim-good-brewery-robim-good-zero-stout/6851862']
 ];
+// Как часто обновлять оценки, в минутах (1, 5, 10, 15 или 30). Изменили — запустите install() ещё раз.
+var UNTAPPD_EVERY_MINUTES = 5;
 
 function updateUntappd() {
   var ss = SpreadsheetApp.getActive();
   var sheet = ss.getSheetByName(SHEET_UNTAPPD) || ss.insertSheet(SHEET_UNTAPPD);
   var rows = untappdRows_();
-  if (!rows.length) rows = UNTAPPD_DEFAULTS.map(function (d) { return { key: d[0], beer: d[1], url: d[2] }; });
+  // Сорта из списка выше, которых ещё нет на листе, добавляются сами (новое пиво — одна строка в UNTAPPD_DEFAULTS или на листе).
+  var have = {};
+  rows.forEach(function (r) { have[r.key] = true; });
+  UNTAPPD_DEFAULTS.forEach(function (d) { if (!have[d[0]]) rows.push({ key: d[0], beer: d[1], url: d[2] }); });
   var today;
   try { today = Utilities.formatDate(new Date(), ss.getSpreadsheetTimeZone() || 'Europe/Minsk', 'yyyy-MM-dd'); }
   catch (e) { today = new Date().toISOString().slice(0, 10); }
@@ -214,7 +222,7 @@ function updateUntappd() {
         row.updated = today;
       }
     } catch (e) { console.warn(row.url + ': ' + e); }
-    Utilities.sleep(1500);
+    Utilities.sleep(800);
   });
 
   sheet.clearContents();
