@@ -217,6 +217,12 @@
 
 /* ---------- Версия 2: карта и выпадающий список «Точки» ---------- */
 #rg-wtb .rg-mapsec { padding: 28px 0 8px; display: grid; gap: 12px; }
+/* Телефон и планшет: над и под кнопкой «Найти ближайшую» одинаковый отступ — 20px */
+@media (max-width: 899px) {
+  #rg-wtb .rg-hero__body { padding-bottom: 0; }
+  #rg-wtb #rg-locate { margin-top: 6px; }
+  #rg-wtb .rg-mapsec { padding-top: 20px; }
+}
 #rg-wtb .rg-mapsec__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 20px; }
 #rg-wtb .rg-mapsec .rg-map { display: block; height: 72vh; min-height: 420px; max-height: 680px; }
 #rg-wtb .rg-dotpin { width: 22px; height: 22px; border-radius: 50%; background: var(--rg-ink); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(16,32,46,.4); }
