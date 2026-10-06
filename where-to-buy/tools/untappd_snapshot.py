@@ -21,6 +21,7 @@ BEERS = [
     ("vista", "FACTORY I.P.A Vista", "https://untappd.com/b/robim-good-brewery-factory-ipa-vista/6753498"),
     ("bbq", "FACTORY TOMATO BBQ", "https://untappd.com/b/robim-good-brewery-bbq-tomato-beer/6798506"),
     ("strata", "IPA American Strata", "https://untappd.com/b/robim-good-brewery-factory-ipa-strata/6860636"),
+    ("okt", "OKTOBERFEST", "https://untappd.com/b/robim-good-brewery-robim-good-oktoberfest/6868970"),
     ("zlager", "Zero Lager", "https://untappd.com/b/robim-good-brewery-robim-good-zero/6772340"),
     ("zipa", "Zero IPA", "https://untappd.com/b/robim-good-brewery-robim-good-zero-ipa/6772342"),
     ("zstout", "Zero Stout", "https://untappd.com/b/robim-good-brewery-robim-good-zero-stout/6851862"),
