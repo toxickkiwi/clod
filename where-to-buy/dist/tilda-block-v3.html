@@ -232,6 +232,8 @@
 #rg-wtb .rg-plist { display: grid; gap: 14px; animation: rg-in .3s cubic-bezier(.16,1,.3,1) both; }
 #rg-wtb .rg-plist h3 { margin: 0 0 6px; font-size: 14px; font-weight: 700; color: var(--rg-muted); text-transform: uppercase; letter-spacing: .05em; display: flex; gap: 8px; }
 #rg-wtb .rg-plist h3 span { color: var(--rg-ink); }
+#rg-wtb .rg-districts-wrap { display: grid; gap: 8px; margin-top: 6px; animation: rg-in .3s cubic-bezier(.16,1,.3,1) both; }
+#rg-wtb .rg-districts-wrap[hidden] { display: none; }
 #rg-wtb .rg-pgroups { display: grid; gap: 18px; align-items: start; }
 #rg-wtb .rg-districts { display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 2px 16px 4px; scrollbar-width: none; }
 #rg-wtb .rg-districts::-webkit-scrollbar { display: none; }
@@ -292,8 +294,9 @@
 }
 
 /* ---------- Подвал как на сайте ---------- */
-#rg-wtb .rg-contact { margin-top: 56px; background: #111111; color: #fff; text-align: center; padding: 64px 16px; }
-#rg-wtb .rg-contact h2 { font-size: 26px; line-height: 1.23; font-weight: 600; margin-bottom: 24px; }
+#rg-wtb .rg-contact { margin: 56px 16px 24px; max-width: 560px; background: #111111; color: #fff; text-align: center; padding: 36px 20px; border-radius: 16px; }
+@media (min-width: 592px) { #rg-wtb .rg-contact { margin-left: auto; margin-right: auto; } }
+#rg-wtb .rg-contact h2 { font-size: 24px; line-height: 1.23; font-weight: 600; margin-bottom: 16px; }
 #rg-wtb .rg-contact__text { font-size: 20px; line-height: 1.55; }
 #rg-wtb .rg-contact__text a { text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.35); display: inline-block; padding: 11px 0 7px; }
 #rg-wtb .rg-contact__text { line-height: 1.3; }
@@ -416,6 +419,10 @@
         <div class="rg-cities">
           <span class="rg-cities__label" id="rg-cities-label">или выберите город</span>
           <div class="rg-cities__row" id="rg-cities" role="group" aria-labelledby="rg-cities-label"></div>
+          <div class="rg-districts-wrap" id="rg-districts-wrap" hidden>
+            <span class="rg-cities__label" id="rg-districts-label">Районы Минска</span>
+            <div class="rg-districts" id="rg-districts" role="group" aria-labelledby="rg-districts-label"></div>
+          </div>
         </div>
         <p class="rg-geo-note" id="rg-geo-note" role="status" hidden></p>
       </div>
@@ -505,7 +512,6 @@
         <h2 class="rg-h2" id="rg-social-h">Следите за новинками</h2>
         <div class="rg-social">
           <a class="rg-btn rg-btn--dark" href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener">Instagram</a>
-          <a class="rg-btn rg-btn--dark" href="https://www.facebook.com/robimgoodbrewery/" target="_blank" rel="noopener">Facebook</a>
         </div>
       </section>
     </div>
@@ -551,7 +557,6 @@
       <div class="rg-icons">
         <a class="rg-ico" href="https://t.me/+375296611701" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100c27.614 0 50-22.386 50-50S77.614 0 50 0 0 22.386 0 50s22.386 50 50 50Zm21.977-68.056c.386-4.38-4.24-2.576-4.24-2.576-3.415 1.414-6.937 2.85-10.497 4.302-11.04 4.503-22.444 9.155-32.159 13.734-5.268 1.932-2.184 3.864-2.184 3.864l8.351 2.577c3.855 1.16 5.91-.129 5.91-.129l17.988-12.238c6.424-4.38 4.882-.773 3.34.773l-13.49 12.882c-2.056 1.804-1.028 3.35-.129 4.123 2.55 2.249 8.82 6.364 11.557 8.16.712.467 1.185.778 1.292.858.642.515 4.111 2.834 6.424 2.319 2.313-.516 2.57-3.479 2.57-3.479l3.083-20.226c.462-3.511.993-6.886 1.417-9.582.4-2.546.705-4.485.751-5.362Z" fill="#ffffff"/></svg></a>
         <a class="rg-ico" href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100ZM25 39.3918C25 31.4558 31.4566 25 39.3918 25H60.6082C68.5442 25 75 31.4566 75 39.3918V60.8028C75 68.738 68.5442 75.1946 60.6082 75.1946H39.3918C31.4558 75.1946 25 68.738 25 60.8028V39.3918ZM36.9883 50.0054C36.9883 42.8847 42.8438 37.0922 50.0397 37.0922C57.2356 37.0922 63.0911 42.8847 63.0911 50.0054C63.0911 57.1252 57.2356 62.9177 50.0397 62.9177C42.843 62.9177 36.9883 57.1252 36.9883 50.0054ZM41.7422 50.0054C41.7422 54.5033 45.4641 58.1638 50.0397 58.1638C54.6153 58.1638 58.3372 54.5041 58.3372 50.0054C58.3372 45.5066 54.6145 41.8469 50.0397 41.8469C45.4641 41.8469 41.7422 45.5066 41.7422 50.0054ZM63.3248 39.6355C65.0208 39.6355 66.3956 38.2606 66.3956 36.5646C66.3956 34.8687 65.0208 33.4938 63.3248 33.4938C61.6288 33.4938 60.2539 34.8687 60.2539 36.5646C60.2539 38.2606 61.6288 39.6355 63.3248 39.6355Z" fill="#ffffff"/></svg></a>
-        <a class="rg-ico" href="https://www.facebook.com/robimgoodbrewery/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100c27.6142 0 50-22.3858 50-50S77.6142 0 50 0 0 22.3858 0 50s22.3858 50 50 50Zm3.431-73.9854c-2.5161.0701-5.171.6758-7.0464 2.4577-1.5488 1.4326-2.329 3.5177-2.5044 5.602-.0534 1.4908-.0458 2.9855-.0382 4.4796.0058 1.1205.0115 2.2407-.0085 3.3587-.6888.005-1.3797.0036-2.0709.0021-.9218-.0019-1.8441-.0038-2.7626.0096 0 .8921.0013 1.7855.0026 2.6797.0026 1.791.0052 3.5853-.0026 5.3799.9185.0134 1.8409.0115 2.7627.0096.6912-.0015 1.382-.0029 2.0708.0021.0155 3.5565.0127 7.1128.0098 10.669-.0036 4.4452-.0072 8.8903.0252 13.3354 1.8903-.0134 3.7765-.0115 5.6633-.0095 1.4152.0014 2.8306.0028 4.2484-.0022.0117-4.0009.0088-7.9986.0058-11.9963-.0029-3.9979-.0058-7.9957.0059-11.9964.9533-.005 1.9067-.0036 2.86-.0021 1.2713.0019 2.5425.0038 3.8137-.0096.396-2.679.7335-5.3814.9198-8.0947-1.2576-.0058-2.5155-.0058-3.7734-.0058-1.2578 0-2.5157 0-3.7734-.0059 0-.4689-.0007-.9378-.0014-1.4066-.0022-1.4063-.0044-2.8123.0131-4.2188.198-1.0834 1.3158-1.9104 2.3992-1.8403h5.1476c.0117-2.8069.0117-5.602 0-8.4089-.6636 0-1.3273-.0007-1.9911-.0014-1.9915-.0022-3.9832-.0044-5.975.0131Z" fill="#ffffff"/></svg></a>
       </div>
       <p class="rg-warning">Чрезмерное употребление пива вредит вашему здоровью</p>
     </section>
@@ -559,7 +564,6 @@
       <div class="rg-strip__inner">
         <p class="rg-strip__text"><a class="rg-num" href="tel:+375296611701">+375 (29) 661 17 01</a><br><a href="mailto:info@robimgood.beer">info@robimgood.beer</a></p>
         <div class="rg-icons">
-          <a class="rg-ico" href="https://www.facebook.com/robimgoodbrewery/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100c27.6142 0 50-22.3858 50-50S77.6142 0 50 0 0 22.3858 0 50s22.3858 50 50 50Zm3.431-73.9854c-2.5161.0701-5.171.6758-7.0464 2.4577-1.5488 1.4326-2.329 3.5177-2.5044 5.602-.0534 1.4908-.0458 2.9855-.0382 4.4796.0058 1.1205.0115 2.2407-.0085 3.3587-.6888.005-1.3797.0036-2.0709.0021-.9218-.0019-1.8441-.0038-2.7626.0096 0 .8921.0013 1.7855.0026 2.6797.0026 1.791.0052 3.5853-.0026 5.3799.9185.0134 1.8409.0115 2.7627.0096.6912-.0015 1.382-.0029 2.0708.0021.0155 3.5565.0127 7.1128.0098 10.669-.0036 4.4452-.0072 8.8903.0252 13.3354 1.8903-.0134 3.7765-.0115 5.6633-.0095 1.4152.0014 2.8306.0028 4.2484-.0022.0117-4.0009.0088-7.9986.0058-11.9963-.0029-3.9979-.0058-7.9957.0059-11.9964.9533-.005 1.9067-.0036 2.86-.0021 1.2713.0019 2.5425.0038 3.8137-.0096.396-2.679.7335-5.3814.9198-8.0947-1.2576-.0058-2.5155-.0058-3.7734-.0058-1.2578 0-2.5157 0-3.7734-.0059 0-.4689-.0007-.9378-.0014-1.4066-.0022-1.4063-.0044-2.8123.0131-4.2188.198-1.0834 1.3158-1.9104 2.3992-1.8403h5.1476c.0117-2.8069.0117-5.602 0-8.4089-.6636 0-1.3273-.0007-1.9911-.0014-1.9915-.0022-3.9832-.0044-5.975.0131Z" fill="#000000"/></svg></a>
           <a class="rg-ico" href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100ZM25 39.3918C25 31.4558 31.4566 25 39.3918 25H60.6082C68.5442 25 75 31.4566 75 39.3918V60.8028C75 68.738 68.5442 75.1946 60.6082 75.1946H39.3918C31.4558 75.1946 25 68.738 25 60.8028V39.3918ZM36.9883 50.0054C36.9883 42.8847 42.8438 37.0922 50.0397 37.0922C57.2356 37.0922 63.0911 42.8847 63.0911 50.0054C63.0911 57.1252 57.2356 62.9177 50.0397 62.9177C42.843 62.9177 36.9883 57.1252 36.9883 50.0054ZM41.7422 50.0054C41.7422 54.5033 45.4641 58.1638 50.0397 58.1638C54.6153 58.1638 58.3372 54.5041 58.3372 50.0054C58.3372 45.5066 54.6145 41.8469 50.0397 41.8469C45.4641 41.8469 41.7422 45.5066 41.7422 50.0054ZM63.3248 39.6355C65.0208 39.6355 66.3956 38.2606 66.3956 36.5646C66.3956 34.8687 65.0208 33.4938 63.3248 33.4938C61.6288 33.4938 60.2539 34.8687 60.2539 36.5646C60.2539 38.2606 61.6288 39.6355 63.3248 39.6355Z" fill="#000000"/></svg></a>
         </div>
       </div>
@@ -850,16 +854,15 @@
     names.sort(function (a, b) { return (a === 'Другие адреса') - (b === 'Другие адреса') || a.localeCompare(b, 'ru'); });
     $('rg-plist-label').textContent = near ? 'Все адреса, ближе к вам' : 'Адреса: ' + state.city;
     $('rg-plist-n').textContent = pts.length;
-    var html = '';
-    if (useGroups) {
-      html += '<div class="rg-districts" role="group" aria-label="Район">' +
-        '<button class="rg-chip" type="button" data-district="" aria-pressed="' + !state.district + '">Все районы</button>' +
-        names.map(function (n) {
-          return '<button class="rg-chip" type="button" data-district="' + esc(n) + '" aria-pressed="' + (n === state.district) + '">' + esc(n) +
-            ' <span class="rg-num">' + groups[n].length + '</span></button>';
-        }).join('') + '</div>';
-    }
-    html += '<p class="rg-hint rg-plist__hint">Нажмите на адрес — покажем его на карте.</p>';
+    // Кнопки районов — под выбором города, видны только когда выбран Минск.
+    $('rg-districts-wrap').hidden = !useGroups;
+    $('rg-districts').innerHTML = !useGroups ? '' :
+      '<button class="rg-chip" type="button" data-district="" aria-pressed="' + !state.district + '">Все районы</button>' +
+      names.map(function (n) {
+        return '<button class="rg-chip" type="button" data-district="' + esc(n) + '" aria-pressed="' + (n === state.district) + '">' + esc(n) +
+          ' <span class="rg-num">' + groups[n].length + '</span></button>';
+      }).join('');
+    var html = '<p class="rg-hint rg-plist__hint">Нажмите на адрес — покажем его на карте.</p>';
     if (useGroups) {
       html += '<div class="rg-pgroups">' + names.filter(function (n) { return !state.district || n === state.district; }).map(function (n) {
         var g = groups[n].slice().sort(bySort);
@@ -1061,8 +1064,6 @@
 
     $('rg-plist-toggle').addEventListener('click', function () { setListOpen(this.getAttribute('aria-expanded') !== 'true'); });
     $('rg-plist').addEventListener('click', function (e) {
-      var d = e.target.closest('[data-district]');
-      if (d) { setDistrict(d.getAttribute('data-district')); return; }
       var b = e.target.closest('[data-show]'); if (!b) return;
       var i = +b.getAttribute('data-show');
       highlight(i);
@@ -1071,6 +1072,12 @@
     });
     bindBeerModal();
     $('rg-zero-go').addEventListener('click', scrollToMap);
+    $('rg-districts').addEventListener('click', function (e) {
+      var d = e.target.closest('[data-district]'); if (!d) return;
+      setDistrict(d.getAttribute('data-district'));
+      setListOpen(true);
+      scrollToMap();
+    });
   }
 
   function start(points) {
