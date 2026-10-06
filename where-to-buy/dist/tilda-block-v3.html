@@ -871,7 +871,10 @@
     var pts = state.district ? groups[state.district] : all;
     var bySort = state.me ? function (a, b) { return a.dist - b.dist; } : function (a, b) { return a.address.localeCompare(b.address, 'ru'); };
     names.sort(function (a, b) { return (a === 'Другие адреса') - (b === 'Другие адреса') || a.localeCompare(b, 'ru'); });
-    $('rg-plist-label').textContent = near ? 'Все адреса, ближе к вам' : 'Адреса: ' + state.city + (state.district ? ' — ' + state.district : '');
+    // «Все адреса» → «Все адреса в Московском районе» (предложный падеж: -ский → -ском, -ный → -ном, -ой → -ом).
+    var inDistrict = state.district && state.district !== 'Другие адреса'
+      ? (/^[ВФвф][^аеёиоуыэюяАЕЁИОУЫЭЮЯ]/.test(state.district) ? ' во ' : ' в ') + state.district.replace(/ский$/, 'ском').replace(/ный$/, 'ном').replace(/ой$/, 'ом') + ' районе' : '';
+    $('rg-plist-label').textContent = near ? 'Все адреса, ближе к вам' : state.district === 'Другие адреса' ? 'Другие адреса' : 'Все адреса' + inDistrict;
     $('rg-plist-n').textContent = pts.length;
     // Район — выпадающий список рядом с городом, только когда у города есть районы (Минск).
     $('rg-district-field').hidden = !useGroups;
