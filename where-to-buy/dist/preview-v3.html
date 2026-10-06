@@ -143,7 +143,8 @@
 #rg-wtb .rg-btn--line { background: transparent; color: var(--rg-ink); border: 1.5px solid var(--rg-ink); }
 #rg-wtb .rg-btn--line:hover { background: #e8eef4; }
 @keyframes rg-pulse { 50% { transform: translateY(-3px); } }
-#rg-wtb .rg-geo-note { font-size: 15px; color: var(--rg-muted); }
+#rg-wtb .rg-geo-note { margin: 0; padding: 12px 14px; border-radius: 12px; background: #fff1e6; border: 1px solid #ffd2b0; font-size: 15px; line-height: 1.35; color: var(--rg-ink); }
+#rg-wtb .rg-geo-note[hidden] { display: none; }
 
 /* ---------- Фильтры и вид ---------- */
 #rg-wtb .rg-chip {
@@ -169,6 +170,13 @@
 #rg-wtb .rg-pop { font: 15px/1.35 var(--rg-font); color: var(--rg-ink); }
 #rg-wtb .rg-pop b { font-size: 16px; }
 #rg-wtb .rg-pop a { font-weight: 700; }
+#rg-wtb .rg-pop__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; min-width: 230px; }
+#rg-wtb .rg-pop__actions > :only-child { grid-column: 1 / -1; }
+#rg-wtb .rg-pop .rg-btn { min-height: 44px; padding: 0 12px; font-size: 15px; text-decoration: none; }
+#rg-wtb .rg-pop .rg-btn--dark { color: #fff; }
+#rg-wtb .rg-pop .rg-btn--line { color: var(--rg-ink); }
+/* Текст только для экранного диктора */
+#rg-wtb .rg-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* ---------- Блоки ниже списка ---------- */
 #rg-wtb .rg-section { padding: 40px 0 0; display: grid; gap: 14px; }
@@ -334,7 +342,7 @@
 /* ---------- Телефон: жесты на карте, листание полки, кнопка под большим пальцем ---------- */
 #rg-wtb .rg-map__gesture {
   position: absolute; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 24px; text-align: center;
-  background: rgba(16,32,46,.55); color: #fff; font: 600 18px/1.3 var(--rg-font);
+  background: rgba(16,32,46,.68); color: #fff; font: 600 18px/1.3 var(--rg-font);
   opacity: 0; pointer-events: none; transition: opacity .2s ease;
 }
 #rg-wtb .rg-map__gesture.is-on { opacity: 1; }
@@ -378,19 +386,12 @@
 #rg-wtb .rg-ico:hover { opacity: .7; }
 #rg-wtb .rg-contact__more { margin-top: 10px; padding-top: 12px; border-top: 1px solid #333; display: grid; gap: 4px; font-size: 15px; line-height: 1.4; color: #cfcfcf; }
 #rg-wtb .rg-contact__more b { color: #fff; font-weight: 600; }
-#rg-wtb .rg-contact__more a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.45); display: inline-block; padding: 10px 0; margin: -10px 0; }
+#rg-wtb .rg-contact__more a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.45); display: inline-block; padding: 12px 0; margin: -12px 0; }
 #rg-wtb .rg-contact__more p { margin: 0; padding: 4px 0; }
 #rg-wtb .rg-warning { margin: 10px auto 0; max-width: 520px; padding-top: 10px; border-top: 1px solid #333; font-size: 13px; color: #bdbdbd; }
-#rg-wtb .rg-strip { height: 115px; background: #fbb040 url(https://thb.tildacdn.biz/tild3534-3561-4334-a361-613065646235/-/resize/1680x/htader.jpg) center / cover no-repeat; }
-#rg-wtb .rg-strip__inner { max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-#rg-wtb .rg-strip__text { order: 2; text-align: right; font-weight: 700; font-size: 16px; line-height: 1.55; color: rgba(0,0,0,.75); }
-#rg-wtb .rg-strip__text a { text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
-#rg-wtb .rg-strip__text { line-height: 1.2; }
-#rg-wtb .rg-strip .rg-icons { margin: 0; }
+#rg-wtb .rg-strip { height: 72px; background: #fbb040 url(https://thb.tildacdn.biz/tild3534-3561-4334-a361-613065646235/-/resize/1680x/htader.jpg) center / cover no-repeat; }
 @media (min-width: 640px) {
-  #rg-wtb .rg-strip { height: 122px; }
-  #rg-wtb .rg-strip__inner { justify-content: flex-end; gap: 24px; }
-  #rg-wtb .rg-strip__text { order: 0; font-size: 21px; }
+  #rg-wtb .rg-strip { height: 96px; }
 
 }
 
@@ -490,7 +491,7 @@
 <div id="rg-wtb">
   <section class="rg-hero" aria-labelledby="rg-title">
     <div class="rg-hero__inner">
-      <div class="rg-hero__photo" role="img" aria-label="Банки Robim Good: IPA Vista, BBQ Tomato, Zero Lager и Zero IPA"></div>
+      <div class="rg-hero__photo" role="img" aria-label="Банки Robim Good в голубом небе"></div>
       <div class="rg-hero__body">
         <h1 id="rg-title">Где купить Robim&nbsp;Good <span>в&nbsp;банке</span></h1>
         <p class="rg-lead" id="rg-lead">Магазины и бары сети «Точка» в Минске, Лиде и Бобруйске.</p>
@@ -498,7 +499,6 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
           <span>Найти ближайшую «Точку»</span>
         </button>
-        <p class="rg-geo-note" id="rg-geo-note" role="status" hidden></p>
       </div>
     </div>
   </section>
@@ -509,6 +509,7 @@
         <h2 class="rg-h2" id="rg-map-h">Магазины и бары «Точка»</h2>
         <p class="rg-hint" id="rg-count"></p>
       </div>
+      <p class="rg-geo-note" id="rg-geo-note" role="status" hidden></p>
       <div class="rg-nearest" id="rg-nearest" aria-live="polite" hidden></div>
       <div class="rg-mapsec__grid">
         <div class="rg-plist-wrap">
@@ -548,7 +549,7 @@
             <li class="rg-zcan rg-zcan--lead"><img data-rg-img="zero-ipa" width="220" height="584" alt="Банка Zero IPA" decoding="async"><b>Zero IPA</b><span>IPA</span></li>
             <li class="rg-zcan"><img data-rg-img="zero-stout" width="220" height="579" alt="Банка Zero Stout" decoding="async"><b>Zero Stout</b><span>Стаут</span></li>
           </ul>
-          <div class="rg-zero__cta"><button class="rg-btn" type="button" id="rg-zero-go">Ищите в точках</button><p class="rg-zero__note">Zero есть не в каждой «Точке» — лучше позвонить перед выходом.</p></div>
+          <div class="rg-zero__cta"><button class="rg-btn" type="button" id="rg-zero-go">Ищите в «Точках»</button><p class="rg-zero__note">Zero есть не в каждой «Точке» — лучше позвонить перед выходом.</p></div>
         </div>
       </section>
 
@@ -641,14 +642,7 @@
       </div>
       <p class="rg-warning">Чрезмерное употребление пива вредит вашему здоровью</p>
     </section>
-    <div class="rg-strip">
-      <div class="rg-strip__inner">
-        <p class="rg-strip__text"><a class="rg-num" href="tel:+375296611701">+375 (29) 661 17 01</a><br><a href="mailto:info@robimgood.beer">info@robimgood.beer</a></p>
-        <div class="rg-icons">
-          <a class="rg-ico" href="https://www.instagram.com/robimgoodbrewery/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100ZM25 39.3918C25 31.4558 31.4566 25 39.3918 25H60.6082C68.5442 25 75 31.4566 75 39.3918V60.8028C75 68.738 68.5442 75.1946 60.6082 75.1946H39.3918C31.4558 75.1946 25 68.738 25 60.8028V39.3918ZM36.9883 50.0054C36.9883 42.8847 42.8438 37.0922 50.0397 37.0922C57.2356 37.0922 63.0911 42.8847 63.0911 50.0054C63.0911 57.1252 57.2356 62.9177 50.0397 62.9177C42.843 62.9177 36.9883 57.1252 36.9883 50.0054ZM41.7422 50.0054C41.7422 54.5033 45.4641 58.1638 50.0397 58.1638C54.6153 58.1638 58.3372 54.5041 58.3372 50.0054C58.3372 45.5066 54.6145 41.8469 50.0397 41.8469C45.4641 41.8469 41.7422 45.5066 41.7422 50.0054ZM63.3248 39.6355C65.0208 39.6355 66.3956 38.2606 66.3956 36.5646C66.3956 34.8687 65.0208 33.4938 63.3248 33.4938C61.6288 33.4938 60.2539 34.8687 60.2539 36.5646C60.2539 38.2606 61.6288 39.6355 63.3248 39.6355Z" fill="#000000"/></svg></a>
-        </div>
-      </div>
-    </div>
+    <div class="rg-strip" aria-hidden="true"></div>
   </footer>
 </div>
 
@@ -758,8 +752,8 @@
     return '<div class="rg-pop"><b>' + esc(p.address) + '</b><br>' + esc(p.name) + ', ' + esc(p.type.toLowerCase()) + ' · г. ' + esc(p.city) +
       (p.district ? '<br>' + esc(p.district) + ' район' : '') + (p.metro ? '<br>' + metroHtml(p) : '') +
       (state.me && isFinite(p.dist) ? '<br>' + fmtDist(p.dist) + ' от вас' : '') +
-      '<br>' + (p.phone ? '<a href="tel:' + esc(p.phone) + '">Позвонить</a> · ' : '') +
-      '<a href="' + routeUrl(p) + '" target="_blank" rel="noopener">Маршрут</a></div>';
+      '<span class="rg-pop__actions">' + (p.phone ? '<a class="rg-btn rg-btn--dark" href="tel:' + esc(p.phone) + '">Позвонить</a>' : '') +
+      '<a class="rg-btn rg-btn--line" href="' + routeUrl(p) + '" target="_blank" rel="noopener">Маршрут</a></span></div>';
   }
 
   // Карта грузится один раз; повторные вызовы возвращают то же обещание.
@@ -983,8 +977,8 @@
       metroHtml(p) + '<span>' + esc(p.type) + (state.me && p.city !== 'Минск' ? ', г. ' + esc(p.city) : '') +
       (!state.city && p.district ? ' · ' + esc(p.district) + ' р-н' : '') + '</span>';
     return '<li class="rg-pitem" data-i="' + i + '">' +
-      '<button class="rg-pitem__main" type="button" data-show="' + i + '" aria-label="Показать на карте: ' + esc(p.address) + '">' +
-        '<b>' + esc(p.address) + '</b><span class="rg-pitem__meta">' + meta + '</span></button>' +
+      '<button class="rg-pitem__main" type="button" data-show="' + i + '">' +
+        '<span class="rg-sr">Показать на карте: </span><b>' + esc(p.address) + '</b><span class="rg-pitem__meta">' + meta + '</span></button>' +
       (p.phone ? '<a class="rg-ico-btn rg-ico-btn--dark" href="tel:' + esc(p.phone) + '" aria-label="Позвонить: ' + esc(p.address) + '" title="Позвонить">' + ICON_PHONE + '</a>' : '') +
       '<a class="rg-ico-btn rg-ico-btn--line" href="' + routeUrl(p) + '" target="_blank" rel="noopener" aria-label="Маршрут: ' + esc(p.address) + '" title="Маршрут">' + ICON_ROUTE + '</a>' +
       '</li>';
@@ -1034,7 +1028,7 @@
 
     $('rg-ut-list').innerHTML = beers.map(function (b) {
       var score = b.rating
-        ? stars(b.rating) + '<b class="rg-num">' + fmtRating(b.rating) + '</b><span class="rg-num">' + fmtCount(b.ratings) + '</span>'
+        ? stars(b.rating) + '<b class="rg-num">' + fmtRating(b.rating) + '</b><span class="rg-num">' + fmtCount(b.ratings) + (b.ratings < 30 ? ', пока мало' : '') + '</span>'
         : '<span>Пока мало оценок</span>';
       return '<li class="rg-ut__item" style="--rg-accent:' + (UT_ACCENT[b.key] || 'var(--rg-ink)') + '">' +
         '<span class="rg-ut__name">' + esc(b.beer) + '</span>' +
@@ -1087,7 +1081,7 @@
       $('rg-beer-desc').textContent = desc || 'Описания на Untappd пока нет. Попробуйте и расскажите, какое оно на вкус.';
       $('rg-beer-src').hidden = !desc;
       $('rg-beer-rating').innerHTML = ut && ut.rating
-        ? stars(ut.rating) + '<b class="rg-num">' + fmtRating(ut.rating) + '</b><span class="rg-num">' + fmtCount(ut.ratings) + ' в Untappd</span>'
+        ? stars(ut.rating) + '<b class="rg-num">' + fmtRating(ut.rating) + '</b><span class="rg-num">' + fmtCount(ut.ratings) + ' в Untappd' + (ut.ratings < 30 ? ' — пока мало' : '') + '</span>'
         : '<span>В Untappd пока мало оценок</span>';
       $('rg-beer-link').href = ut ? ut.url : 'https://untappd.com/Robim_Good_Brewery';
       $('rg-beer-link').setAttribute('aria-label', 'Смотреть ' + $('rg-beer-name').textContent + ' в Untappd');
